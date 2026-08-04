@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CalcPlot3D | PhyTwin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/studio.css" />
+</head>
+<body class="studio-page plot3d-page">
+  <header class="studio-header">
+    <a class="studio-brand" href="products.html">PhyTwin <small>CalcPlot3D</small></a>
+    <nav class="studio-nav">
+      <a href="calculator.html">计算器</a>
+      <a href="plot3d.html" aria-current="page">3D 绘图</a>
+      <a href="model.html">图纸转模型</a>
+      <a href="products.html">工作台</a>
+    </nav>
+  </header>
+
+  <div class="plot3d-main">
+    <div class="plot3d-viewport" id="plot3d-viewport"></div>
+
+    <div class="plot3d-toolbar">
+      <button type="button" id="btn-reset">重置视角</button>
+      <button type="button" id="btn-zoom-in">放大</button>
+      <button type="button" id="btn-zoom-out">缩小</button>
+      <button type="button" id="btn-wire">线框</button>
+      <button type="button" id="btn-edges">边线</button>
+      <button type="button" id="btn-clear">清除</button>
+      <span class="studio-status" id="plot-status">默认: f(x,y) = 7xy/e^(x²+y²)</span>
+    </div>
+
+    <div class="plot3d-expr-row">
+      <label for="expr-f">f(x,y) =</label>
+      <input id="expr-f" type="text" value="7*x*y/exp(x^2+y^2)" spellcheck="false" />
+      <button class="studio-btn studio-btn-primary" type="button" id="btn-graph" style="width:auto;margin:0;padding:0.5rem 1rem;">Graph</button>
+    </div>
+
+    <div class="studio-field-grid" style="max-width:480px;margin:0;">
+      <div class="studio-field">
+        <label>x 范围</label>
+        <input id="range-x" type="text" value="-3, 3" />
+      </div>
+      <div class="studio-field">
+        <label>y 范围</label>
+        <input id="range-y" type="text" value="-3, 3" />
+      </div>
+      <div class="studio-field">
+        <label>网格密度</label>
+        <input id="grid-n" type="number" min="20" max="120" value="60" />
+      </div>
+      <div class="studio-field">
+        <label>z 缩放</label>
+        <input id="z-scale" type="number" step="0.1" value="1" />
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="js/math-eval.js"></script>
+  <script src="js/plot3d.js"></script>
+</body>
+</html>

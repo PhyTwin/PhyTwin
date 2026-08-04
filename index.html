@@ -4,79 +4,112 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PhyTwin — 物理数字孪生计算门户</title>
-  <meta name="description" content="PhyTwin：对外计算工作台门户。前端托管在云端，重计算可调度到你的本地机器。" />
+  <meta name="description" content="PhyTwin：科学计算、3D 绘图、图纸转模型、力学/热场/风场设计台。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="page-home">
+<body>
+  <a class="skip-link" href="#main">跳过导航，进入正文</a>
   <div class="atmosphere" aria-hidden="true"></div>
 
   <header class="site-header">
-    <a class="brand" href="index.html">PhyTwin</a>
+    <a class="brand" href="index.html">
+      <span>PhyTwin</span>
+      <small>PHYSICS DIGITAL TWIN</small>
+    </a>
     <nav class="nav">
       <a href="products.html">工作台</a>
       <a href="calculator.html">计算器</a>
-      <a href="#how">怎么跑</a>
+      <a href="plot3d.html">3D</a>
+      <a href="docs/deploy.html">部署</a>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
     <section class="hero">
-      <p class="hero-brand">PhyTwin</p>
-      <h1>把物理计算，做成可对外调用的工作台</h1>
-      <p class="hero-lead">门户在云端，算力可走你的本地机器。低成本上线，随时扩成多机调度。</p>
+      <p class="pill">PhyTwin / 物理数字孪生</p>
+      <h1>PhyTwin</h1>
+      <p class="hero-lead">
+        门户在云端，算力可走本机。科学计算、3D 可视化、图纸转模型，以及力学 / 热场 / 风场设计台。
+        <span class="en">Cloud portal, local compute. Calculator, CalcPlot3D, image-to-model, and physics studios with tunable parameters.</span>
+      </p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="calculator.html">打开计算器</a>
-        <a class="btn btn-ghost" href="products.html">产品页</a>
+        <a class="btn btn-primary" href="products.html">进入工作台</a>
+        <a class="btn btn-ghost" href="plot3d.html">打开 3D 绘图</a>
+      </div>
+
+      <div class="terminal" aria-label="产品目录终端">
+        <div class="terminal-bar">
+          <span class="terminal-dot r"></span>
+          <span class="terminal-dot y"></span>
+          <span class="terminal-dot g"></span>
+          <span style="margin-left:0.5rem;">phytwin@physics : ~/workbench</span>
+        </div>
+        <div class="terminal-body">
+          <div class="cmd">$ ls workbench/</div>
+          <div><span class="name">calculator</span><span class="tag">APP</span><span class="phase">scientific</span></div>
+          <div><span class="name">plot3d</span><span class="tag">VIZ</span><span class="phase">CalcPlot3D</span></div>
+          <div><span class="name">img2model</span><span class="tag">3D</span><span class="phase">interactive</span></div>
+          <div><span class="name">stability</span><span class="tag">MECH</span><span class="phase">tunable</span></div>
+          <div><span class="name">thermal</span><span class="tag">HEAT</span><span class="phase">field</span></div>
+          <div><span class="name">wind</span><span class="tag">FLOW</span><span class="phase">breeze-1..3</span></div>
+          <div class="cmd">$ <span class="terminal-cursor"></span></div>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="how">
-      <h2>怎么跑起来</h2>
-      <p class="section-lead">三层分离：展示、入口、算力。你只为自己已经有的机器付电费。</p>
-      <ol class="steps">
-        <li>
-          <span class="step-num">01</span>
-          <div>
-            <h3>静态门户</h3>
-            <p>产品页与工作台 UI 托管在 Cloudflare Pages，费用为 0。</p>
-          </div>
-        </li>
-        <li>
-          <span class="step-num">02</span>
-          <div>
-            <h3>域名解析</h3>
-            <p>阿里云 DNS 把 phytwin.com 指到 Pages，不改主机商也能挂上。</p>
-          </div>
-        </li>
-        <li>
-          <span class="step-num">03</span>
-          <div>
-            <h3>本地算力</h3>
-            <p>本机跑 API，经 Cloudflare Tunnel 安全暴露，外网即可调用。</p>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <section class="section section-tight">
-      <h2>先从这里开始</h2>
-      <p class="section-lead">先看产品列表，或直接打开试算页连本地 API。</p>
-      <div class="inline-links">
-        <a href="calculator.html">在线计算器 →</a>
-        <a href="products.html">产品展示 →</a>
-        <a href="docs/deploy.html">挂域名说明 →</a>
+    <section class="section">
+      <div class="section-head">
+        <p class="pill">Modules / 模块</p>
+        <h2>成熟一层，开放一层</h2>
+        <p>每个工作台可独立进入；参数可调，结果可视化。Open each studio as it becomes ready.</p>
+      </div>
+      <div class="module-grid">
+        <a class="module" href="calculator.html">
+          <div class="module-top"><span class="module-idx">01</span><span class="module-tag">CALC</span></div>
+          <h3>科学计算器</h3>
+          <p class="en">Expression, unit conversion, physics formulas — in browser.</p>
+          <p class="zh">表达式、单位换算、常用物理公式，浏览器内即时计算。</p>
+        </a>
+        <a class="module" href="plot3d.html">
+          <div class="module-top"><span class="module-idx">02</span><span class="module-tag">PLOT</span></div>
+          <h3>CalcPlot3D</h3>
+          <p class="en">f(x,y) surfaces with orbit, wireframe, and grid controls.</p>
+          <p class="zh">在线 3D 函数绘图，旋转缩放、线框与边线切换。</p>
+        </a>
+        <a class="module" href="model.html">
+          <div class="module-top"><span class="module-idx">03</span><span class="module-tag">MODEL</span></div>
+          <h3>图纸转模型</h3>
+          <p class="en">Upload image → interactive mesh, clip view, click parts.</p>
+          <p class="zh">上传图纸/图片生成可交互 3D，剖切与部件点击。</p>
+        </a>
+        <a class="module" href="stability.html">
+          <div class="module-top"><span class="module-idx">04</span><span class="module-tag">MECH</span></div>
+          <h3>力学稳定性</h3>
+          <p class="en">Tunable geometry, load, safety factor &amp; buckling viz.</p>
+          <p class="zh">可调几何与载荷，应力、安全系数与屈曲可视化。</p>
+        </a>
+        <a class="module" href="thermal.html">
+          <div class="module-top"><span class="module-idx">05</span><span class="module-tag">HEAT</span></div>
+          <h3>热场</h3>
+          <p class="en">2D steady heat conduction with boundary controls.</p>
+          <p class="zh">二维稳态导热，边界温度可调，温度云图与剖面。</p>
+        </a>
+        <a class="module" href="wind.html">
+          <div class="module-top"><span class="module-idx">06</span><span class="module-tag">WIND</span></div>
+          <h3>迎面风场</h3>
+          <p class="en">Beaufort breeze levels 1–3 with vector field viz.</p>
+          <p class="zh">一级 / 二级 / 三级微风，绕障速度矢量与云图。</p>
+        </a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <span>PhyTwin</span>
-    <span>phytwin.com</span>
+    <span>PhyTwin · phytwin.com</span>
+    <a href="https://github.com/Sam-Messiah/PhyTwin" target="_blank" rel="noopener">GitHub</a>
   </footer>
-
-  <script src="js/main.js"></script>
 </body>
 </html>

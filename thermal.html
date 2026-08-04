@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>热场计算 | PhyTwin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/studio.css" />
+</head>
+<body class="studio-page">
+  <header class="studio-header">
+    <a class="studio-brand" href="products.html">PhyTwin <small>Thermal</small></a>
+    <nav class="studio-nav">
+      <a href="stability.html">力学</a>
+      <a href="thermal.html" aria-current="page">热场</a>
+      <a href="wind.html">风场</a>
+      <a href="products.html">工作台</a>
+    </nav>
+  </header>
+
+  <div class="studio-layout">
+    <aside class="studio-input">
+      <h1 class="studio-title">热场设计台</h1>
+      <p class="studio-sub">二维稳态导热 + 内热源；可调边界温度与材料导热系数，Jacobi 迭代求解并可视化温度场。</p>
+
+      <label class="studio-field full">
+        预设
+        <select id="preset">
+          <option value="plate">均温板演示</option>
+          <option value="hotspot">中心热点</option>
+          <option value="gradient">线性梯度</option>
+        </select>
+      </label>
+
+      <div class="studio-field-grid">
+        <div class="studio-field"><label>k (W/m·K)</label><input id="p-k" type="number" step="any" value="45" /></div>
+        <div class="studio-field"><label>Q (kW/m³)</label><input id="p-Q" type="number" step="any" value="0" /></div>
+        <div class="studio-field"><label>T_左 (°C)</label><input id="p-Tl" type="number" step="any" value="100" /></div>
+        <div class="studio-field"><label>T_右 (°C)</label><input id="p-Tr" type="number" step="any" value="20" /></div>
+        <div class="studio-field"><label>T_上 (°C)</label><input id="p-Tt" type="number" step="any" value="50" /></div>
+        <div class="studio-field"><label>T_下 (°C)</label><input id="p-Tb" type="number" step="any" value="50" /></div>
+        <div class="studio-field"><label>网格 N</label><input id="p-N" type="number" min="20" max="80" value="48" /></div>
+        <div class="studio-field"><label>迭代次数</label><input id="p-it" type="number" min="50" max="2000" value="400" /></div>
+      </div>
+
+      <button class="studio-btn studio-btn-primary" type="button" id="btn-run">运行热场求解</button>
+      <p class="studio-status" id="run-status">等待计算</p>
+      <div class="legend-bar"></div>
+      <div class="legend-labels"><span>低温</span><span>高温</span></div>
+    </aside>
+
+    <main class="studio-output">
+      <div class="studio-metrics">
+        <div class="studio-metric"><span>T_max</span><strong id="m-max">—</strong></div>
+        <div class="studio-metric"><span>T_min</span><strong id="m-min">—</strong></div>
+        <div class="studio-metric"><span>T_avg</span><strong id="m-avg">—</strong></div>
+        <div class="studio-metric"><span>残差</span><strong id="m-res">—</strong></div>
+        <div class="studio-metric"><span>耗时</span><strong id="m-time">—</strong></div>
+      </div>
+
+      <div class="studio-chart-grid">
+        <div class="studio-card">
+          <div class="studio-card-head">温度场 T(x,y)</div>
+          <div class="studio-canvas-wrap"><canvas id="chart-field" width="520" height="360"></canvas></div>
+        </div>
+        <div class="studio-card">
+          <div class="studio-card-head">中心线剖面 T(x)</div>
+          <div class="studio-canvas-wrap"><canvas id="chart-profile" width="520" height="360"></canvas></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/chart2d.js"></script>
+  <script src="js/thermal.js"></script>
+</body>
+</html>

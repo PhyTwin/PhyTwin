@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>风场计算 | PhyTwin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/studio.css" />
+</head>
+<body class="studio-page">
+  <header class="studio-header">
+    <a class="studio-brand" href="products.html">PhyTwin <small>Wind</small></a>
+    <nav class="studio-nav">
+      <a href="stability.html">力学</a>
+      <a href="thermal.html">热场</a>
+      <a href="wind.html" aria-current="page">风场</a>
+      <a href="products.html">工作台</a>
+    </nav>
+  </header>
+
+  <div class="studio-layout">
+    <aside class="studio-input">
+      <h1 class="studio-title">迎面风场设计台</h1>
+      <p class="studio-sub">一级 / 二级 / 三级微风预设（蒲福风级），绕障物 simplified 势流 + 扰动，可视化速度矢量场。</p>
+
+      <p style="font-size:0.85rem;color:var(--studio-muted);margin:0 0 0.5rem;">微风等级</p>
+      <div class="preset-row" id="breeze-presets">
+        <button type="button" class="preset-chip is-active" data-level="1">一级微风 0.3–1.5 m/s</button>
+        <button type="button" class="preset-chip" data-level="2">二级轻风 1.6–3.3 m/s</button>
+        <button type="button" class="preset-chip" data-level="3">三级微风 3.4–5.4 m/s</button>
+      </div>
+
+      <div class="studio-field-grid">
+        <div class="studio-field"><label>U (m/s)</label><input id="p-U" type="number" step="any" value="1.0" /></div>
+        <div class="studio-field"><label>风向 (°)</label><input id="p-dir" type="number" step="any" value="0" /></div>
+        <div class="studio-field"><label>障碍半径</label><input id="p-r" type="number" step="any" value="0.12" /></div>
+        <div class="studio-field"><label>湍强度 (%)</label><input id="p-ti" type="number" step="any" value="5" /></div>
+        <div class="studio-field"><label>网格 N</label><input id="p-N" type="number" min="24" max="80" value="48" /></div>
+        <div class="studio-field"><label>高度 z (m)</label><input id="p-z" type="number" step="any" value="10" /></div>
+      </div>
+
+      <button class="studio-btn studio-btn-primary" type="button" id="btn-run">运行风场求解</button>
+      <p class="studio-status" id="run-status">等待计算</p>
+    </aside>
+
+    <main class="studio-output">
+      <div class="studio-metrics">
+        <div class="studio-metric"><span>风速 U</span><strong id="m-U">—</strong></div>
+        <div class="studio-metric"><span>风级</span><strong id="m-level">—</strong></div>
+        <div class="studio-metric"><span>最大扰动</span><strong id="m-umax">—</strong></div>
+        <div class="studio-metric"><span>迎风面压强系数</span><strong id="m-cp">—</strong></div>
+        <div class="studio-metric"><span>耗时</span><strong id="m-time">—</strong></div>
+      </div>
+
+      <div class="studio-chart-grid">
+        <div class="studio-card">
+          <div class="studio-card-head">速度矢量场 (u, v)</div>
+          <div class="studio-canvas-wrap"><canvas id="chart-vec" width="520" height="380"></canvas></div>
+        </div>
+        <div class="studio-card">
+          <div class="studio-card-head">速度模 |V| 云图</div>
+          <div class="studio-canvas-wrap"><canvas id="chart-speed" width="520" height="380"></canvas></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/chart2d.js"></script>
+  <script src="js/wind.js"></script>
+</body>
+</html>

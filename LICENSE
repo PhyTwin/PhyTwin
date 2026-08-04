@@ -1,0 +1,37 @@
+PhyTwin Proprietary Commercial License
+Copyright (c) 2026 PhyTwin / Sam-Messiah. All rights reserved.
+
+本软件及相关文档（合称「本软件」）为商业闭源软件，版权归权利人所有。
+
+1. 允许的行为
+   - 公众可通过公开的网站（如 https://phytwin.com）或本仓库的公开页面浏览、阅读源代码与文档。
+   - 可通过 GitHub Issues 提出意见、建议、缺陷报告或使用反馈。
+
+2. 禁止的行为（未经权利人事先书面许可，任何人不得）
+   - 修改、改编、翻译、反编译、逆向工程本软件；
+   - 复制、分发、再许可、出售、出租、出借本软件或其衍生作品；
+   - 将本软件用于对外提供同类竞争性产品或服务的核心实现；
+   - 移除、遮盖或篡改本软件中的版权声明、许可声明或其他权利标识。
+
+3. 意见与反馈
+   - 欢迎通过本仓库 Issues 提交意见。提交反馈不赋予您对本软件的任何权利。
+   - 您提交的意见/建议一经提交，权利人可无偿、永久、不可撤销地使用，但您仍保留意见本身的署名权（如适用）。
+   - 本仓库不接受 Pull Request / 合并请求；未经邀请，请勿提交修改代码的贡献。
+
+4. 商标与品牌
+   - 「PhyTwin」及相关标识归权利人所有，本许可未授予任何商标使用权。
+
+5. 免责声明
+   - 本软件按「现状」提供，不作任何明示或默示担保。
+   - 在适用法律允许的最大范围内，权利人对因使用或无法使用本软件产生的任何直接或间接损失不承担责任。
+
+6. 商业许可
+   - 如需修改、二次开发、私有部署、OEM 或商业授权，请联系权利人另行签署书面商业协议。
+
+7. 管辖
+   - 本许可适用中华人民共和国法律（冲突法除外）。
+
+English summary (non-binding; Chinese text prevails if conflict):
+This is proprietary commercial software. Viewing the public site/repo is allowed.
+Modification, redistribution, and derivative works are forbidden without prior written permission.
+Feedback via GitHub Issues is welcome; pull requests are not accepted.

@@ -12,14 +12,7 @@
 
 - 网站：https://phytwin.com
 - 仓库：https://github.com/Sam-Messiah/PhyTwin（只读展示）
-
-## 本地预览（仅供权利人/授权方）
-
-```bash
-python -m http.server 5500
-```
-
-打开 http://127.0.0.1:5500/
+- 联系：phytwin@163.com
 
 ## 模块
 
@@ -34,4 +27,4 @@ python -m http.server 5500
 
 ## 提意见
 
-请使用 GitHub Issues，不要提交 Pull Request。
+请使用 GitHub Issues，或发邮件至 phytwin@163.com。不接受 Pull Request。

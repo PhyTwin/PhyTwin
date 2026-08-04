@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PhyTwin — 物理数字孪生计算门户</title>
+  <meta name="description" content="PhyTwin：对外计算工作台门户。前端托管在云端，重计算可调度到你的本地机器。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="page-home">
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">PhyTwin</a>
+    <nav class="nav">
+      <a href="products.html">工作台</a>
+      <a href="calculator.html">计算器</a>
+      <a href="#how">怎么跑</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="hero-brand">PhyTwin</p>
+      <h1>把物理计算，做成可对外调用的工作台</h1>
+      <p class="hero-lead">门户在云端，算力可走你的本地机器。低成本上线，随时扩成多机调度。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="calculator.html">打开计算器</a>
+        <a class="btn btn-ghost" href="products.html">产品页</a>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <h2>怎么跑起来</h2>
+      <p class="section-lead">三层分离：展示、入口、算力。你只为自己已经有的机器付电费。</p>
+      <ol class="steps">
+        <li>
+          <span class="step-num">01</span>
+          <div>
+            <h3>静态门户</h3>
+            <p>产品页与工作台 UI 托管在 Cloudflare Pages，费用为 0。</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">02</span>
+          <div>
+            <h3>域名解析</h3>
+            <p>阿里云 DNS 把 phytwin.com 指到 Pages，不改主机商也能挂上。</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">03</span>
+          <div>
+            <h3>本地算力</h3>
+            <p>本机跑 API，经 Cloudflare Tunnel 安全暴露，外网即可调用。</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section section-tight">
+      <h2>先从这里开始</h2>
+      <p class="section-lead">先看产品列表，或直接打开试算页连本地 API。</p>
+      <div class="inline-links">
+        <a href="calculator.html">在线计算器 →</a>
+        <a href="products.html">产品展示 →</a>
+        <a href="docs/deploy.html">挂域名说明 →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>PhyTwin</span>
+    <span>phytwin.com</span>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

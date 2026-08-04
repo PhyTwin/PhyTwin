@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>产品展示 | PhyTwin</title>
+  <meta name="description" content="PhyTwin 对外计算工作台产品列表。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="page-products">
+  <div class="atmosphere atmosphere-dim" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">PhyTwin</a>
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="products.html" aria-current="page">工作台</a>
+      <a href="calculator.html">计算器</a>
+    </nav>
+  </header>
+
+  <main class="products-main">
+    <header class="page-intro">
+      <p class="eyebrow">Products</p>
+      <h1>产品展示页</h1>
+      <p>可对外提供的计算工作台。可替换成你自己的求解器与模型。</p>
+    </header>
+
+    <section class="product-grid" aria-label="产品列表">
+      <a class="product" href="calculator.html">
+        <div class="product-top">
+          <h2>Calculator</h2>
+          <span class="arrow" aria-hidden="true">→</span>
+        </div>
+        <p>在线计算器：科学表达式、单位换算、常用物理公式，浏览器内即时计算。</p>
+        <div class="product-meta">
+          <span class="ver">v0.2</span>
+          <div class="bar" style="--p: 85%"><i></i></div>
+        </div>
+        <div class="tags">
+          <span>在线计算器</span>
+          <span class="ok">可用</span>
+        </div>
+      </a>
+
+      <a class="product" href="workbench.html">
+        <div class="product-top">
+          <h2>LocalSolver</h2>
+          <span class="arrow" aria-hidden="true">→</span>
+        </div>
+        <p>调用本机 API 的演示求解器：提交参数、排队、返回结果。</p>
+        <div class="product-meta">
+          <span class="ver">v0.1</span>
+          <div class="bar" style="--p: 70%"><i></i></div>
+        </div>
+        <div class="tags">
+          <span>本机算力</span>
+          <span class="ok">可用</span>
+        </div>
+      </a>
+
+      <a class="product" href="#twin">
+        <div class="product-top">
+          <h2>TwinStudio</h2>
+          <span class="arrow" aria-hidden="true">→</span>
+        </div>
+        <p>物理数字孪生参数扫描与敏感性分析工作台（占位，接你的模型）。</p>
+        <div class="product-meta">
+          <span class="ver">v0.0</span>
+          <div class="bar" style="--p: 25%"><i></i></div>
+        </div>
+        <div class="tags">
+          <span>孪生设计</span>
+          <span class="dev">开发中</span>
+        </div>
+      </a>
+
+      <a class="product" href="#batch">
+        <div class="product-top">
+          <h2>BatchQueue</h2>
+          <span class="arrow" aria-hidden="true">→</span>
+        </div>
+        <p>批量任务队列：把长计算丢到本地 worker，前端轮询状态。</p>
+        <div class="product-meta">
+          <span class="ver">v0.0</span>
+          <div class="bar" style="--p: 15%"><i></i></div>
+        </div>
+        <div class="tags">
+          <span>任务队列</span>
+          <span class="dev">开发中</span>
+        </div>
+      </a>
+
+      <a class="product" href="#viz">
+        <div class="product-top">
+          <h2>FieldViz</h2>
+          <span class="arrow" aria-hidden="true">→</span>
+        </div>
+        <p>场量与结果可视化入口（占位，可接你的后处理脚本）。</p>
+        <div class="product-meta">
+          <span class="ver">v0.0</span>
+          <div class="bar" style="--p: 10%"><i></i></div>
+        </div>
+        <div class="tags">
+          <span>可视化</span>
+          <span class="dev">开发中</span>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>PhyTwin</span>
+    <a href="docs/deploy.html">部署与挂域</a>
+  </footer>
+</body>
+</html>

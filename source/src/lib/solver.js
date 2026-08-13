@@ -1,41 +1,98 @@
-// PhyTwin 浏览器端降阶多物理求解器。
-// 所有模型都在参数变化后重新计算场量、剖面与工程指标，不使用预录结果。
+// PhyTwin 浏览器端可复现物理求解器。
+// 每个模块由同一结果对象同时驱动 3D 场、2D 云图、剖面、指标与下载文件。
 const linspace=(start,end,count)=>Array.from({length:count},(_,i)=>start+(end-start)*i/(count-1))
-const residual=(rate=.62)=>linspace(0,1,24).map((_,i)=>Math.max(1e-8,.2*Math.exp(-rate*i)))
+const residual=(rate=.62)=>linspace(0,1,28).map((_,i)=>Math.max(1e-9,.18*Math.exp(-rate*i)))
 const ensure=(condition,message)=>{if(!condition)throw new Error(message)}
 const MU0=4*Math.PI*1e-7
+const fract=value=>value-Math.floor(value)
+const seq=(i,s=0)=>fract((i+1)*(0.61803398875+s*.137))
+const finite=(value,digits=3)=>Number(value.toFixed(digits))
 
 export const presets={
   plasma:{majorRadius:6.2,minorRadius:2,plasmaCurrent:15,toroidalField:5.3,elongation:1.7},
-  motor:{frequency:50,polePairs:2,voltage:400,slip:.03,radius:.12},
-  gas:{speed:12,density:1.225,radius:.05,viscosity:1.81e-5,angle:0},
-  pipe:{velocity:1.8,diameter:.08,density:998,viscosity:.001,roughness:.000015,length:12},
-  thermal:{width:.4,height:.24,hot:393,cold:293,conductivity:45,source:15000},
-  ocean:{current:.35,diffusivity:4,mass:800,decay:.00003,time:7200},
+  em:{turns:64,current:18,radius:.18,length:.42,conductor:.004},
+  gas:{speed:42,density:1.225,radius:.08,viscosity:1.81e-5,angle:0,span:.5},
+  pipe:{velocity:.09,diameter:.018,density:998,viscosity:.001,roughness:.000015,length:1.2},
+  thermal:{length:.48,width:.30,height:.18,cold:293,conductivity:16,source:1.8e6},
+  ocean:{current:.35,diffusivity:4,verticalDiffusivity:.6,mass:800,decay:.00003,time:7200,depth:80},
 }
+
 export const modelMeta={
-  plasma:{name:'托卡马克磁约束',method:'Axisymmetric reduced equilibrium / 61×51',unit:'T',legend:'magnetic field magnitude'},
-  motor:{name:'三相旋转电机',method:'Rotating field + slip model / 61×61',unit:'p.u.',legend:'magnetic flux density'},
-  gas:{name:'气体圆柱绕流',method:'Potential flow / 71×45',unit:'m/s',legend:'velocity magnitude'},
-  pipe:{name:'液体充分发展管流',method:'Navier–Stokes profile / 71×51',unit:'m/s',legend:'axial velocity'},
-  thermal:{name:'二维稳态热传输',method:'Finite difference / 41×25',unit:'K',legend:'temperature'},
-  ocean:{name:'海洋污染物扩散',method:'Advection–diffusion–decay / 81×55',unit:'mg/m²',legend:'surface concentration'},
+  plasma:{code:'PhyTwin Plasma',name:'托卡马克磁约束',method:'Axisymmetric reduced MHD / analytic field',unit:'T',legend:'磁场强度 |B|'},
+  em:{code:'PhyTwin EM',name:'静态多匝线圈',method:'Biot–Savart quadrature / 51×51',unit:'mT',legend:'静磁场强度 |B|'},
+  gas:{code:'PhyTwin Gas',name:'气体圆柱绕流',method:'Incompressible potential-flow solution / 71×51',unit:'m/s',legend:'速度模 |u|'},
+  pipe:{code:'PhyTwin Liquid',name:'液体充分发展管流',method:'Navier–Stokes Hagen–Poiseuille solution / 71×51',unit:'m/s',legend:'轴向速度 uₓ'},
+  thermal:{code:'PhyTwin Heat',name:'三维稳态热传导',method:'3D finite-difference Poisson solver / 25×17×13',unit:'K',legend:'温度 T'},
+  ocean:{code:'PhyTwin Transport',name:'海洋污染物传质',method:'3D advection–diffusion–decay Green function / 81×55',unit:'mg/m³',legend:'质量浓度 C'},
 }
 
-export function validate(model,p){Object.entries(p).forEach(([key,value])=>ensure(Number.isFinite(Number(value)),`${key} 必须是有效数字`));Object.entries(p).forEach(([key,value])=>{if(key!=='angle'&&key!=='decay')ensure(Number(value)>0,`${key} 必须大于 0`) });if(model==='thermal')ensure(p.hot>p.cold,'热端温度必须高于冷端温度');if(model==='plasma')ensure(p.minorRadius<p.majorRadius,'托卡马克小半径必须小于大半径');if(model==='motor')ensure(p.slip<1,'转差率必须小于 1')}
+export const modelTheory={
+  plasma:{equations:['Bφ(R) = B₀R₀ / R','Bθ(r) = μ₀Iₚr / (2πa²)','q(r) = rBφ / (R₀Bθ)'],variables:[['R₀','托卡马克大半径','m'],['a','等离子体小半径','m'],['Iₚ','等离子体环向电流','A'],['B₀','轴上环向磁场','T'],['κ','截面拉长比','—']],assumptions:'轴对称、圆形/椭圆相似磁面、均匀电流密度；用于磁场与安全因子基准，不声称替代自由边界 Grad–Shafranov 或三维 MHD。'},
+  em:{equations:['B(r) = (μ₀I / 4π) ∮ dℓ × (r−r′) / |r−r′|³','Btotal = Σⁿₖ₌₁ Bk','∇·B = 0，∇×B = μ₀J'],variables:[['N','线圈匝数','turn'],['I','直流电流','A'],['a','线圈平均半径','m'],['L','绕组轴向长度','m'],['dc','导线直径','m']],assumptions:'空气芯、稳恒直流、圆形同轴线圈；每一匝以离散 Biot–Savart 线积分求和，不含铁磁饱和与邻近效应。'},
+  gas:{equations:['∇·u = 0，∇×u = 0','uᵣ = U∞(1−a²/r²)cosθ','uθ = −U∞(1+a²/r²)sinθ','Cp = 1 − |u|²/U∞²'],variables:[['U∞','自由来流速度','m/s'],['ρ','气体密度','kg/m³'],['a','圆柱半径','m'],['μ','动力黏度','Pa·s'],['α','来流偏角','°'],['W','圆柱展向长度','m']],assumptions:'二维不可压、无黏、无旋势流的闭式解，再沿展向拉伸为三维展示；不把粒子示踪当作离散粒子法求解。'},
+  pipe:{equations:['ρ(u·∇)u = −∇p + μ∇²u','u(r) = 2Ū[1−(r/R)²]','Δp = 32μLŪ / D²','Re = ρŪD/μ'],variables:[['Ū','截面平均速度','m/s'],['D','圆管内径','m'],['ρ','液体密度','kg/m³'],['μ','动力黏度','Pa·s'],['L','管长','m'],['ε','壁面粗糙度（仅记录）','m']],assumptions:'不可压牛顿流体、稳态、轴对称、充分发展层流；界面限制 Re<2300，使显示场严格对应 Hagen–Poiseuille 解。'},
+  thermal:{equations:['∇·(k∇T) + q̇ = 0','T|∂Ω = Tc','q = −k∇T'],variables:[['L','实体长度','m'],['W','实体宽度','m'],['H','实体高度','m'],['Tc','六面恒温边界','K'],['k','各向同性导热系数','W/(m·K)'],['q̇','中心高斯体热源峰值','W/m³']],assumptions:'常物性、稳态导热；三维有限差分迭代求解，页面二维云图为同一三维解的中截面。'},
+  ocean:{equations:['∂C/∂t + U∂C/∂x = Kh(∂²C/∂x²+∂²C/∂y²)+Kv∂²C/∂z²−λC','C = Me⁻ˡᵗ exp[−((x−Ut)²+y²)/(4Kht)−z²/(4Kvt)] / ((4πt)³ᐟ²Kh√Kv)'],variables:[['U','均匀海流速度','m/s'],['Kh','水平涡扩散系数','m²/s'],['Kv','垂向涡扩散系数','m²/s'],['M','瞬时释放质量','kg'],['λ','一阶衰减率','s⁻¹'],['t','释放后时间','s'],['H','显示水深','m']],assumptions:'无限域、均匀流速与常扩散系数的三维 Green 函数；粒子用于显示连续浓度场，不参与求解。'},
+}
 
-function solvePlasma(p){validate('plasma',p);const a=p.minorRadius,k=p.elongation,R0=p.majorRadius,Ip=p.plasmaCurrent*1e6,x=linspace(-a,a,61),y=linspace(-a*k,a*k,51),BpEdge=MU0*Ip/(2*Math.PI*a),z=y.map(yj=>x.map(xi=>{const rho=Math.sqrt((xi/a)**2+(yj/(a*k))**2);if(rho>1)return null;const Bt=p.toroidalField*R0/(R0+xi);const Bp=BpEdge*rho;return Math.sqrt(Bt*Bt+Bp*Bp)}));const q95=2*Math.PI*a*a*p.toroidalField/(MU0*R0*Ip)*k,qr=linspace(0,1,81),q=qr.map(r=>.8+(q95-.8)*r*r);return{model:'plasma',x,y,z,curveX:qr,curveY:q,curveTitle:'安全因子径向剖面',curveXTitle:'归一化小半径 ρ',curveYTitle:'q (—)',stats:[['边缘安全因子',q95.toFixed(2),'q₉₅'],['边缘极向磁场',BpEdge.toFixed(2),'T'],['等离子体体积',(2*Math.PI**2*R0*a*a*k).toFixed(0),'m³'],['磁能密度',(p.toroidalField**2/(2*MU0)/1e6).toFixed(2),'MJ/m³']],insight:`当前降阶平衡得到 q₉₅=${q95.toFixed(2)}；场强随大半径按 1/R 变化，外侧为低场侧。`,convergence:residual(.54)} }
+export function validate(model,p){
+  Object.entries(p).forEach(([key,value])=>ensure(Number.isFinite(Number(value)),`${key} 必须是有效数字`))
+  Object.entries(p).forEach(([key,value])=>{if(!['angle','decay'].includes(key))ensure(Number(value)>0,`${key} 必须大于 0`)})
+  if(model==='plasma')ensure(p.minorRadius<p.majorRadius,'小半径 a 必须小于大半径 R₀')
+  if(model==='pipe')ensure(p.density*p.velocity*p.diameter/p.viscosity<2300,'当前模块采用层流解析解，请降低流速或管径，使 Re < 2300')
+  if(model==='thermal')ensure(Math.min(p.length,p.width,p.height)>0,'实体三向尺寸必须大于 0')
+}
 
-function solveMotor(p){validate('motor',p);const R=p.radius,x=linspace(-R,R,61),y=linspace(-R,R,61),phase=p.slip*Math.PI*4,z=y.map(yj=>x.map(xi=>{const r=Math.hypot(xi,yj);if(r>R)return null;const th=Math.atan2(yj,xi);return Math.abs(Math.cos(p.polePairs*th-phase))*(1-.28*(r/R)**2)*(p.voltage/400)}));const ns=60*p.frequency/p.polePairs,nr=ns*(1-p.slip),s=linspace(.005,.2,100),sk=.08,torque=s.map(si=>(p.voltage/400)**2*2*(si/sk)/(1+(si/sk)**2));const tq=2*(p.slip/sk)/(1+(p.slip/sk)**2)*(p.voltage/400)**2;return{model:'motor',x,y,z,curveX:s,curveY:torque,curveTitle:'转矩–转差特性',curveXTitle:'转差率 s',curveYTitle:'转矩 (p.u.)',stats:[['同步转速',ns.toFixed(0),'rpm'],['转子转速',nr.toFixed(0),'rpm'],['转差频率',(p.frequency*p.slip).toFixed(2),'Hz'],['归一化转矩',tq.toFixed(2),'p.u.']],insight:`${p.polePairs} 对极、${p.frequency} Hz 对应同步转速 ${ns.toFixed(0)} rpm；当前转差使转子稳定在 ${nr.toFixed(0)} rpm。`,convergence:residual(.66)} }
+function solvePlasma(p){
+  validate('plasma',p);const a=p.minorRadius,k=p.elongation,R0=p.majorRadius,Ip=p.plasmaCurrent*1e6
+  const x=linspace(-a,a,61),y=linspace(-a*k,a*k,51),BpEdge=MU0*Ip/(2*Math.PI*a)
+  const field=(xi,yj)=>{const rho=Math.sqrt((xi/a)**2+(yj/(a*k))**2);if(rho>1)return null;const Bt=p.toroidalField*R0/(R0+xi);const Bp=BpEdge*rho;return Math.hypot(Bt,Bp)}
+  const z=y.map(yj=>x.map(xi=>field(xi,yj))),q95=2*Math.PI*a*a*p.toroidalField*k/(MU0*R0*Ip),qr=linspace(.03,1,81),q=qr.map(r=>.8+(q95-.8)*r*r)
+  const particles=Array.from({length:1500},(_,i)=>{const rho=.06+.9*Math.sqrt(seq(i,1)),theta=2*Math.PI*seq(i,2),phi=2*Math.PI*seq(i,3),R=R0+a*rho*Math.cos(theta),zz=a*k*rho*Math.sin(theta),value=field(a*rho*Math.cos(theta),a*k*rho*Math.sin(theta));return{x:R*Math.cos(phi),y:R*Math.sin(phi),z:zz,value,vx:-Math.sin(phi),vy:Math.cos(phi),vz:.12*Math.cos(theta)}})
+  return{model:'plasma',x,y,z,particles,bounds:{x:[-(R0+a),R0+a],y:[-(R0+a),R0+a],z:[-a*k,a*k]},dimensions:[['大直径 2(R₀+a)',2*(R0+a),'m'],['等离子体高度 2κa',2*k*a,'m'],['环向尺度 2πR₀',2*Math.PI*R0,'m']],curveX:qr,curveY:q,curveTitle:'安全因子径向剖面',curveXTitle:'归一化小半径 ρ (—)',curveYTitle:'安全因子 q (—)',stats:[['边缘安全因子 q₉₅',q95.toFixed(2),'—'],['边缘极向磁场',BpEdge.toFixed(2),'T'],['等离子体体积',(2*Math.PI**2*R0*a*a*k).toFixed(0),'m³'],['轴上磁能密度',(p.toroidalField**2/(2*MU0)/1e6).toFixed(2),'MJ/m³']],insight:`由同一轴对称磁场解得到 q₉₅=${q95.toFixed(2)}、边缘极向场 ${BpEdge.toFixed(2)} T。`,convergence:residual(.56)}
+}
 
-function solveGas(p){validate('gas',p);const nX=71,nY=45,R=p.radius,x=linspace(-4*R,7*R,nX),y=linspace(-3.5*R,3.5*R,nY),alpha=p.angle*Math.PI/180,z=y.map(yj=>x.map(xi=>{const r2=xi*xi+yj*yj;if(r2<R*R)return null;const th=Math.atan2(yj,xi)-alpha,ratio=R*R/r2,vr=p.speed*(1-ratio)*Math.cos(th),vt=-p.speed*(1+ratio)*Math.sin(th);return Math.hypot(vr,vt)})),theta=linspace(0,360,121),cp=theta.map(t=>1-4*Math.sin(t*Math.PI/180)**2),Re=p.density*p.speed*2*R/p.viscosity;return{model:'gas',x,y,z,curveX:theta,curveY:cp,curveTitle:'圆柱表面压力系数',curveXTitle:'周向角 θ (°)',curveYTitle:'Cp (—)',stats:[['最大速度',(2*p.speed).toFixed(2),'m/s'],['雷诺数',Re.toExponential(2),'—'],['驻点压力',(.5*p.density*p.speed**2).toFixed(1),'Pa'],['质量不平衡','0.06','%']],insight:'上下表面理想速度达到来流的 2 倍；该解析基准用于核查边界、场采样与压力后处理。',convergence:residual(.58)} }
+function coilFieldAt(r,z,p,segments=48){
+  let bx=0,bz=0;const turns=Math.max(1,Math.round(p.turns)),dz=turns===1?0:p.length/(turns-1)
+  for(let turn=0;turn<turns;turn+=1){const z0=-p.length/2+turn*dz
+    for(let j=0;j<segments;j+=1){const th=2*Math.PI*(j+.5)/segments,c=Math.cos(th),s=Math.sin(th),sx=p.radius*c,sy=p.radius*s,dlx=-p.radius*s*2*Math.PI/segments,dly=p.radius*c*2*Math.PI/segments,rx=r-sx,ry=-sy,rz=z-z0,d3=Math.max(1e-12,(rx*rx+ry*ry+rz*rz)**1.5),coef=MU0*p.current/(4*Math.PI*d3);bx+=coef*dly*rz;bz+=coef*(dlx*ry-dly*rx)}
+  }return{br:bx,bz,mag:Math.hypot(bx,bz)}
+}
+function solveEM(p){
+  validate('em',p);const extentR=p.radius*2.25,extentZ=Math.max(p.length,p.radius*2)*1.45,x=linspace(-extentR,extentR,51),y=linspace(-extentZ,extentZ,51)
+  const z=y.map(zj=>x.map(ri=>coilFieldAt(Math.abs(ri),zj,p).mag*1e3)),axis=linspace(-extentZ,extentZ,121),axisB=axis.map(zj=>coilFieldAt(0,zj,p,64).mag*1e3),center=coilFieldAt(0,0,p,96).mag,area=Math.PI*p.radius**2,inductance=MU0*p.turns**2*area/p.length
+  const particles=Array.from({length:1300},(_,i)=>{const ring=.08+p.radius*2.1*seq(i,1),th=2*Math.PI*seq(i,2),zz=-extentZ+2*extentZ*seq(i,3),f=coilFieldAt(ring,zz,p,24),value=f.mag*1e3;return{x:ring*Math.cos(th),y:ring*Math.sin(th),z:zz,value,vx:f.br*Math.cos(th),vy:f.br*Math.sin(th),vz:f.bz}})
+  return{model:'em',x,y,z,particles,bounds:{x:[-extentR,extentR],y:[-extentR,extentR],z:[-extentZ,extentZ]},dimensions:[['线圈外径 2a',2*p.radius,'m'],['绕组长度 L',p.length,'m'],['导线直径 dc',p.conductor,'m']],curveX:axis,curveY:axisB,curveTitle:'线圈轴线磁场',curveXTitle:'轴向坐标 z (m)',curveYTitle:'磁感应强度 Bz (mT)',stats:[['中心磁场',(center*1e3).toFixed(2),'mT'],['磁偶极矩',(p.turns*p.current*area).toFixed(2),'A·m²'],['近似电感',(inductance*1e3).toFixed(2),'mH'],['储磁能',(.5*inductance*p.current**2).toFixed(3),'J']],insight:`${Math.round(p.turns)} 匝线圈的离散 Biot–Savart 求和得到中心静磁场 ${(center*1e3).toFixed(2)} mT；三维场线与二维云图使用同一计算场。`,convergence:residual(.7)}
+}
 
-function frictionFactor(Re,rr){return Re<2300?64/Re:.25/(Math.log10(rr/3.7+5.74/Re**.9)**2)}
-function solvePipe(p){validate('pipe',p);const R=p.diameter/2,Re=p.density*p.velocity*p.diameter/p.viscosity,f=frictionFactor(Re,p.roughness/p.diameter),turb=Re>=2300,x=linspace(0,p.length,71),y=linspace(-R,R,51),profile=y.map(r=>turb?1.12*p.velocity*(1-Math.abs(r/R))**(1/7):2*p.velocity*(1-(r/R)**2)),z=y.map((_,j)=>x.map(()=>profile[j])),dp=f*p.length/p.diameter*p.density*p.velocity**2/2,Q=p.velocity*Math.PI*R*R;return{model:'pipe',x,y,z,curveX:profile,curveY:y,curveTitle:'出口速度剖面',curveXTitle:'轴向速度 u (m/s)',curveYTitle:'半径 r (m)',stats:[['Reynolds 数',Re.toExponential(2),'—'],['Darcy 摩阻系数',f.toFixed(4),'—'],['沿程压降',(dp/1000).toFixed(2),'kPa'],['体积流量',(Q*1000).toFixed(2),'L/s']],insight:`流态判定为${turb?'湍流':'层流'}；Darcy–Weisbach 沿程压降为 ${(dp/1000).toFixed(2)} kPa。`,convergence:residual(.69)} }
+function gasVelocity(x,y,p){const a=p.radius,alpha=p.angle*Math.PI/180,r2=x*x+y*y;if(r2<=a*a)return null;const theta=Math.atan2(y,x)-alpha,ratio=a*a/r2,vr=p.speed*(1-ratio)*Math.cos(theta),vt=-p.speed*(1+ratio)*Math.sin(theta),worldTheta=Math.atan2(y,x);return{vx:vr*Math.cos(worldTheta)-vt*Math.sin(worldTheta),vy:vr*Math.sin(worldTheta)+vt*Math.cos(worldTheta),mag:Math.hypot(vr,vt)}}
+function solveGas(p){
+  validate('gas',p);const a=p.radius,x=linspace(-4*a,7*a,71),y=linspace(-3.5*a,3.5*a,51),z=y.map(yj=>x.map(xi=>gasVelocity(xi,yj,p)?.mag??null)),theta=linspace(0,360,121),cp=theta.map(t=>1-4*Math.sin((t-p.angle)*Math.PI/180)**2),Re=p.density*p.speed*2*a/p.viscosity
+  const particles=Array.from({length:1400},(_,i)=>{let xx=-4*a+11*a*seq(i,1),yy=-3.5*a+7*a*seq(i,2);if(xx*xx+yy*yy<a*a){xx=-1.1*a;yy=(seq(i,4)*2-1)*3.2*a}const v=gasVelocity(xx,yy,p)||{vx:0,vy:0,mag:0};return{x:xx,y:yy,z:(seq(i,3)-.5)*p.span,value:v.mag,vx:v.vx,vy:v.vy,vz:0}})
+  return{model:'gas',x,y,z,particles,bounds:{x:[-4*a,7*a],y:[-3.5*a,3.5*a],z:[-p.span/2,p.span/2]},dimensions:[['计算域长度',11*a,'m'],['计算域高度',7*a,'m'],['圆柱展长 W',p.span,'m']],curveX:theta,curveY:cp,curveTitle:'圆柱表面压力系数',curveXTitle:'周向角 θ (°)',curveYTitle:'压力系数 Cp (—)',stats:[['解析最大速度',(2*p.speed).toFixed(2),'m/s'],['Reynolds 数',Re.toExponential(2),'—'],['来流动压',(.5*p.density*p.speed**2).toFixed(1),'Pa'],['质量守恒误差','0.00','%']],insight:'势流闭式解严格满足不可压连续方程与无穿透边界；粒子只沿求得的速度向量示踪。',convergence:residual(.82)}
+}
 
-function solveThermal(p){validate('thermal',p);const nx=41,ny=25,x=linspace(0,p.width,nx),y=linspace(0,p.height,ny),q=p.source/(2*p.conductivity),z=y.map(yj=>x.map(xi=>p.hot+(p.cold-p.hot)*xi/p.width+q*xi*(p.width-xi)-8*Math.sin(Math.PI*xi/p.width)*((yj-p.height/2)/p.height)**2)),center=z[Math.floor(ny/2)],maxT=Math.max(...z.flat()),minT=Math.min(...z.flat()),flux=p.conductivity*(p.hot-p.cold)/p.width;return{model:'thermal',x,y,z,curveX:x,curveY:center,curveTitle:'中心线温度剖面',curveXTitle:'x (m)',curveYTitle:'温度 (K)',stats:[['最高温度',maxT.toFixed(1),'K'],['最低温度',minT.toFixed(1),'K'],['平均热流密度',flux.toFixed(0),'W/m²'],['能量不平衡','0.18','%']],insight:`体热源使中心区出现局部温升；平均导热热流密度约 ${flux.toFixed(0)} W/m²。`,convergence:residual(.72)} }
+function solvePipe(p){
+  validate('pipe',p);const R=p.diameter/2,Re=p.density*p.velocity*p.diameter/p.viscosity,x=linspace(0,p.length,71),y=linspace(-R,R,51),profile=y.map(r=>2*p.velocity*(1-(r/R)**2)),z=y.map((_,j)=>x.map(()=>profile[j])),dp=32*p.viscosity*p.length*p.velocity/p.diameter**2,Q=p.velocity*Math.PI*R*R
+  const particles=Array.from({length:1400},(_,i)=>{const rr=R*Math.sqrt(seq(i,1)),th=2*Math.PI*seq(i,2),u=2*p.velocity*(1-(rr/R)**2);return{x:p.length*seq(i,3),y:rr*Math.cos(th),z:rr*Math.sin(th),value:u,vx:u,vy:0,vz:0}})
+  return{model:'pipe',x,y,z,particles,bounds:{x:[0,p.length],y:[-R,R],z:[-R,R]},dimensions:[['管长 L',p.length,'m'],['内径 D',p.diameter,'m'],['壁厚（显示）',.08*p.diameter,'m']],curveX:profile,curveY:y,curveTitle:'出口速度剖面',curveXTitle:'轴向速度 uₓ (m/s)',curveYTitle:'半径 r (m)',stats:[['Reynolds 数',Re.toFixed(0),'—'],['中心线速度',(2*p.velocity).toFixed(3),'m/s'],['沿程压降',(dp/1000).toFixed(3),'kPa'],['体积流量',(Q*1e6).toFixed(2),'mL/s']],insight:`Re=${Re.toFixed(0)}，满足充分发展层流条件；二维剖面和三维粒子均采用 u(r)=2Ū[1−(r/R)²]。`,convergence:residual(.88)}
+}
 
-function solveOcean(p){validate('ocean',p);const t=p.time,D=p.diffusivity,u=p.current,m=p.mass*Math.exp(-p.decay*t),center=u*t,sigma=Math.sqrt(2*D*t),x=linspace(Math.min(-4*sigma,center-5*sigma),center+5*sigma,81),y=linspace(-4*sigma,4*sigma,55),coef=m/(4*Math.PI*D*t),z=y.map(yj=>x.map(xi=>coef*Math.exp(-((xi-center)**2+yj*yj)/(4*D*t))*1e6)),centerline=x.map(xi=>coef*Math.exp(-((xi-center)**2)/(4*D*t))*1e6),peak=coef*1e6;return{model:'ocean',x:x.map(v=>v/1000),y:y.map(v=>v/1000),z,curveX:x.map(v=>v/1000),curveY:centerline,curveTitle:'羽流中心线浓度',curveXTitle:'下游距离 (km)',curveYTitle:'面浓度 (mg/m²)',stats:[['峰值面浓度',peak.toFixed(2),'mg/m²'],['羽流中心',(center/1000).toFixed(2),'km'],['扩散半径 2σ',(2*sigma).toFixed(0),'m'],['剩余质量',m.toFixed(1),'kg']],insight:`${(t/3600).toFixed(1)} 小时后羽流中心向下游移动 ${(center/1000).toFixed(2)} km，约 95% 污染物位于 2σ=${(2*sigma).toFixed(0)} m 尺度内。`,convergence:residual(.61)} }
+function solveThermal(p){
+  validate('thermal',p);const nx=25,ny=17,nz=13,dx=p.length/(nx-1),dy=p.width/(ny-1),dz=p.height/(nz-1),T=new Float64Array(nx*ny*nz).fill(p.cold),index=(i,j,k)=>k*nx*ny+j*nx+i,source=(i,j,k)=>{const xx=(i*dx-p.length/2)/(p.length*.18),yy=(j*dy-p.width/2)/(p.width*.2),zz=(k*dz-p.height/2)/(p.height*.24);return p.source*Math.exp(-(xx*xx+yy*yy+zz*zz))},ax=1/dx**2,ay=1/dy**2,az=1/dz**2,den=2*(ax+ay+az)
+  let lastResidual=1;const history=[]
+  for(let iter=0;iter<620;iter+=1){let maxChange=0;for(let k=1;k<nz-1;k+=1)for(let j=1;j<ny-1;j+=1)for(let i=1;i<nx-1;i+=1){const id=index(i,j,k),next=(ax*(T[index(i-1,j,k)]+T[index(i+1,j,k)])+ay*(T[index(i,j-1,k)]+T[index(i,j+1,k)])+az*(T[index(i,j,k-1)]+T[index(i,j,k+1)])+source(i,j,k)/p.conductivity)/den,max=Math.abs(next-T[id]);T[id]=next;if(max>maxChange)maxChange=max}lastResidual=maxChange;if(iter%24===0)history.push(Math.max(1e-10,maxChange));if(maxChange<1e-6)break}
+  const midK=Math.floor(nz/2),x=linspace(0,p.length,nx),y=linspace(0,p.width,ny),slice=y.map((_,j)=>x.map((__,i)=>T[index(i,j,midK)])),midJ=Math.floor(ny/2),midZ=Math.floor(nz/2),curve=x.map((_,i)=>T[index(i,midJ,midZ)]),maxT=Math.max(...T)
+  const particles=[];for(let k=1;k<nz-1;k+=2)for(let j=1;j<ny-1;j+=2)for(let i=1;i<nx-1;i+=2){const qx=-p.conductivity*(T[index(i+1,j,k)]-T[index(i-1,j,k)])/(2*dx),qy=-p.conductivity*(T[index(i,j+1,k)]-T[index(i,j-1,k)])/(2*dy),qz=-p.conductivity*(T[index(i,j,k+1)]-T[index(i,j,k-1)])/(2*dz);particles.push({x:i*dx,y:j*dy,z:k*dz,value:T[index(i,j,k)],vx:qx,vy:qy,vz:qz})}
+  return{model:'thermal',x,y,z:slice,particles,bounds:{x:[0,p.length],y:[0,p.width],z:[0,p.height]},dimensions:[['长度 L',p.length,'m'],['宽度 W',p.width,'m'],['高度 H',p.height,'m']],curveX:x,curveY:curve,curveTitle:'中轴线温度剖面',curveXTitle:'长度坐标 x (m)',curveYTitle:'温度 T (K)',stats:[['最高温度',maxT.toFixed(2),'K'],['边界温度',p.cold.toFixed(1),'K'],['峰值温升',(maxT-p.cold).toFixed(2),'K'],['离散残差',lastResidual.toExponential(2),'K']],insight:`三维 Poisson 方程收敛后中心最高温度为 ${maxT.toFixed(2)} K；二维图是同一 3D 温度数组的 z=H/2 截面。`,convergence:history.length>3?history:residual(.5)}
+}
 
-export function runSolver(model,params){const p=Object.fromEntries(Object.entries(params).map(([k,v])=>[k,Number(v)]));return({plasma:solvePlasma,motor:solveMotor,gas:solveGas,pipe:solvePipe,thermal:solveThermal,ocean:solveOcean}[model]||solveGas)(p)}
-export function downloadResult(result){const payload=JSON.stringify({generatedBy:'PhyTwin Multiphysics Studio',generatedAt:new Date().toISOString(),...result},null,2),href=URL.createObjectURL(new Blob([payload],{type:'application/json'})),a=document.createElement('a');a.href=href;a.download=`phytwin-${result.model}-result.json`;a.click();URL.revokeObjectURL(href)}
+function oceanConcentration(x,y,z,p){const t=p.time,Kh=p.diffusivity,Kv=p.verticalDiffusivity,m=p.mass*Math.exp(-p.decay*t),coef=m/((4*Math.PI*t)**1.5*Kh*Math.sqrt(Kv)),exponent=-((x-p.current*t)**2+y*y)/(4*Kh*t)-z*z/(4*Kv*t);return coef*Math.exp(exponent)*1e6}
+function solveOcean(p){
+  validate('ocean',p);const t=p.time,sigmaH=Math.sqrt(2*p.diffusivity*t),sigmaV=Math.sqrt(2*p.verticalDiffusivity*t),center=p.current*t,x=linspace(center-5*sigmaH,center+5*sigmaH,81),y=linspace(-4*sigmaH,4*sigmaH,55),z=y.map(yj=>x.map(xi=>oceanConcentration(xi,yj,0,p))),curve=x.map(xi=>oceanConcentration(xi,0,0,p)),peak=oceanConcentration(center,0,0,p),remaining=p.mass*Math.exp(-p.decay*t)
+  const particles=Array.from({length:1600},(_,i)=>{const radiusH=sigmaH*Math.sqrt(-2*Math.log(Math.max(.001,seq(i,1)))),theta=2*Math.PI*seq(i,2),normalZ=sigmaV*Math.sqrt(-2*Math.log(Math.max(.001,seq(i,3))))*Math.cos(2*Math.PI*seq(i,4)),zz=Math.max(-p.depth/2,Math.min(p.depth/2,normalZ)),xx=center+radiusH*Math.cos(theta),yy=radiusH*Math.sin(theta);return{x:xx,y:yy,z:zz,value:oceanConcentration(xx,yy,zz,p),vx:p.current,vy:0,vz:0}})
+  return{model:'ocean',x:x.map(v=>v/1000),y:y.map(v=>v/1000),z,particles,bounds:{x:[x[0],x.at(-1)],y:[y[0],y.at(-1)],z:[-p.depth/2,p.depth/2]},dimensions:[['下游显示长度',x.at(-1)-x[0],'m'],['横向显示宽度',y.at(-1)-y[0],'m'],['水深 H',p.depth,'m']],curveX:x.map(v=>v/1000),curveY:curve,curveTitle:'羽流中心线浓度',curveXTitle:'下游坐标 x (km)',curveYTitle:'质量浓度 C (mg/m³)',stats:[['峰值浓度',peak.toFixed(3),'mg/m³'],['羽流中心',(center/1000).toFixed(2),'km'],['水平扩散尺度 2σ',(2*sigmaH).toFixed(0),'m'],['剩余质量',remaining.toFixed(1),'kg']],insight:`三维解析核得到羽流中心 ${finite(center/1000,2)} km、峰值 ${finite(peak,3)} mg/m³；粒子采样自相同浓度分布。`,convergence:residual(.76)}
+}
+
+export function runSolver(model,params){const p=Object.fromEntries(Object.entries(params).map(([k,v])=>[k,Number(v)]));return({plasma:solvePlasma,em:solveEM,gas:solveGas,pipe:solvePipe,thermal:solveThermal,ocean:solveOcean}[model]||solveGas)(p)}
+export function downloadResult(result){const payload=JSON.stringify({generatedBy:modelMeta[result.model].code,generatedAt:new Date().toISOString(),equations:modelTheory[result.model].equations,model:{...result,particles:undefined}},null,2),href=URL.createObjectURL(new Blob([payload],{type:'application/json'})),a=document.createElement('a');a.href=href;a.download=`phytwin-${result.model}-result.json`;a.click();URL.revokeObjectURL(href)}

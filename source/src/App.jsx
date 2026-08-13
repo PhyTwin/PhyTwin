@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { ArrowRight, BookOpen, Braces, Calculator, Check, ChevronRight, Code2, Download, ExternalLink, Gauge, Grid3X3, Mail, Menu, Pause, Play, RotateCcw, Save, Sigma, Waves, X } from 'lucide-react'
+import { ArrowRight, Atom, BookOpen, Boxes, Braces, Calculator, Check, ChevronRight, Code2, Download, ExternalLink, Gauge, Grid3X3, Layers3, Mail, Menu, Pause, Play, RotateCcw, Save, Sigma, Waves, X } from 'lucide-react'
 import { capabilities, cases, validations } from './data'
 import { downloadResult, modelMeta, presets, runSolver } from './lib/solver'
 
@@ -108,11 +108,11 @@ function Capabilities() {
 
 const parameterSchema = {
   plasma: [['majorRadius','大半径 R₀','m'],['minorRadius','小半径 a','m'],['plasmaCurrent','等离子体电流','MA'],['toroidalField','环向磁场','T'],['elongation','拉长比 κ','—']],
-  motor: [['frequency','电源频率','Hz'],['polePairs','极对数','p'],['voltage','线电压','V'],['slip','转差率','—'],['radius','转子半径','m']],
-  gas: [['speed','来流速度','m/s'],['density','气体密度','kg/m³'],['radius','圆柱半径','m'],['viscosity','动力黏度','Pa·s'],['angle','攻角','deg']],
+  em: [['turns','线圈匝数 N','turn'],['current','直流电流 I','A'],['radius','线圈半径 a','m'],['length','绕组长度 L','m'],['conductor','导线直径 dc','m']],
+  gas: [['speed','自由来流 U∞','m/s'],['density','气体密度 ρ','kg/m³'],['radius','圆柱半径 a','m'],['viscosity','动力黏度 μ','Pa·s'],['angle','来流偏角 α','deg'],['span','展向长度 W','m']],
   pipe: [['velocity','平均流速','m/s'],['diameter','管径','m'],['density','液体密度','kg/m³'],['viscosity','动力黏度','Pa·s'],['roughness','绝对粗糙度','m'],['length','管长','m']],
-  thermal: [['width','板宽','m'],['height','板高','m'],['hot','热端温度','K'],['cold','冷端温度','K'],['conductivity','导热系数','W/mK'],['source','体热源','W/m³']],
-  ocean: [['current','海流速度','m/s'],['diffusivity','扩散系数','m²/s'],['mass','释放质量','kg'],['decay','衰减率','s⁻¹'],['time','计算时间','s']],
+  thermal: [['length','实体长度 L','m'],['width','实体宽度 W','m'],['height','实体高度 H','m'],['cold','边界温度 Tc','K'],['conductivity','导热系数 k','W/(m·K)'],['source','体热源 q̇','W/m³']],
+  ocean: [['current','海流速度 U','m/s'],['diffusivity','水平扩散 Kh','m²/s'],['verticalDiffusivity','垂向扩散 Kv','m²/s'],['mass','释放质量 M','kg'],['decay','衰减率 λ','s⁻¹'],['time','计算时间 t','s'],['depth','水深 H','m']],
 }
 
 function ResultPlot({ result, tab }) {
@@ -143,7 +143,7 @@ function Simulator({ embedded = false }) {
       <aside className="parameter-panel">
         <div className="panel-head"><span>01</span><div><b>模型与参数</b><small>INPUT DEFINITION</small></div></div>
         <label className="field-label">求解模型</label>
-        <div className="model-select multiphysics-select">{Object.entries(modelMeta).map(([key,m])=><button key={key} className={model===key?'active':''} onClick={()=>changeModel(key)}>{({plasma:'托卡马克',motor:'电机',gas:'气体',pipe:'管流',thermal:'热传输',ocean:'海洋传质'})[key]}<small>{m.name}</small></button>)}</div>
+        <div className="model-select multiphysics-select">{Object.entries(modelMeta).map(([key,m])=><button key={key} className={model===key?'active':''} onClick={()=>changeModel(key)}>{({plasma:'PhyTwin Plasma',em:'PhyTwin EM',gas:'PhyTwin Gas',pipe:'PhyTwin Liquid',thermal:'PhyTwin Heat',ocean:'PhyTwin Transport'})[key]}<small>{m.name}</small></button>)}</div>
         <div className="parameter-fields">{parameterSchema[model].map(([key,label,unit])=><label key={key}><span>{label}<em>{unit}</em></span><input type="number" step="any" value={params[key]} onChange={e=>setParams({...params,[key]:e.target.value})}/></label>)}</div>
         {error && <div className="error-message">{error}</div>}
         <button className="run-button" onClick={run} disabled={running}>{running?<><Pause size={17}/>计算中 {progress}%</>:<><Play size={17} fill="currentColor"/>运行仿真</>}</button>
@@ -168,6 +168,56 @@ function Projects() {
 
 const resourceGroups = [
   {
+    key: 'PHYTWIN / LIVE', title: 'PhyTwin 在线物理模块', description: '统一命名、统一数据链：连续场方程求解，三维粒子示踪，二维科研后处理。',
+    items: [
+      { name:'PhyTwin Plasma',subtitle:'托卡马克轴对称磁约束',url:'/lab',icon:Atom,featured:true,tags:['MHD 基准','托卡马克','3D'],text:'计算 Bφ、Bθ 与安全因子 q，并将同一磁场解用于环形三维粒子示踪和二维极向截面。' },
+      { name:'PhyTwin EM',subtitle:'静态多匝线圈电磁场',url:'/lab',icon:Layers3,featured:true,tags:['Biot–Savart','静磁场','3D'],text:'逐匝执行 Biot–Savart 线积分，输出轴线磁场、空间场强、磁矩、电感与储磁能。' },
+      { name:'PhyTwin Gas',subtitle:'不可压势流解析基准',url:'/lab',icon:Waves,tags:['Continuum','Potential Flow','3D'],text:'圆柱绕流闭式解满足连续方程和无穿透边界，粒子仅沿计算速度场显示轨迹。' },
+      { name:'PhyTwin Liquid',subtitle:'Hagen–Poiseuille 管流',url:'/lab',icon:Waves,tags:['Navier–Stokes','层流','3D'],text:'在 Re<2300 适用域内计算充分发展速度剖面、压降与流量，二维和三维结果严格共源。' },
+      { name:'PhyTwin Heat',subtitle:'三维稳态热传导',url:'/lab',icon:Boxes,tags:['Poisson','有限差分','3D'],text:'对带中心体热源的长方体求解三维温度场，展示真实长宽高及中截面温度云图。' },
+      { name:'PhyTwin Transport',subtitle:'三维海洋污染物扩散',url:'/lab',icon:Waves,tags:['对流–扩散','Green 函数','3D'],text:'计算水平与垂向扩散、一阶衰减和均匀海流输运，用同一浓度核生成粒子示踪。' },
+    ],
+  },
+  {
+    key: 'FUSION / MHD', title: '聚变与等离子体仿真代码', description: '按平衡、宏观 MHD、边缘输运与回旋动理学组织的聚变计算入口。',
+    items: [
+      {name:'Fusion Hub',subtitle:'聚变代码与装置导航器',url:'https://hub.veloalpha.cn/hub/?type=codes',icon:Atom,featured:true,tags:['代码目录','装置','论文'],text:'浏览聚变代码、装置、机构和文献，并查看逐项来源与物理模型说明。'},
+      {name:'Tokamak 3D',subtitle:'交互式托卡马克部件模型',url:'https://hub.veloalpha.cn/tokamak-3d/index.html',icon:Atom,tags:['ITER 几何','部件','3D'],text:'用于理解真空室、环向场线圈和中心螺线管等装置几何；PhyTwin 计算结果由本站求解器独立生成。'},
+      {name:'M3D-C1',subtitle:'三维扩展 MHD',url:'https://m3dc1.pppl.gov/',icon:Code2,tags:['Extended MHD','C¹ FEM','PPPL'],text:'面向平衡、稳定性、ELM、破裂与 VDE 的扩展 MHD 研究代码。'},
+      {name:'NIMROD',subtitle:'三维扩展磁流体',url:'https://nimrodteam.org/',icon:Code2,tags:['Spectral FEM','MHD','3D'],text:'采用二维谱有限元、第三维 Fourier 展开和隐式时间离散求解扩展 MHD。'},
+      {name:'JOREK',subtitle:'非线性扩展 MHD',url:'https://www.jorek.eu/',icon:Code2,tags:['Tokamak','ELM','Nonlinear'],text:'面向真实 X-point 托卡马克几何的大规模非线性扩展 MHD。'},
+      {name:'BOUT++',subtitle:'等离子体流体模拟框架',url:'https://boutproject.github.io/',icon:Code2,tags:['Edge plasma','PDE','Open source'],text:'用于等离子体边缘和磁场对齐坐标中的流体方程数值研究。'},
+      {name:'VMEC / STELLOPT',subtitle:'三维平衡与优化',url:'https://princetonuniversity.github.io/STELLOPT/',icon:Code2,tags:['Stellarator','Equilibrium','Optimization'],text:'VMEC 求三维 MHD 平衡，STELLOPT 面向仿星器形状和物理目标优化。'},
+      {name:'XGC',subtitle:'边缘回旋动理学 PIC',url:'https://www.pppl.gov/research/theory/codes',icon:Code2,tags:['Gyrokinetic','PIC','Edge'],text:'用于磁约束聚变等离子体边缘区域的回旋动理学粒子模拟。'},
+    ],
+  },
+  {
+    key: 'CFD / MULTIPHYSICS', title: '连续介质与多物理场代码', description: '覆盖流体、传热、结构、电磁、多物理耦合和粒子系统的开源工程计算生态。',
+    items: [
+      {name:'OpenFOAM',subtitle:'通用有限体积 CFD',url:'https://openfoam.org/',icon:Waves,featured:true,tags:['FVM','CFD','Multiphysics'],text:'不可压/可压流、多相、传热、反应和定制方程的开源连续介质工具箱。'},
+      {name:'SU2',subtitle:'CFD 与伴随优化',url:'https://su2code.github.io/',icon:Waves,tags:['CFD','Adjoint','Optimization'],text:'面向高保真流动、PDE 约束优化、网格自适应和离散伴随。'},
+      {name:'FEniCSx',subtitle:'自动化有限元 PDE',url:'https://fenicsproject.org/',icon:Code2,tags:['FEM','PDE','Python'],text:'以变分形式表达和求解偏微分方程，适合快速构建自定义多物理场模型。'},
+      {name:'Elmer FEM',subtitle:'多物理场有限元',url:'https://www.elmerfem.org/',icon:Boxes,tags:['FEM','Heat','Electromagnetics'],text:'支持流体、传热、电磁、结构与耦合场的开源有限元求解。'},
+      {name:'MOOSE',subtitle:'多物理场有限元框架',url:'https://mooseframework.inl.gov/',icon:Boxes,tags:['FEM','Coupling','HPC'],text:'面向强耦合多物理场、非线性求解和可扩展高性能计算。'},
+      {name:'MFEM',subtitle:'高阶有限元库',url:'https://mfem.org/',icon:Code2,tags:['High-order FEM','GPU','HPC'],text:'用于高阶、并行和 GPU 加速有限元算法开发。'},
+      {name:'deal.II',subtitle:'自适应有限元库',url:'https://www.dealii.org/',icon:Code2,tags:['Adaptive FEM','C++','HPC'],text:'提供成熟的自适应网格、并行线性代数和有限元开发基础。'},
+      {name:'CalculiX',subtitle:'结构与热有限元',url:'https://www.calculix.de/',icon:Boxes,tags:['Structure','Thermal','FEM'],text:'面向线性/非线性结构、接触和热分析的开源有限元求解器。'},
+      {name:'Code_Aster',subtitle:'通用结构有限元',url:'https://www.code-aster.org/',icon:Boxes,tags:['Structure','Dynamics','Thermomechanics'],text:'覆盖结构静力、动力、断裂和热力耦合的工程级开源有限元。'},
+      {name:'LAMMPS',subtitle:'粒子与分子动力学',url:'https://www.lammps.org/',icon:Code2,tags:['MD','Particles','HPC'],text:'适用于原子、分子、颗粒和粗粒化体系的二维/三维粒子模拟。'},
+      {name:'DualSPHysics',subtitle:'光滑粒子流体动力学',url:'https://dual.sphysics.org/',icon:Waves,tags:['SPH','Free surface','GPU'],text:'面向自由液面、波浪与流固相互作用的粒子法流体计算。'},
+    ],
+  },
+  {
+    key: 'MESH / POST', title: '几何、网格与科研后处理', description: '建立可复现网格、检查计算域并生成可发表的二维和三维结果。',
+    items: [
+      {name:'Gmsh',subtitle:'三维有限元网格生成',url:'https://gmsh.info/',icon:Grid3X3,featured:true,tags:['Mesh','CAD','High order'],text:'脚本化几何、网格划分和基础后处理，适合建立可复现网格流程。'},
+      {name:'SALOME',subtitle:'数值仿真集成平台',url:'https://www.salome-platform.org/',icon:Boxes,tags:['CAD','Mesh','Integration'],text:'提供几何、网格、求解器集成和 ParaVis 后处理工作流。'},
+      {name:'ParaView',subtitle:'科学数据分析与可视化',url:'https://www.paraview.org/',icon:Layers3,tags:['Post-processing','VTK','HPC'],text:'开源多平台后处理引擎，可处理从工作站到超算的大规模科学数据。'},
+      {name:'VisIt',subtitle:'并行科学可视化',url:'https://visit-dav.github.io/visit-website/',icon:Layers3,tags:['Visualization','Parallel','HPC'],text:'面向大规模网格与多变量场的交互式并行可视化。'},
+      {name:'PyVista',subtitle:'Python 三维网格分析',url:'https://pyvista.org/',icon:Code2,tags:['Python','VTK','3D'],text:'用 Python 处理和绘制 VTK 网格、等值面、切片和矢量场。'},
+    ],
+  },
+  {
     key: 'ODE / PDE', title: '微分方程求解', description: '从符号解、数值积分到浏览器端偏微分方程交互，覆盖建模、验证和教学演示。',
     items: [
       { name: 'VisualPDE', subtitle: '浏览器端 PDE 交互仿真', url: 'https://visualpde.com/', icon: Waves, featured: true, tags: ['PDE', '实时可视化', '无需安装'], text: '直接创建、修改并观察一维或二维偏微分方程的时空演化，适合快速探索反应扩散、波动与输运问题。' },
@@ -188,17 +238,21 @@ const resourceGroups = [
 
 function Resources() {
   useDocumentTitle('资源链接')
+  const [query,setQuery]=useState('');const [category,setCategory]=useState('ALL')
+  const visibleGroups=resourceGroups.map(group=>({...group,items:group.items.filter(item=>(category==='ALL'||group.key===category)&&`${item.name} ${item.subtitle} ${item.text} ${item.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase()))})).filter(group=>group.items.length)
   return <div className="resources-page">
     <section className="resource-hero section-shell">
-      <div><Eyebrow>ENGINEERING TOOLKIT</Eyebrow><h1>把可靠的数学工具，<br/>放进同一个入口。</h1><p>面向建模、推导与数值验证精选的在线资源。无需安装软件，即开即用；外部工具会在新标签页打开。</p></div>
+      <div><Eyebrow>ENGINEERING CODE HUB</Eyebrow><h1>把可信的仿真代码，<br/>放进同一个入口。</h1><p>按照 PhyTwin 模块、聚变 MHD、连续介质、多物理场、网格后处理和在线数学工具组织。每个入口写清用途、方法和官方链接。</p></div>
       <div className="resource-hero-orbit" aria-hidden="true"><span>∂u/∂t</span><span>∇²u</span><span>dy/dx</span><i /></div>
     </section>
+    <section className="section-shell resource-search"><label><span>SEARCH CODES</span><input type="search" placeholder="搜索 OpenFOAM、MHD、FEM、传热…" value={query} onChange={event=>setQuery(event.target.value)}/></label><div>{['ALL',...resourceGroups.map(group=>group.key)].map(key=><button key={key} className={category===key?'active':''} onClick={()=>setCategory(key)}>{key}</button>)}</div></section>
     <section className="section-shell resource-directory">
-      {resourceGroups.map((group) => <div className="resource-group" key={group.key}>
+      {visibleGroups.map((group) => <div className="resource-group" key={group.key}>
         <header><span>{group.key}</span><div><h2>{group.title}</h2><p>{group.description}</p></div></header>
         <div className="resource-grid">{group.items.map((item) => {
           const Icon = item.icon
-          return <a className={`resource-card${item.featured ? ' featured' : ''}`} href={item.url} target="_blank" rel="noreferrer" key={item.name}>
+          const internal=item.url.startsWith('/')
+          return <a className={`resource-card${item.featured ? ' featured' : ''}`} href={item.url} target={internal?undefined:'_blank'} rel={internal?undefined:'noreferrer'} key={item.name}>
             <div className="resource-card-top"><span className="resource-icon"><Icon size={21}/></span>{item.featured && <em>推荐</em>}<ExternalLink size={16}/></div>
             <small>{item.subtitle}</small><h3>{item.name}</h3><p>{item.text}</p>
             <div className="resource-tags">{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
@@ -215,5 +269,5 @@ function Resources() {
 }
 
 export default function App() {
-  return <Shell><Routes><Route path="/" element={<Home/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<><Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense><Simulator embedded/></>}/><Route path="/simulate" element={<Navigate to="/lab#solver-workbench" replace/>}/><Route path="/projects" element={<Projects/>}/><Route path="/resources" element={<Resources/>}/><Route path="/about" element={<Navigate to="/" replace/>}/><Route path="*" element={<Home/>}/></Routes></Shell>
+  return <Shell><Routes><Route path="/" element={<Home/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense>}/><Route path="/simulate" element={<Navigate to="/lab" replace/>}/><Route path="/projects" element={<Projects/>}/><Route path="/resources" element={<Resources/>}/><Route path="/about" element={<Navigate to="/" replace/>}/><Route path="*" element={<Home/>}/></Routes></Shell>
 }

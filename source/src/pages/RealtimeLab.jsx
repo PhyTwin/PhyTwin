@@ -76,7 +76,7 @@ export default function RealtimeLab() {
   return <section className="realtime-lab-page">
     <div className="lab-intro section-shell">
       <div><div className="lab-eyebrow"><span className="pulse-dot"/>PHYTWIN REALTIME LAB / 60 FPS</div><h1>把物理场放进浏览器里。</h1><p>拖动参数即可观察流场与热羽流的瞬态响应；无需安装求解器，所有更新都在当前设备上实时计算与渲染。</p></div>
-      <div className="lab-intro-note"><Sparkles size={18}/><span><b>面试官快捷体验</b>两个模型均已预载稳定工况，打开即运行。</span></div>
+      <div className="lab-intro-note"><Sparkles size={18}/><span><b>客户快捷体验</b>两个模型均已预载稳定工况，打开即可调整参数并观察响应。</span></div>
     </div>
 
     <div className="lab-shell">

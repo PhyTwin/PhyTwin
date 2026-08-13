@@ -1,5 +1,5 @@
 // PhyTwin 浏览器端轻量 CAE 求解器。
-// 线上演示以确定性解析/数值离散为主，保证面试官无需安装任何软件即可复现实验。
+// 线上演示以确定性解析/数值离散为主，保证客户无需安装任何软件即可复现实验。
 
 const linspace = (start, end, count) => Array.from({ length: count }, (_, i) => start + (end - start) * i / (count - 1))
 

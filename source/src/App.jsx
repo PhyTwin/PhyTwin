@@ -107,24 +107,26 @@ function Capabilities() {
 }
 
 const parameterSchema = {
-  beam: [['length','梁长','m'],['width','截面宽','m'],['height','截面高','m'],['load','端部载荷','N'],['young','弹性模量','GPa'],['poisson','泊松比','—']],
+  plasma: [['majorRadius','大半径 R₀','m'],['minorRadius','小半径 a','m'],['plasmaCurrent','等离子体电流','MA'],['toroidalField','环向磁场','T'],['elongation','拉长比 κ','—']],
+  motor: [['frequency','电源频率','Hz'],['polePairs','极对数','p'],['voltage','线电压','V'],['slip','转差率','—'],['radius','转子半径','m']],
+  gas: [['speed','来流速度','m/s'],['density','气体密度','kg/m³'],['radius','圆柱半径','m'],['viscosity','动力黏度','Pa·s'],['angle','攻角','deg']],
+  pipe: [['velocity','平均流速','m/s'],['diameter','管径','m'],['density','液体密度','kg/m³'],['viscosity','动力黏度','Pa·s'],['roughness','绝对粗糙度','m'],['length','管长','m']],
   thermal: [['width','板宽','m'],['height','板高','m'],['hot','热端温度','K'],['cold','冷端温度','K'],['conductivity','导热系数','W/mK'],['source','体热源','W/m³']],
-  flow: [['speed','来流速度','m/s'],['density','流体密度','kg/m³'],['radius','圆柱半径','m'],['viscosity','动力黏度','Pa·s'],['angle','攻角','deg']],
+  ocean: [['current','海流速度','m/s'],['diffusivity','扩散系数','m²/s'],['mass','释放质量','kg'],['decay','衰减率','s⁻¹'],['time','计算时间','s']],
 }
 
 function ResultPlot({ result, tab }) {
   if (!result) return null
-  const isFlow = result.model === 'flow'
   const title = modelMeta[result.model]
-  if (tab === 'curve') return <Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{ x: result.curveX, y: result.curveY, type: 'scatter', mode: 'lines', line: { color: '#3157d5', width: 2.5 }, fill: result.model === 'beam' ? 'tozeroy' : 'none', fillcolor: 'rgba(49,87,213,.08)', name: result.model === 'beam' ? '位移' : result.model === 'thermal' ? '中心线温度' : '压力系数 Cp' }]} layout={{ ...baseLayout, title: { text: result.model === 'beam' ? '沿梁轴向位移' : result.model === 'thermal' ? '中心线温度剖面' : '圆柱表面压力系数', x: .02, font: { size: 13 } }, xaxis: { title: result.model === 'flow' ? '周向角 θ (°)' : 'x (m)', gridcolor: '#e6e8e3', zeroline: false }, yaxis: { title: result.model === 'beam' ? '位移 (mm)' : result.model === 'thermal' ? '温度 (K)' : 'Cp (—)', gridcolor: '#e6e8e3', zerolinecolor: '#adb3aa' }, height: 420, showlegend: false }} config={plotConfig} style={{ width:'100%' }} /></Suspense>
+  if (tab === 'curve') return <Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{ x:result.curveX,y:result.curveY,type:'scatter',mode:'lines',line:{color:'#55d6ff',width:2.5},fill:'tozeroy',fillcolor:'rgba(85,214,255,.08)',name:result.curveTitle }]} layout={{...baseLayout,title:{text:result.curveTitle,x:.02,font:{size:13}},xaxis:{title:result.curveXTitle,gridcolor:'#1d3447',zeroline:false},yaxis:{title:result.curveYTitle,gridcolor:'#1d3447',zerolinecolor:'#526a7b'},height:420,showlegend:false}} config={plotConfig} style={{width:'100%'}} /></Suspense>
   if (tab === 'residual') return <Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{ x: result.convergence.map((_,i)=>i+1), y: result.convergence, type:'scatter', mode:'lines+markers', line:{color:'#16a6a1',width:2}, marker:{size:4}, name:'L₂ residual' }]} layout={{...baseLayout,title:{text:'迭代收敛历史',x:.02,font:{size:13}},xaxis:{title:'Iteration',gridcolor:'#e6e8e3'},yaxis:{title:'L₂ residual',type:'log',gridcolor:'#e6e8e3'},height:420,showlegend:false}} config={plotConfig} style={{width:'100%'}} /></Suspense>
-  return <Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{ x: result.x, y: result.y, z: result.z, type: 'heatmap', connectgaps: false, colorscale: result.model==='thermal' ? [[0,'#293480'],[.25,'#2c7bb6'],[.5,'#70cdb5'],[.72,'#f4d35e'],[1,'#d94841']] : [[0,'#213b67'],[.28,'#2e77b5'],[.55,'#79c9b8'],[.78,'#f5c761'],[1,'#dc4b46']], colorbar:{title:{text:`${title.unit}`},thickness:12,outlinewidth:0}, hovertemplate: isFlow?'x=%{x:.3f} m<br>y=%{y:.3f} m<br>U=%{z:.2f} m/s<extra></extra>':'x=%{x:.3f} m<br>y=%{y:.3f} m<br>value=%{z:.2f}<extra></extra>' }]} layout={{...baseLayout,title:{text:`${title.name} · ${title.legend}`,x:.02,font:{size:13}},xaxis:{title:'x (m)',scaleanchor:'y',gridcolor:'#e6e8e3'},yaxis:{title:'y (m)',gridcolor:'#e6e8e3'},height:420}} config={plotConfig} style={{width:'100%'}} /></Suspense>
+  return <Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{x:result.x,y:result.y,z:result.z,type:'heatmap',connectgaps:false,colorscale:result.model==='plasma'?[[0,'#1a1747'],[.35,'#4732a8'],[.7,'#2dd4d7'],[1,'#ffe8aa']]:result.model==='ocean'?[[0,'#071828'],[.25,'#124a7c'],[.55,'#20a3a5'],[.8,'#e2cc61'],[1,'#e95b4d']]:[[0,'#173b57'],[.35,'#168d9c'],[.72,'#b7d578'],[1,'#f2c14e']],colorbar:{title:{text:title.unit},thickness:12,outlinewidth:0},hovertemplate:'x=%{x:.3f}<br>y=%{y:.3f}<br>value=%{z:.3g}<extra></extra>'}]} layout={{...baseLayout,title:{text:`${title.name} · ${title.legend}`,x:.02,font:{size:13}},xaxis:{title:result.model==='ocean'?'x (km)':'x (m)',scaleanchor:'y',gridcolor:'#1d3447'},yaxis:{title:result.model==='ocean'?'y (km)':'y (m)',gridcolor:'#1d3447'},height:420}} config={plotConfig} style={{width:'100%'}} /></Suspense>
 }
 
 function Simulator({ embedded = false }) {
   useDocumentTitle(embedded ? '实时实验室' : '在线实时仿真')
-  const [model, setModel] = useState('beam'); const [params, setParams] = useState(presets.beam)
-  const [result, setResult] = useState(() => runSolver('beam', presets.beam)); const [running, setRunning] = useState(false)
+  const [model, setModel] = useState('plasma'); const [params, setParams] = useState(presets.plasma)
+  const [result, setResult] = useState(() => runSolver('plasma', presets.plasma)); const [running, setRunning] = useState(false)
   const [progress, setProgress] = useState(100); const [error, setError] = useState(''); const [tab, setTab] = useState('field')
   const [logs, setLogs] = useState(['载入默认模型与参数','基准解已就绪']); const [saved, setSaved] = useState(false)
   function changeModel(next) { setModel(next); setParams(presets[next]); setResult(runSolver(next,presets[next])); setLogs(['切换求解模型',`${modelMeta[next].method} 已就绪`]); setProgress(100); setError('') }
@@ -141,7 +143,7 @@ function Simulator({ embedded = false }) {
       <aside className="parameter-panel">
         <div className="panel-head"><span>01</span><div><b>模型与参数</b><small>INPUT DEFINITION</small></div></div>
         <label className="field-label">求解模型</label>
-        <div className="model-select">{Object.entries(modelMeta).map(([key,m])=><button key={key} className={model===key?'active':''} onClick={()=>changeModel(key)}>{key==='beam'?'结构':key==='thermal'?'热传导':'流体'}<small>{m.name}</small></button>)}</div>
+        <div className="model-select multiphysics-select">{Object.entries(modelMeta).map(([key,m])=><button key={key} className={model===key?'active':''} onClick={()=>changeModel(key)}>{({plasma:'托卡马克',motor:'电机',gas:'气体',pipe:'管流',thermal:'热传输',ocean:'海洋传质'})[key]}<small>{m.name}</small></button>)}</div>
         <div className="parameter-fields">{parameterSchema[model].map(([key,label,unit])=><label key={key}><span>{label}<em>{unit}</em></span><input type="number" step="any" value={params[key]} onChange={e=>setParams({...params,[key]:e.target.value})}/></label>)}</div>
         {error && <div className="error-message">{error}</div>}
         <button className="run-button" onClick={run} disabled={running}>{running?<><Pause size={17}/>计算中 {progress}%</>:<><Play size={17} fill="currentColor"/>运行仿真</>}</button>

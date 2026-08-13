@@ -3,161 +3,78 @@ import { Activity, Atom, ChevronRight, Droplets, Flame, Gauge, Info, Magnet, Mou
 import WindTunnelCanvas from '../components/WindTunnelCanvas'
 
 const ThermalPlume3D = lazy(() => import('../components/ThermalPlume3D'))
+const MU0 = 4 * Math.PI * 1e-7
 
-const windDefaults = { airfoil: '2412', speed: 42, angle: 6, chord: 1.2, density: 1.225, turbulence: .28 }
-const plumeDefaults = { heat: 620, buoyancy: 1.2, turbulence: .68, wind: .25 }
-const fieldDefaults = { plasma:{drive:62,diffusion:.36,coupling:.72}, em:{drive:48,diffusion:.22,coupling:.64}, liquid:{drive:55,diffusion:.42,coupling:.58}, mass:{drive:46,diffusion:.55,coupling:.68} }
+const defaults = {
+  plasma:{majorRadius:6.2,minorRadius:2,plasmaCurrent:15,toroidalField:5.3,elongation:1.7},
+  motor:{frequency:50,polePairs:2,voltage:400,slip:.03,radius:.12},
+  gas:{airfoil:'2412',speed:42,angle:6,chord:1.2,density:1.225,turbulence:.28},
+  pipe:{velocity:1.8,diameter:.08,viscosity:.001,roughness:.000015,length:12},
+  thermal:{heat:620,buoyancy:1.2,turbulence:.68,wind:.25},
+  ocean:{current:.35,diffusivity:4,mass:800,decay:.00003},
+}
+
 const modes = {
-  plasma:{label:'等离子体',short:'PLASMA',icon:Atom,method:'漂移扩散 + 泊松耦合',note:'实时场用于观察电离源、扩散和电势耦合的趋势；工程求解需进一步引入反应截面、鞘层网格与能量方程。'},
-  em:{label:'电磁场',short:'E / B FIELD',icon:Magnet,method:'Maxwell 场线代理模型',note:'显示激励频率、材料扩散和耦合强度对场线及损耗区的影响；高频工程问题需使用全波有限元或时域方法。'},
-  gas:{label:'气体计算',short:'GAS FLOW',icon:Wind,method:'薄翼理论 + 势流粒子对流',note:'用于快速观察翼型、攻角和来流参数的趋势。升阻力来自修正薄翼理论，粒子场用于交互演示；不替代 RANS / LES。'},
-  liquid:{label:'液体计算',short:'LIQUID',icon:Droplets,method:'不可压缩涡量输运代理',note:'展示驱动、黏性扩散和界面耦合对液体涡结构的影响；工程应用需进一步求解压力泊松方程与自由液面。'},
-  thermal:{label:'热传输',short:'HEAT',icon:Flame,method:'浮力粒子输运 + 湍动扰动',note:'用于演示浮力、热衰减、湍动与横向来流对羽流形态的影响，不替代辐射、相变或燃烧耦合 CFD。'},
-  mass:{label:'传质计算',short:'MASS',icon:TestTubes,method:'对流扩散反应代理模型',note:'展示 Peclet、扩散和反应耦合对浓度羽流的影响；工程计算需进一步标定多组分物性和反应动力学。'},
+  plasma:{label:'托卡马克',short:'TOKAMAK',icon:Atom,method:'轴对称磁平衡降阶模型',note:'依据 Bφ=B₀R₀/R、安培环路定律和椭圆等磁通面实时计算。用于磁约束趋势探索；不替代含输运、加热和不稳定性的 Grad–Shafranov / MHD 高保真求解。'},
+  motor:{label:'旋转电机',short:'3-PHASE MOTOR',icon:Magnet,method:'三相旋转磁场 + 感应转差模型',note:'三相电流合成旋转磁场，转速由 nₛ=60f/p 和转差率计算，转矩使用 Kloss 型降阶关系；不替代槽型、谐波和端部效应的瞬态电磁有限元。'},
+  gas:{label:'气体计算',short:'GAS FLOW',icon:Wind,method:'薄翼理论 + 势流粒子对流',note:'实时求解翼型势流与薄翼升力趋势；用于参数敏感性与流动物理演示，不替代带可压缩性和湍流闭合的 RANS / LES。'},
+  pipe:{label:'液体管流',short:'PIPE FLOW',icon:Droplets,method:'Navier–Stokes 充分发展管流',note:'根据 Reynolds 数自动使用层流解析剖面或湍流幂律剖面，并由 Darcy–Weisbach 计算沿程压降；不包含弯头、入口和空化效应。'},
+  thermal:{label:'热传输',short:'HEAT',icon:Flame,method:'浮力粒子输运 + 湍动扰动',note:'实时计算浮力、热衰减、湍动与横向来流对羽流的影响；不替代辐射、相变或燃烧化学耦合 CFD。'},
+  ocean:{label:'海洋传质',short:'OCEAN DISPERSION',icon:TestTubes,method:'二维对流–扩散–衰减解析核',note:'实时计算瞬时点源在均匀海流中的高斯对流扩散与一阶衰减；用于应急范围估算，不替代真实海岸线、潮汐和分层湍流业务模型。'},
 }
 
-function RangeField({ label, value, min, max, step, unit, onChange }) {
-  const progress = (Number(value) - min) / (max - min) * 100
-  return <label className="lab-range">
-    <span><b>{label}</b><output>{Number(value).toFixed(step < .1 ? 2 : step < 1 ? 1 : 0)} <small>{unit}</small></output></span>
-    <input type="range" value={value} min={min} max={max} step={step} onChange={(event) => onChange(Number(event.target.value))} style={{ '--range-progress': `${progress}%` }}/>
-  </label>
+function RangeField({label,value,min,max,step,unit,onChange}) {
+  const progress=(Number(value)-min)/(max-min)*100
+  return <label className="lab-range"><span><b>{label}</b><output>{Number(value).toFixed(step<.01?4:step<.1?2:step<1?1:0)} <small>{unit}</small></output></span><input type="range" value={value} min={min} max={max} step={step} onChange={e=>onChange(Number(e.target.value))} style={{'--range-progress':`${progress}%`}}/></label>
+}
+function Metric({label,value,unit,accent}) { return <div className={accent?'lab-metric accent':'lab-metric'}><span>{label}</span><strong>{value}</strong><small>{unit}</small></div> }
+
+function Controls({mode,params,setParams}) {
+  const set=key=>value=>setParams(current=>({...current,[key]:value}))
+  if(mode==='gas') return <><div className="lab-control-group"><span className="lab-control-label">翼型截面</span><div className="airfoil-presets">{['0012','2412','4412'].map(code=><button key={code} className={params.airfoil===code?'active':''} onClick={()=>set('airfoil')(code)}>NACA {code}</button>)}</div></div><div className="lab-control-group range-stack"><RangeField label="自由来流" value={params.speed} min={10} max={90} step={1} unit="m/s" onChange={set('speed')}/><RangeField label="攻角 α" value={params.angle} min={-8} max={18} step={.5} unit="deg" onChange={set('angle')}/><RangeField label="弦长" value={params.chord} min={.4} max={2.5} step={.1} unit="m" onChange={set('chord')}/><RangeField label="湍动强度" value={params.turbulence} min={0} max={1} step={.01} unit="I" onChange={set('turbulence')}/></div></>
+  const fields={
+    plasma:[['majorRadius','大半径 R₀',3,9,.1,'m'],['minorRadius','小半径 a',.8,3,.1,'m'],['plasmaCurrent','等离子体电流',2,22,.5,'MA'],['toroidalField','环向磁场',1,9,.1,'T'],['elongation','拉长比 κ',1,2.2,.05,'—']],
+    motor:[['frequency','电源频率',20,100,1,'Hz'],['polePairs','极对数',1,4,1,'p'],['voltage','线电压',110,690,10,'V'],['slip','转差率',.005,.15,.005,'—'],['radius','转子半径',.05,.3,.01,'m']],
+    pipe:[['velocity','平均流速',.05,5,.05,'m/s'],['diameter','管径',.01,.3,.01,'m'],['viscosity','动力黏度',.0002,.01,.0001,'Pa·s'],['roughness','绝对粗糙度',.000001,.001,.00001,'m'],['length','管长',1,60,1,'m']],
+    thermal:[['heat','温升 ΔT',120,1100,10,'K'],['buoyancy','浮力系数',.2,2.4,.05,'B'],['turbulence','湍动强度',0,1.4,.02,'I'],['wind','横向来流',0,2.5,.05,'m/s']],
+    ocean:[['current','海流速度',.02,1.2,.01,'m/s'],['diffusivity','水平扩散系数',.2,20,.2,'m²/s'],['mass','瞬时释放质量',50,3000,50,'kg'],['decay','一阶衰减率',0,.0002,.00001,'s⁻¹']],
+  }
+  return <div className="lab-control-group range-stack plume-ranges">{fields[mode].map(([key,label,min,max,step,unit])=><RangeField key={key} label={label} value={params[key]} min={min} max={max} step={step} unit={unit} onChange={set(key)}/>)}</div>
 }
 
-function Metric({ label, value, unit, accent }) {
-  return <div className={accent ? 'lab-metric accent' : 'lab-metric'}><span>{label}</span><strong>{value}</strong><small>{unit}</small></div>
+function frictionFactor(Re,relativeRoughness) { return Re<2300?64/Re:.25/(Math.log10(relativeRoughness/3.7+5.74/Re**.9)**2) }
+function computeMetrics(mode,p) {
+  if(mode==='plasma') { const a=p.minorRadius,R=p.majorRadius,Ip=p.plasmaCurrent*1e6,Bp=MU0*Ip/(2*Math.PI*a),q95=2*Math.PI*a*a*p.toroidalField/(MU0*R*Ip)*p.elongation;return [['边缘安全因子 q₉₅',q95.toFixed(2),'—',true],['边缘极向磁场',Bp.toFixed(2),'T'],['等离子体体积',(2*Math.PI**2*R*a*a*p.elongation).toFixed(0),'m³'],['环向磁能密度',(p.toroidalField**2/(2*MU0)/1e6).toFixed(2),'MJ/m³']] }
+  if(mode==='motor') { const ns=60*p.frequency/p.polePairs,nr=ns*(1-p.slip),torque=1.55*(p.voltage/400)**2*(2*p.slip/.08)/(p.slip/.08+.08/p.slip);return [['同步转速',ns.toFixed(0),'rpm',true],['转子转速',nr.toFixed(0),'rpm'],['转差频率',(p.frequency*p.slip).toFixed(2),'Hz'],['归一化转矩',torque.toFixed(2),'p.u.']] }
+  if(mode==='pipe') { const rho=998,Re=rho*p.velocity*p.diameter/p.viscosity,f=frictionFactor(Re,p.roughness/p.diameter),dp=f*p.length/p.diameter*rho*p.velocity**2/2;return [['Reynolds 数',Re.toExponential(2),'—',true],['Darcy 摩阻系数',f.toFixed(4),'—'],['沿程压降',(dp/1000).toFixed(2),'kPa'],['体积流量',(p.velocity*Math.PI*p.diameter**2/4*1000).toFixed(2),'L/s']] }
+  if(mode==='ocean') { const t=7200,sigma=Math.sqrt(2*p.diffusivity*t),remaining=p.mass*Math.exp(-p.decay*t),peak=remaining/(4*Math.PI*p.diffusivity*t);return [['峰值面浓度',(peak*1e6).toFixed(2),'mg/m²',true],['羽流中心',(p.current*t/1000).toFixed(2),'km'],['扩散半径 2σ',(2*sigma).toFixed(0),'m'],['剩余质量',remaining.toFixed(1),'kg']] }
+  return null
 }
 
-function WindControls({ params, setParams }) {
-  const set = (key) => (value) => setParams((current) => ({ ...current, [key]: value }))
-  return <>
-    <div className="lab-control-group">
-      <span className="lab-control-label">翼型截面</span>
-      <div className="airfoil-presets">{['0012', '2412', '4412'].map((code) => <button key={code} className={params.airfoil === code ? 'active' : ''} onClick={() => set('airfoil')(code)}>NACA {code}</button>)}</div>
-    </div>
-    <div className="lab-control-group range-stack">
-      <RangeField label="自由来流" value={params.speed} min={10} max={90} step={1} unit="m/s" onChange={set('speed')}/>
-      <RangeField label="攻角 α" value={params.angle} min={-8} max={18} step={.5} unit="deg" onChange={set('angle')}/>
-      <RangeField label="弦长" value={params.chord} min={.4} max={2.5} step={.1} unit="m" onChange={set('chord')}/>
-      <RangeField label="湍动强度" value={params.turbulence} min={0} max={1} step={.01} unit="I" onChange={set('turbulence')}/>
-    </div>
-  </>
-}
-
-function PlumeControls({ params, setParams }) {
-  const set = (key) => (value) => setParams((current) => ({ ...current, [key]: value }))
-  return <div className="lab-control-group range-stack plume-ranges">
-    <RangeField label="温升 ΔT" value={params.heat} min={120} max={1100} step={10} unit="K" onChange={set('heat')}/>
-    <RangeField label="浮力系数" value={params.buoyancy} min={.2} max={2.4} step={.05} unit="B" onChange={set('buoyancy')}/>
-    <RangeField label="湍动强度" value={params.turbulence} min={0} max={1.4} step={.02} unit="I" onChange={set('turbulence')}/>
-    <RangeField label="横向来流" value={params.wind} min={0} max={2.5} step={.05} unit="m/s" onChange={set('wind')}/>
-  </div>
-}
-
-function GenericControls({ params, setParams, mode }) {
-  const set=(key)=>(value)=>setParams(current=>({...current,[key]:value}))
-  return <div className="lab-control-group range-stack plume-ranges">
-    <RangeField label={mode==='em'?'激励频率':'驱动强度'} value={params.drive} min={10} max={100} step={1} unit={mode==='em'?'kHz':'%'} onChange={set('drive')}/>
-    <RangeField label={mode==='liquid'?'黏性扩散':'扩散系数'} value={params.diffusion} min={.05} max={1} step={.01} unit="D" onChange={set('diffusion')}/>
-    <RangeField label={mode==='plasma'?'电势耦合':mode==='mass'?'反应耦合':'材料耦合'} value={params.coupling} min={.05} max={1.2} step={.01} unit="K" onChange={set('coupling')}/>
-  </div>
-}
-
-function ConceptFieldCanvas({ mode, params, running, resetKey }) {
+function PhysicsCanvas({mode,params,running,resetKey}) {
   const ref=useRef(null)
-  useEffect(()=>{const canvas=ref.current,ctx=canvas.getContext('2d');let frame=0,t=0
-    const draw=()=>{frame=requestAnimationFrame(draw);if(running)t+=.012;const dpr=Math.min(devicePixelRatio||1,2),rect=canvas.getBoundingClientRect(),w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(rect.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}ctx.setTransform(dpr,0,0,dpr,0,0);const W=rect.width,H=rect.height;ctx.fillStyle='#060e19';ctx.fillRect(0,0,W,H)
-      const palette=mode==='plasma'?['#7837ff','#58ddff','#ff79c9']:mode==='em'?['#4ec8ff','#a8f0ff','#ffd66b']:mode==='liquid'?['#1665b5','#4ee0d1','#d4fbff']:['#3149a8','#50d6be','#f4df70'];const bands=22
-      for(let j=0;j<bands;j++){ctx.beginPath();for(let x=0;x<=W;x+=7){const y=H*(.15+j/(bands-1)*.7)+Math.sin(x*.013+t*(.7+params.drive*.012)+j*.52)*18*params.coupling+Math.cos(x*.005-t+j)*11*params.diffusion;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.strokeStyle=palette[j%palette.length];ctx.globalAlpha=.11+(j%4)*.035;ctx.lineWidth=1.2;ctx.stroke()}
-      ctx.globalAlpha=.9;const cx=W*(.5+Math.sin(t*.35)*.08),cy=H*.5;const glow=ctx.createRadialGradient(cx,cy,2,cx,cy,Math.min(W,H)*.22);glow.addColorStop(0,palette[1]+'cc');glow.addColorStop(.35,palette[0]+'55');glow.addColorStop(1,'#00000000');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1}
-    draw();return()=>cancelAnimationFrame(frame)},[mode,params,running,resetKey])
+  useEffect(()=>{const canvas=ref.current,ctx=canvas.getContext('2d'),particles=Array.from({length:260},(_,i)=>({u:(i*.618033)%1,v:((i*37)%251)/251}));let frame=0,time=0
+    const drawTokamak=(W,H)=>{const cx=W*.5,cy=H*.5,a=Math.min(W,H)*.28,k=params.elongation;ctx.strokeStyle='#253d55';ctx.lineWidth=1;for(let i=1;i<=8;i++){const s=i/8;ctx.beginPath();ctx.ellipse(cx,cy,a*s,a*s*k*.56,0,0,Math.PI*2);ctx.stroke()}for(let i=0;i<12;i++){const th=i/12*Math.PI*2,x=cx+Math.cos(th)*a*1.28,y=cy+Math.sin(th)*a*k*.7;ctx.fillStyle=i%2?'#304764':'#50617f';ctx.fillRect(x-7,y-7,14,14)}particles.forEach((pt,i)=>{const rho=.12+.83*pt.v,th=pt.u*Math.PI*2+time*(.22+params.toroidalField*.035)/(rho+.2);const x=cx+Math.cos(th)*a*rho,y=cy+Math.sin(th)*a*rho*k*.56;ctx.fillStyle=i%5?'#70dcff':'#ff70d3';ctx.globalAlpha=.32+.55*(1-rho);ctx.fillRect(x,y,1.8,1.8)});ctx.globalAlpha=1;const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,a*.9);grad.addColorStop(0,'#d86cff99');grad.addColorStop(.45,'#447dff33');grad.addColorStop(1,'#00101a00');ctx.fillStyle=grad;ctx.beginPath();ctx.ellipse(cx,cy,a,a*k*.56,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#a9c6d8';ctx.font='10px IBM Plex Mono';ctx.fillText(`Ip ${params.plasmaCurrent.toFixed(1)} MA`,20,30);ctx.fillText(`Bφ ${params.toroidalField.toFixed(1)} T`,20,46)}
+    const drawMotor=(W,H)=>{const cx=W*.5,cy=H*.5,R=Math.min(W,H)*.34,ns=60*params.frequency/params.polePairs,nr=ns*(1-params.slip),a=time*nr/60*.17*2*Math.PI;ctx.strokeStyle='#385268';ctx.lineWidth=18;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();for(let i=0;i<12;i++){const th=i/12*Math.PI*2;ctx.strokeStyle=['#ff6f7d','#75d6ff','#ffd367'][i%3];ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx+Math.cos(th)*(R-14),cy+Math.sin(th)*(R-14));ctx.lineTo(cx+Math.cos(th)*(R+5),cy+Math.sin(th)*(R+5));ctx.stroke()}ctx.save();ctx.translate(cx,cy);ctx.rotate(a);ctx.fillStyle='#60788a';ctx.beginPath();ctx.arc(0,0,R*.56,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#d8e8f1';ctx.lineWidth=2;for(let i=0;i<6;i++){ctx.rotate(Math.PI/3);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(R*.5,0);ctx.stroke()}ctx.restore();const fieldAngle=time*params.frequency*.04*2*Math.PI;ctx.strokeStyle='#68dcff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(cx-Math.cos(fieldAngle)*R*.72,cy-Math.sin(fieldAngle)*R*.72);ctx.lineTo(cx+Math.cos(fieldAngle)*R*.72,cy+Math.sin(fieldAngle)*R*.72);ctx.stroke();ctx.fillStyle='#9eb4c4';ctx.font='10px IBM Plex Mono';ctx.fillText(`nₛ ${ns.toFixed(0)} rpm`,20,30);ctx.fillText(`nᵣ ${nr.toFixed(0)} rpm`,20,46)}
+    const drawPipe=(W,H)=>{const top=H*.28,bottom=H*.72,rho=998,Re=rho*params.velocity*params.diameter/params.viscosity,turb=Re>=2300;ctx.fillStyle='#0a2940';ctx.fillRect(0,top,W,bottom-top);ctx.strokeStyle='#67869b';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,top);ctx.lineTo(W,top);ctx.moveTo(0,bottom);ctx.lineTo(W,bottom);ctx.stroke();particles.forEach((pt,i)=>{const yn=pt.v*2-1,shape=turb?(1-Math.abs(yn))**(1/7):1-yn*yn,speed=(turb?1.12:2)*params.velocity*shape;const x=(pt.u*W+time*speed*55)%W,y=(top+bottom)/2+yn*(bottom-top)*.48;ctx.fillStyle=i%4?'#55dcff':'#b7f6ff';ctx.globalAlpha=.25+.7*shape;ctx.fillRect(x,y,2.2,2.2)});ctx.globalAlpha=1;ctx.fillStyle='#9eb4c4';ctx.font='10px IBM Plex Mono';ctx.fillText(`${turb?'TURBULENT':'LAMINAR'} · Re ${Re.toExponential(2)}`,20,30)}
+    const drawOcean=(W,H)=>{const simT=1800+(time%30)*900,D=params.diffusivity,u=params.current,m=params.mass*Math.exp(-params.decay*simT),cx=W*.16+u*simT/4200*W*.58,cy=H*.52,s2=4*D*simT,cell=9,max=m/(Math.PI*s2);for(let y=0;y<H;y+=cell)for(let x=0;x<W;x+=cell){const dx=(x-cx)*4200/W,dy=(y-cy)*2200/H,c=m/(Math.PI*s2)*Math.exp(-(dx*dx+dy*dy)/s2),q=Math.min(1,c/max);if(q>.015){ctx.fillStyle=`rgba(${Math.round(30+230*q)},${Math.round(90+150*(1-q))},${Math.round(210-80*q)},${.12+.75*q})`;ctx.fillRect(x,y,cell+1,cell+1)}}ctx.strokeStyle='#284458';ctx.lineWidth=1;for(let x=0;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=70){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(W*.16,H*.52,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#9eb4c4';ctx.font='10px IBM Plex Mono';ctx.fillText(`t ${(simT/3600).toFixed(1)} h · center ${(u*simT/1000).toFixed(2)} km`,20,30)}
+    const loop=()=>{frame=requestAnimationFrame(loop);if(running)time+=.016;const dpr=Math.min(devicePixelRatio||1,2),rect=canvas.getBoundingClientRect(),w=Math.max(1,Math.round(rect.width*dpr)),h=Math.max(1,Math.round(rect.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#060e19';ctx.fillRect(0,0,rect.width,rect.height);if(mode==='plasma')drawTokamak(rect.width,rect.height);if(mode==='motor')drawMotor(rect.width,rect.height);if(mode==='pipe')drawPipe(rect.width,rect.height);if(mode==='ocean')drawOcean(rect.width,rect.height)};loop();return()=>cancelAnimationFrame(frame)
+  },[mode,params,running,resetKey])
   return <canvas className="concept-field-canvas" ref={ref}/>
 }
 
 export default function RealtimeLab() {
-  const [mode, setMode] = useState('gas')
-  const [running, setRunning] = useState(true)
-  const [view, setView] = useState('speed')
-  const [resetKey, setResetKey] = useState(0)
-  const [windParams, setWindParams] = useState(windDefaults)
-  const [plumeParams, setPlumeParams] = useState(plumeDefaults)
-  const [fieldParams, setFieldParams] = useState(fieldDefaults)
-  const [windMetrics, setWindMetrics] = useState({ cl: .84, cd: .029, lift: 1089, reynolds: 3.41e6, ratio: 29 })
-  const [plumeMetrics, setPlumeMetrics] = useState({ maxTemperature: 913, rise: 1.2, ri: 4.8, particles: 5200 })
-
-  useEffect(() => { document.title = '浏览器实时实验室｜PhyTwin' }, [])
-  const reset = () => {
-    if (mode === 'gas') setWindParams(windDefaults); else if(mode==='thermal') setPlumeParams(plumeDefaults); else setFieldParams(current=>({...current,[mode]:fieldDefaults[mode]}))
-    setResetKey((key) => key + 1); setRunning(true)
-  }
-  const metrics = useMemo(() => mode === 'gas' ? [
-    ['升力系数 Cₗ', windMetrics.cl.toFixed(3), '—', true],
-    ['阻力系数 Cᴅ', windMetrics.cd.toFixed(3), '—'],
-    ['单位翼展升力', windMetrics.lift.toFixed(0), 'N/m'],
-    ['雷诺数', `${(windMetrics.reynolds / 1e6).toFixed(2)}M`, 'Re'],
-    ['升阻比', windMetrics.ratio.toFixed(1), 'L/D'],
-  ] : mode === 'thermal' ? [
-    ['峰值温度', plumeMetrics.maxTemperature.toFixed(0), 'K', true],
-    ['羽流上升速度', plumeMetrics.rise.toFixed(2), 'm/s'],
-    ['Richardson 数', plumeMetrics.ri.toFixed(2), 'Ri'],
-    ['实时粒子', plumeMetrics.particles.toLocaleString(), 'points'],
-  ] : [
-    [mode==='plasma'?'峰值电子密度':mode==='em'?'峰值场强':mode==='liquid'?'最大速度':'峰值浓度', `${(fieldParams[mode].drive*(1+fieldParams[mode].coupling)).toFixed(1)}`, mode==='em'?'kV/m':mode==='liquid'?'m/s':'a.u.', true],
-    ['扩散尺度',fieldParams[mode].diffusion.toFixed(2),'D'],['耦合强度',fieldParams[mode].coupling.toFixed(2),'K'],['实时场线','22','lines'],
-  ], [mode, windMetrics, plumeMetrics, fieldParams])
-
-  return <section className="realtime-lab-page">
-    <div className="lab-intro section-shell">
-      <div><div className="lab-eyebrow"><span className="pulse-dot"/>PHYTWIN REALTIME LAB / 60 FPS</div><h1>把六类物理场放进浏览器里。</h1><p>在等离子体、电磁、气体、液体、热传输与传质模型之间切换，拖动参数即可观察场结构与瞬态响应。</p></div>
-      <div className="lab-intro-note"><Sparkles size={18}/><span><b>客户快捷体验</b>六类模型均已预载稳定工况，打开即可调整参数并观察响应。</span></div>
-    </div>
-
-    <div className="lab-shell">
-      <header className="lab-toolbar">
-        <div className="experiment-tabs">
-          {Object.entries(modes).map(([key,item])=>{const Icon=item.icon;return <button key={key} className={mode===key?'active':''} onClick={()=>{setMode(key);setRunning(true)}}><Icon size={16}/>{item.label}<span>{key==='thermal'?'3D':'LIVE'}</span></button>})}
-        </div>
-        <div className="lab-run-state"><span className={running ? 'live' : ''}/>{running ? 'COMPUTING LIVE' : 'PAUSED'}</div>
-        <div className="lab-toolbar-actions">
-          <button onClick={() => setRunning((value) => !value)}>{running ? <Pause size={15}/> : <Play size={15} fill="currentColor"/>}{running ? '暂停' : '继续'}</button>
-          <button onClick={reset}><RotateCcw size={15}/>重置</button>
-        </div>
-      </header>
-
-      <div className="lab-workspace">
-        <aside className="lab-controls">
-          <div className="lab-panel-heading"><span>01</span><div><b>工况参数</b><small>BOUNDARY CONDITIONS</small></div></div>
-          {mode === 'gas' ? <WindControls params={windParams} setParams={setWindParams}/> : mode==='thermal' ? <PlumeControls params={plumeParams} setParams={setPlumeParams}/> : <GenericControls mode={mode} params={fieldParams[mode]} setParams={(update)=>setFieldParams(current=>({...current,[mode]:typeof update==='function'?update(current[mode]):update}))}/>} 
-          <div className="model-chip"><Activity size={15}/><div><b>{modes[mode].method}</b><span>{mode === 'thermal' ? 'TRANSIENT / THREE.JS WEBGL' : 'INSTANT / LOCAL FIELD'}</span></div></div>
-        </aside>
-
-        <main className="lab-viewport">
-          <div className="viewport-hud top-left"><span>{mode === 'gas' ? `NACA ${windParams.airfoil}` : modes[mode].short}</span><b>{mode === 'gas' ? `${windParams.speed.toFixed(0)} m/s · α ${windParams.angle.toFixed(1)}°` : mode==='thermal'?`ΔT ${plumeParams.heat.toFixed(0)} K · B ${plumeParams.buoyancy.toFixed(2)}`:`DRIVE ${fieldParams[mode].drive.toFixed(0)} · COUPLING ${fieldParams[mode].coupling.toFixed(2)}`}</b></div>
-          <div className="viewport-hud top-right"><span>LOCAL COMPUTE</span><b>NO SERVER REQUIRED</b></div>
-          {mode === 'gas' ? <WindTunnelCanvas params={windParams} running={running} view={view} resetKey={resetKey} onMetrics={setWindMetrics}/> : mode==='thermal'?<Suspense fallback={<div className="lab-loading"><div className="spinner"/><span>初始化 WebGL 粒子场…</span></div>}><ThermalPlume3D params={plumeParams} running={running} resetKey={resetKey} onMetrics={setPlumeMetrics}/></Suspense>:<ConceptFieldCanvas mode={mode} params={fieldParams[mode]} running={running} resetKey={resetKey}/>} 
-          <div className="viewport-help"><MousePointer2 size={14}/>{mode === 'gas' ? '在流场中拖动，注入瞬态涡扰动' : mode==='thermal'?'拖动旋转视角 · 滚轮缩放':'调整左侧参数，实时观察场结构演化'}</div>
-          {mode === 'gas' && <div className="field-legend"><span>LOW</span><i className={`legend-${view}`}/><span>HIGH</span></div>}
-        </main>
-
-        <aside className="lab-diagnostics">
-          <div className="lab-panel-heading"><span>02</span><div><b>实时诊断</b><small>LIVE DIAGNOSTICS</small></div></div>
-          {mode === 'gas' && <div className="view-switch"><span>场变量</span>{[['speed', '速度'], ['pressure', '压力'], ['vorticity', '涡量']].map(([key, label]) => <button key={key} className={view === key ? 'active' : ''} onClick={() => setView(key)}>{label}</button>)}</div>}
-          <div className="lab-metrics">{metrics.map(([label, value, unit, accent]) => <Metric key={label} label={label} value={value} unit={unit} accent={accent}/>)}</div>
-          <div className="solver-health"><Gauge size={17}/><div><span>TIME INTEGRATION</span><b>STABLE · Δt ADAPTIVE</b></div></div>
-          <div className="lab-scope-note"><Info size={16}/><div><b>模型适用范围</b><p>{modes[mode].note}</p></div></div>
-        </aside>
-      </div>
-    </div>
-
-    <div className="lab-method section-shell">
-      <div><span>MODEL TRANSPARENCY</span><h2>先让物理直觉可交互，<br/>再让工程结论可验证。</h2></div>
-      <div className="method-steps">
-        <div><b>01</b><span>即时响应</span><p>参数变化直接进入时间推进与指标计算，没有预录视频或假动画。</p></div>
-        <ChevronRight/>
-        <div><b>02</b><span>层级清晰</span><p>实时简化模型负责趋势探索，高保真求解负责最终工程判定。</p></div>
-        <ChevronRight/>
-        <div><b>03</b><span>继续扩展</span><p>后续可接入 WebGPU 体积求解器、WASM 内核与服务器侧 CFD 作业队列。</p></div>
-      </div>
-    </div>
+  const [mode,setMode]=useState('plasma'),[running,setRunning]=useState(true),[view,setView]=useState('speed'),[resetKey,setResetKey]=useState(0)
+  const [allParams,setAllParams]=useState(defaults),[windMetrics,setWindMetrics]=useState({cl:.84,cd:.029,lift:1089,reynolds:3.41e6,ratio:29}),[plumeMetrics,setPlumeMetrics]=useState({maxTemperature:913,rise:1.2,ri:4.8,particles:5200})
+  useEffect(()=>{document.title='浏览器实时实验室｜PhyTwin'},[])
+  const params=allParams[mode],setParams=update=>setAllParams(current=>({...current,[mode]:typeof update==='function'?update(current[mode]):update}))
+  const reset=()=>{setAllParams(current=>({...current,[mode]:defaults[mode]}));setResetKey(k=>k+1);setRunning(true)}
+  const metrics=useMemo(()=>{const direct=computeMetrics(mode,params);if(direct)return direct;if(mode==='gas')return [['升力系数 Cₗ',windMetrics.cl.toFixed(3),'—',true],['阻力系数 Cᴅ',windMetrics.cd.toFixed(3),'—'],['单位翼展升力',windMetrics.lift.toFixed(0),'N/m'],['雷诺数',`${(windMetrics.reynolds/1e6).toFixed(2)}M`,'Re']];return [['峰值温度',plumeMetrics.maxTemperature.toFixed(0),'K',true],['羽流速度',plumeMetrics.rise.toFixed(2),'m/s'],['Richardson 数',plumeMetrics.ri.toFixed(2),'Ri'],['实时粒子',plumeMetrics.particles.toLocaleString(),'points']]},[mode,params,windMetrics,plumeMetrics])
+  return <section className="realtime-lab-page"><div className="lab-intro section-shell"><div><div className="lab-eyebrow"><span className="pulse-dot"/>PHYTWIN REALTIME LAB / SOLVING LIVE</div><h1>让控制方程在浏览器里运行。</h1><p>托卡马克、电机、气体、液体管流、热羽流与海洋污染物扩散：参数变化后立即重新计算场量与工程指标。</p></div><div className="lab-intro-note"><Sparkles size={18}/><span><b>真实计算，不是预录动画</b>每个模型都基于明确的解析解或降阶控制方程；适用范围在右侧完整说明。</span></div></div>
+    <div className="lab-shell"><header className="lab-toolbar"><div className="experiment-tabs">{Object.entries(modes).map(([key,item])=>{const Icon=item.icon;return <button key={key} className={mode===key?'active':''} onClick={()=>{setMode(key);setRunning(true)}}><Icon size={16}/>{item.label}<span>LIVE</span></button>})}</div><div className="lab-run-state"><span className={running?'live':''}/>{running?'COMPUTING LIVE':'PAUSED'}</div><div className="lab-toolbar-actions"><button onClick={()=>setRunning(v=>!v)}>{running?<Pause size={15}/>:<Play size={15} fill="currentColor"/>}{running?'暂停':'继续'}</button><button onClick={reset}><RotateCcw size={15}/>重置</button></div></header>
+      <div className="lab-workspace"><aside className="lab-controls"><div className="lab-panel-heading"><span>01</span><div><b>工况参数</b><small>BOUNDARY CONDITIONS</small></div></div><Controls mode={mode} params={params} setParams={setParams}/><div className="model-chip"><Activity size={15}/><div><b>{modes[mode].method}</b><span>RECALCULATED ON DEVICE</span></div></div></aside>
+        <main className="lab-viewport"><div className="viewport-hud top-left"><span>{modes[mode].short}</span><b>{mode==='plasma'?`R₀ ${params.majorRadius.toFixed(1)} m · Ip ${params.plasmaCurrent.toFixed(1)} MA`:mode==='motor'?`${params.frequency} Hz · ${params.polePairs} pole pairs`:mode==='pipe'?`D ${params.diameter.toFixed(2)} m · U ${params.velocity.toFixed(2)} m/s`:mode==='ocean'?`U ${params.current.toFixed(2)} m/s · D ${params.diffusivity.toFixed(1)} m²/s`:mode==='thermal'?`ΔT ${params.heat.toFixed(0)} K`:`NACA ${params.airfoil} · ${params.speed} m/s`}</b></div><div className="viewport-hud top-right"><span>LOCAL SOLVER</span><b>PARAMETERS → FIELD → METRICS</b></div>{mode==='gas'?<WindTunnelCanvas params={params} running={running} view={view} resetKey={resetKey} onMetrics={setWindMetrics}/>:mode==='thermal'?<Suspense fallback={<div className="lab-loading"><div className="spinner"/><span>初始化 WebGL 粒子场…</span></div>}><ThermalPlume3D params={params} running={running} resetKey={resetKey} onMetrics={setPlumeMetrics}/></Suspense>:<PhysicsCanvas mode={mode} params={params} running={running} resetKey={resetKey}/>}<div className="viewport-help"><MousePointer2 size={14}/>{mode==='thermal'?'拖动旋转视角 · 滚轮缩放':'拖动参数，场量与指标立即重算'}</div>{mode==='gas'&&<div className="field-legend"><span>LOW</span><i className={`legend-${view}`}/><span>HIGH</span></div>}</main>
+        <aside className="lab-diagnostics"><div className="lab-panel-heading"><span>02</span><div><b>实时后处理</b><small>LIVE POST-PROCESSING</small></div></div>{mode==='gas'&&<div className="view-switch"><span>场变量</span>{[['speed','速度'],['pressure','压力'],['vorticity','涡量']].map(([key,label])=><button key={key} className={view===key?'active':''} onClick={()=>setView(key)}>{label}</button>)}</div>}<div className="lab-metrics">{metrics.map(([label,value,unit,accent])=><Metric key={label} label={label} value={value} unit={unit} accent={accent}/>)}</div><div className="solver-health"><Gauge size={17}/><div><span>SOLVER STATE</span><b>STABLE · CONSERVATIVE MODEL</b></div></div><div className="lab-scope-note"><Info size={16}/><div><b>方程与适用范围</b><p>{modes[mode].note}</p></div></div></aside></div></div>
+    <div className="lab-method section-shell"><div><span>MODEL TRANSPARENCY</span><h2>实时模型负责物理探索，<br/>高保真模型负责工程判定。</h2></div><div className="method-steps"><div><b>01</b><span>即时求解</span><p>参数直接进入控制方程、场计算和后处理，没有预录视频。</p></div><ChevronRight/><div><b>02</b><span>可核查公式</span><p>每个指标都来自明确的守恒关系、解析解或工程降阶模型。</p></div><ChevronRight/><div><b>03</b><span>高保真升级</span><p>项目阶段可接入 FEM / FVM / MHD、WASM 内核和服务器计算队列。</p></div></div></div>
   </section>
 }

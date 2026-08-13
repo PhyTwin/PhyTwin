@@ -1,30 +1,55 @@
-# PhyTwin
+# PhyTwin · CAE 在线实时仿真作品集
 
-物理数字孪生计算门户 · [phytwin.com](https://phytwin.com)
+[www.phytwin.com](https://www.phytwin.com) 面向 CAE 仿真面试官、力学/流体/多物理场技术负责人的工程能力作品集。网站以“可复现的计算”为核心，包含结构、热、流体浏览器端实时求解、科研级 Plotly 可视化、工程案例和求职简介。
 
-> **许可说明：商业闭源（Proprietary）**  
-> 仓库与网站公开可见，欢迎浏览。**禁止擅自修改、分发或再开发**。  
-> 可在 [Issues](https://github.com/Sam-Messiah/PhyTwin/issues) 提意见与反馈。详见 [`LICENSE`](./LICENSE) 与 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。
+## 架构概览
 
-深色终端风格门户 + 科学计算器、CalcPlot3D、图纸转模型、力学 / 热场 / 风场设计台。
+```mermaid
+flowchart LR
+  A[首页 / 能力 / 案例 / 关于] --> B[React 交互层]
+  B --> C[浏览器 CAE 求解器]
+  B --> D[FastAPI 计算接口]
+  C --> E[Plotly 科研可视化]
+  D --> E
+  E --> F[云图 / 曲线 / 残差 / JSON 导出]
+```
 
-## 在线地址
+详细架构、页面流程和接口说明见 [`ARCHITECTURE.md`](./ARCHITECTURE.md)。
 
-- 网站：https://phytwin.com
-- 仓库：https://github.com/Sam-Messiah/PhyTwin（只读展示）
-- 联系：phytwin@163.com
+## 本地运行
 
-## 模块
+```bash
+# 前端（Node.js 20+）
+cd source
+npm install
+npm run dev
 
-| 路径 | 功能 |
-|---|---|
-| `/calculator.html` | 科学计算器 |
-| `/plot3d.html` | 3D 函数绘图 |
-| `/model.html` | 图纸转交互模型 |
-| `/stability.html` | 力学稳定性 |
-| `/thermal.html` | 热场 |
-| `/wind.html` | 迎面风场（微风 1–3 级） |
+# 生产构建
+npm run build
+npm run preview
+```
 
-## 提意见
+打开 `http://localhost:5173`。线上 GitHub Pages 版本默认使用浏览器端求解器，因此无需启动后端。
 
-请使用 GitHub Issues，或发邮件至 phytwin@163.com。不接受 Pull Request。
+## 可选 Python 计算接口
+
+```bash
+cd ..  # 如果刚运行过前端命令，先回到仓库根目录
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r backend/requirements.txt
+uvicorn backend.app:app --reload --port 8787
+```
+
+- 健康检查：`GET http://127.0.0.1:8787/health`
+- 仿真接口：`POST http://127.0.0.1:8787/api/v1/simulate`
+- API 文档：`http://127.0.0.1:8787/docs`
+
+## 联系
+
+- 网站：[https://www.phytwin.com](https://www.phytwin.com)
+- GitHub：[https://github.com/PhyTwin/PhyTwin](https://github.com/PhyTwin/PhyTwin)
+- 邮箱：[phytwin@outlook.com](mailto:phytwin@outlook.com)
+
+本项目为公开作品展示，许可约束见 [`LICENSE`](./LICENSE)。

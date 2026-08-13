@@ -3,15 +3,39 @@ import { ArrowDown, ArrowRight, Crosshair, Maximize2, MousePointer2, Rotate3D, X
 import { Link } from 'react-router-dom'
 import * as THREE from 'three'
 
-// 星座是地球视角中的方向图案，而不是银河盘上的封闭区域。
-// 总览中的坐标用于表达从太阳系看去的近似方向；点击后展示主要恒星的局部三维结构。
+// 星座是从太阳系看到的天空方向区域，并不存在一个唯一的“星座空间坐标”。
+// 为避免把星座错误地散布到不同旋臂，这里用代表主星作为空间锚点，并统一使用 IAU 银河坐标：
+// x 轴从银心指向太阳，y 轴指向银河经度 l=90°，太阳距银心采用约 26,000 光年。
+const SUN_GALACTOCENTRIC_LY = 26000
+const SCENE_LY_PER_UNIT = SUN_GALACTOCENTRIC_LY / 2.07
+const toRadians = degrees => degrees * Math.PI / 180
+const anchorFromGalacticCoordinates = ({ longitude, latitude, earthDistance, ...meta }) => {
+  const l = toRadians(longitude)
+  const b = toRadians(latitude)
+  const planarDistance = earthDistance * Math.cos(b)
+  const xLy = SUN_GALACTOCENTRIC_LY - planarDistance * Math.cos(l)
+  const yLy = planarDistance * Math.sin(l)
+  const zLy = earthDistance * Math.sin(b)
+  return {
+    ...meta,
+    longitude,
+    latitude,
+    earthDistance,
+    x:xLy / SCENE_LY_PER_UNIT,
+    y:yLy / SCENE_LY_PER_UNIT,
+    z:zLy / SCENE_LY_PER_UNIT,
+    centerDistance:Math.hypot(xLy,yLy,zLy),
+    centerAngle:Math.atan2(yLy,xLy) * 180 / Math.PI,
+  }
+}
+
 const OBJECTS = {
-  solar: { index:'01', kind:'LOCAL SYSTEM', name:'太阳系', latin:'Solar System', x:2.07, y:-.92, screen:[61,57], distance:'距银心约 26,000 光年', metric:'GALACTIC RADIUS', value:'≈ 26,000 ly', description:'太阳位于猎户臂附近。放大后可观察八大行星公转与自转；轨道半径和速度经过视觉压缩，不代表真实比例。' },
-  lyra: { index:'02', kind:'CONSTELLATION', name:'天琴座', latin:'Lyra', x:2.22, y:.22, screen:[65,43], metric:'ANCHOR STAR', value:'Vega · 25 ly', description:'以织女星为主星的北天小星座。放大视图保留主要恒星的相对拓扑，并用深度差提示它们并不位于同一平面。' },
-  draco: { index:'03', kind:'CONSTELLATION', name:'天龙座', latin:'Draco', x:.72, y:1.18, screen:[53,32], metric:'BRIGHTEST STAR', value:'Eltanin · 2.24 mag', description:'天龙座环绕北天极延展。恒星连线是观测文化图式，局部三维视图展示蜿蜒的主要亮星结构。' },
-  orion: { index:'04', kind:'CONSTELLATION', name:'猎户座', latin:'Orion', x:2.76, y:-1.68, screen:[73,67], metric:'ANCHOR STAR', value:'Betelgeuse · 548 ly', description:'猎户座由参宿四、参宿七和醒目的腰带三星构成，是冬季夜空中最易识别的星座之一。' },
-  cassiopeia: { index:'05', kind:'CONSTELLATION', name:'仙后座', latin:'Cassiopeia', x:-.52, y:.82, screen:[44,39], metric:'SKY PATTERN', value:'W-shaped asterism', description:'仙后座以明亮的 W 形结构著称。点击后可查看五颗主星的局部空间层次。' },
-  cygnus: { index:'06', kind:'CONSTELLATION', name:'天鹅座', latin:'Cygnus', x:1.48, y:.48, screen:[58,46], metric:'ANCHOR STAR', value:'Deneb · ≈ 2,600 ly', description:'天鹅座沿银河背景延展，天津四与十字形主星构成北十字，是银河方向的重要识别标志。' },
+  solar: { index:'01', kind:'LOCAL SYSTEM', name:'太阳系', latin:'Solar System', x:2.07, y:0, z:0, centerDistance:26000, centerAngle:0, labelOffset:[24,42], distance:'银心距 ≈ 26,000 ly · φ 0.000°', metric:'GALACTOCENTRIC DISTANCE', value:'≈ 26,000 ly', coordinate:'基准轴：银心 → 太阳', angle:'银心方位 φ = 0.000°', description:'太阳位于猎户臂附近，并定义这张俯视图的 0° 基准方向。放大后可观察八大行星公转与自转；轨道半径和速度经过视觉压缩，不代表真实比例。' },
+  lyra: anchorFromGalacticCoordinates({ index:'02', kind:'CONSTELLATION ANCHOR', name:'天琴座', latin:'Lyra · Vega anchor', longitude:67.448204, latitude:19.237282, earthDistance:25.04, labelOffset:[52,-112], distance:'银心距 ≈ 25,991 ly · φ +0.048°', metric:'GALACTOCENTRIC DISTANCE', value:'≈ 25,991 ly', coordinate:'l 67.448° · b +19.237°', angle:'银心方位 φ = +0.048°', description:'天琴座以织女星作为空间锚点。织女星距太阳约 25 光年，因此在十万光年尺度的银河盘上几乎与太阳重合；图中的引线只用于分开标签，不改变它的真实坐标。' }),
+  draco: anchorFromGalacticCoordinates({ index:'03', kind:'CONSTELLATION ANCHOR', name:'天龙座', latin:'Draco · Eltanin anchor', longitude:79.054960, latitude:29.217362, earthDistance:154.3, labelOffset:[116,-43], distance:'银心距 ≈ 25,975 ly · φ +0.292°', metric:'GALACTOCENTRIC DISTANCE', value:'≈ 25,975 ly', coordinate:'l 79.055° · b +29.217°', angle:'银心方位 φ = +0.292°', description:'天龙座以天棓四（Eltanin）作为空间锚点。它距太阳约 154 光年，真实位置仍非常接近太阳系；银河经纬度和银心方位均由同一坐标变换计算。' }),
+  orion: anchorFromGalacticCoordinates({ index:'04', kind:'CONSTELLATION ANCHOR', name:'猎户座', latin:'Orion · Betelgeuse anchor', longitude:199.787236, latitude:-8.958603, earthDistance:548, labelOffset:[90,102], distance:'银心距 ≈ 26,510 ly · φ −0.396°', metric:'GALACTOCENTRIC DISTANCE', value:'≈ 26,510 ly', coordinate:'l 199.787° · b −8.959°', angle:'银心方位 φ = −0.396°', description:'猎户座以参宿四作为空间锚点。参宿四位于太阳背离银心的视线一侧，所以它的银心距略大于太阳。局部视图展示猎户座的地球视角拓扑。' }),
+  cassiopeia: anchorFromGalacticCoordinates({ index:'05', kind:'CONSTELLATION ANCHOR', name:'仙后座', latin:'Cassiopeia · Schedar anchor', longitude:121.416373, latitude:-6.302281, earthDistance:228, labelOffset:[-178,-86], distance:'银心距 ≈ 26,119 ly · φ +0.424°', metric:'GALACTOCENTRIC DISTANCE', value:'≈ 26,119 ly', coordinate:'l 121.416° · b −6.302°', angle:'银心方位 φ = +0.424°', description:'仙后座以王良四（Schedar）作为空间锚点。标签保留经典 W 形星群的局部展示，同时总览位置按代表主星的银河坐标计算。' }),
+  cygnus: anchorFromGalacticCoordinates({ index:'06', kind:'CONSTELLATION ANCHOR', name:'天鹅座', latin:'Cygnus · Deneb anchor', longitude:84.284737, latitude:1.997546, earthDistance:1412, labelOffset:[-178,49], distance:'银心距 ≈ 25,898 ly · φ +3.108°', metric:'GALACTOCENTRIC DISTANCE', value:'≈ 25,898 ly', coordinate:'l 84.285° · b +1.998°', angle:'银心方位 φ = +3.108°', description:'天鹅座以天津四作为空间锚点。其距离不确定性较大，这里按约 1,412 光年的锚点距离投影；它沿银河背景延展，是北十字的重要识别标志。' }),
 }
 const GALAXY_INFO={index:'00',kind:'GALACTIC TWIN',name:'银河系',latin:'Milky Way',x:0,y:0,metric:'ESTIMATED DIAMETER',value:'≈ 100,000–120,000 ly',description:'由核球、银盘与四条主要旋臂构成的动态数字孪生。恒星粒子采用随半径变化的角速度，表现银河系差分旋转；比例依据太阳距银心约 26,000 光年进行标定。'}
 
@@ -82,8 +106,32 @@ function makeConstellation(id) {
   return group
 }
 
+function GalaxyAnchorLayer({ expanded=false, onSelect, anchorRefs, rulerRef }) {
+  return <div className={expanded?'galaxy-marker-layer expanded':'galaxy-marker-layer'}>
+    <div className="galactic-center-label"><i/><span>银河系中心<small>GALACTIC CENTER · 0 ly · φ 0°</small></span></div>
+    <div className="solar-distance-ruler" ref={rulerRef}><span>太阳基准轴 · ≈ 26,000 ly · φ 0°</span></div>
+    {Object.entries(OBJECTS).map(([id,item])=>{
+      const [labelX,labelY]=item.labelOffset
+      const leaderLength=Math.hypot(labelX,labelY)
+      const leaderAngle=Math.atan2(labelY,labelX)*180/Math.PI
+      return <div
+        key={id}
+        ref={node=>{anchorRefs.current[id]=node}}
+        className={`galaxy-anchor ${id==='solar'?'solar':''}`}
+        style={{'--label-x':`${labelX}px`,'--label-y':`${labelY}px`,'--leader-length':`${leaderLength}px`,'--leader-angle':`${leaderAngle}deg`}}
+      >
+        <i className="anchor-dot"/>
+        <i className="anchor-leader"/>
+        <button className="galaxy-marker" onClick={()=>onSelect(id)}>
+          <span><small>{item.kind}</small><b>{item.name}</b><em>{item.distance}</em></span><Crosshair size={13}/>
+        </button>
+      </div>
+    })}
+  </div>
+}
+
 export default function CosmicExplorer() {
-  const hostRef=useRef(null);const [selected,setSelected]=useState(null);const selectedRef=useRef(null);const [ready,setReady]=useState(false)
+  const hostRef=useRef(null);const anchorRefs=useRef({});const rulerRef=useRef(null);const [selected,setSelected]=useState(null);const selectedRef=useRef(null);const [ready,setReady]=useState(false)
   useEffect(()=>{selectedRef.current=selected},[selected])
   useEffect(()=>{
     const host=hostRef.current,renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});renderer.setClearColor(0x010207,1);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));host.appendChild(renderer.domElement)
@@ -91,8 +139,8 @@ export default function CosmicExplorer() {
     scene.add(new THREE.AmbientLight(0x8ebcff,1.8));const light=new THREE.PointLight(0xffd79b,8,12);light.position.set(0,0,3);scene.add(light)
     const background=makeBackground();scene.add(background);const galaxy=makeGalaxy();scene.add(galaxy)
     const localGroups={solar:makeSolarSystem()};Object.keys(CONSTELLATIONS).forEach(id=>{localGroups[id]=makeConstellation(id)})
-    Object.entries(localGroups).forEach(([id,g])=>{g.position.set(OBJECTS[id].x,OBJECTS[id].y,.18);g.scale.setScalar(.001);scene.add(g)})
-    const markerMeshes={};Object.entries(OBJECTS).forEach(([id,o])=>{const marker=new THREE.Mesh(new THREE.RingGeometry(.045,.075,24),new THREE.MeshBasicMaterial({color:id==='solar'?0x71ecff:0xa9c4ff,side:THREE.DoubleSide,transparent:true,opacity:.9}));marker.position.set(o.x,o.y,.12);scene.add(marker);markerMeshes[id]=marker})
+    Object.entries(localGroups).forEach(([id,g])=>{g.position.set(OBJECTS[id].x,OBJECTS[id].y,(OBJECTS[id].z||0)+.18);g.scale.setScalar(.001);scene.add(g)})
+    const markerMeshes={};Object.entries(OBJECTS).forEach(([id,o])=>{const marker=new THREE.Mesh(new THREE.RingGeometry(.045,.075,24),new THREE.MeshBasicMaterial({color:id==='solar'?0x71ecff:0xa9c4ff,side:THREE.DoubleSide,transparent:true,opacity:.9}));marker.position.set(o.x,o.y,(o.z||0)+.12);scene.add(marker);markerMeshes[id]=marker})
     const resize=()=>{const rect=host.getBoundingClientRect();renderer.setSize(Math.max(1,rect.width),Math.max(1,rect.height),false);camera.aspect=rect.width/Math.max(1,rect.height);camera.updateProjectionMatrix()};const observer=new ResizeObserver(resize);observer.observe(host);resize()
     const mouse={down:false,lastX:0,lastY:0,dragX:0,dragY:0,zoom:0};const onDown=e=>{mouse.down=true;mouse.lastX=e.clientX;mouse.lastY=e.clientY;renderer.domElement.setPointerCapture(e.pointerId)};const onMove=e=>{if(mouse.down&&selectedRef.current){mouse.dragX+=(e.clientX-mouse.lastX)*.006;mouse.dragY+=(e.clientY-mouse.lastY)*.005;mouse.lastX=e.clientX;mouse.lastY=e.clientY}};const onUp=()=>{mouse.down=false};const onWheel=e=>{if(selectedRef.current){e.preventDefault();mouse.zoom=Math.max(-1.4,Math.min(1.8,mouse.zoom+e.deltaY*.0025))}}
     renderer.domElement.addEventListener('pointerdown',onDown);renderer.domElement.addEventListener('pointermove',onMove);renderer.domElement.addEventListener('pointerup',onUp);renderer.domElement.addEventListener('pointercancel',onUp);renderer.domElement.addEventListener('wheel',onWheel,{passive:false})
@@ -103,17 +151,23 @@ export default function CosmicExplorer() {
       Object.entries(localGroups).forEach(([id,g])=>{const shown=id===active,targetScale=shown?(id==='solar'?1.08:1.22):.001;const s=THREE.MathUtils.lerp(g.scale.x,targetScale,.065);g.scale.setScalar(s);g.rotation.x=THREE.MathUtils.lerp(g.rotation.x,shown?mouse.dragY:0,.06);g.rotation.y=THREE.MathUtils.lerp(g.rotation.y,shown?mouse.dragX:0,.06);if(shown&&id!=='solar')g.rotation.z+=.0008})
       const solar=localGroups.solar;solar.userData.sun.rotation.y+=.006;solar.userData.planets.forEach(p=>{const a=p.userData.phase+t*p.userData.speed;p.position.set(Math.cos(a)*p.userData.radius,Math.sin(a)*p.userData.radius,0);p.rotation.y+=p.userData.spin})
       Object.entries(markerMeshes).forEach(([id,m])=>{m.visible=!active;m.rotation.z=t*(id==='solar'?.5:.22);const pulse=1+Math.sin(t*2+OBJECTS[id].index)*.13;m.scale.setScalar(pulse)})
-      galaxy.scale.setScalar(THREE.MathUtils.lerp(galaxy.scale.x,active&&active!=='galaxy'?.78:active==='galaxy'?1.1:1,.04));galaxy.rotation.x=THREE.MathUtils.lerp(galaxy.rotation.x,active==='galaxy'?mouse.dragY:0,.055);galaxy.rotation.y=THREE.MathUtils.lerp(galaxy.rotation.y,active==='galaxy'?mouse.dragX:0,.055);renderer.render(scene,camera)};animate()
+      galaxy.scale.setScalar(THREE.MathUtils.lerp(galaxy.scale.x,active&&active!=='galaxy'?.78:active==='galaxy'?1.1:1,.04));galaxy.rotation.x=THREE.MathUtils.lerp(galaxy.rotation.x,active==='galaxy'?mouse.dragY:0,.055);galaxy.rotation.y=THREE.MathUtils.lerp(galaxy.rotation.y,active==='galaxy'?mouse.dragX:0,.055)
+      // 用同一个 Three.js 相机投影真实锚点；旋转银河盘时，锚点与银河坐标系保持锁定。
+      Object.entries(OBJECTS).forEach(([id,o])=>{const element=anchorRefs.current[id];if(!element)return;const point=new THREE.Vector3(o.x,o.y,o.z||0);if(active==='galaxy')point.multiplyScalar(galaxy.scale.x).applyEuler(galaxy.rotation);point.project(camera);element.style.left=`${(point.x*.5+.5)*100}%`;element.style.top=`${(-point.y*.5+.5)*100}%`;element.style.opacity=point.z>-1&&point.z<1?'1':'0'})
+      const ruler=rulerRef.current;if(ruler){const center=new THREE.Vector3();const sun=new THREE.Vector3(OBJECTS.solar.x,OBJECTS.solar.y,OBJECTS.solar.z);if(active==='galaxy'){center.multiplyScalar(galaxy.scale.x).applyEuler(galaxy.rotation);sun.multiplyScalar(galaxy.scale.x).applyEuler(galaxy.rotation)}center.project(camera);sun.project(camera);const rect=host.getBoundingClientRect();const startX=(center.x*.5+.5)*rect.width,startY=(-center.y*.5+.5)*rect.height,endX=(sun.x*.5+.5)*rect.width,endY=(-sun.y*.5+.5)*rect.height;ruler.style.left=`${startX}px`;ruler.style.top=`${startY}px`;ruler.style.width=`${Math.hypot(endX-startX,endY-startY)}px`;ruler.style.transform=`rotate(${Math.atan2(endY-startY,endX-startX)*180/Math.PI}deg)`}
+      renderer.render(scene,camera)};animate()
     return()=>{cancelAnimationFrame(frame);observer.disconnect();renderer.domElement.removeEventListener('pointerdown',onDown);renderer.domElement.removeEventListener('pointermove',onMove);renderer.domElement.removeEventListener('pointerup',onUp);renderer.domElement.removeEventListener('pointercancel',onUp);renderer.domElement.removeEventListener('wheel',onWheel);scene.traverse(o=>{o.geometry?.dispose();if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material?.dispose()});renderer.dispose();renderer.domElement.remove()}
   },[])
   const current=selected?(selected==='galaxy'?GALAXY_INFO:OBJECTS[selected]):null
+  const openObject=id=>setSelected(id)
+  const closeSelection=()=>setSelected(selected==='galaxy'?null:'galaxy')
   return <div className={selected?'cosmic-explorer selected':'cosmic-explorer'}>
     <div className="cosmic-canvas" ref={hostRef}/>{!ready&&<div className="cosmic-loader"><i/><span>生成银河系旋臂…</span></div>}<div className="cosmic-grid"/>
     <div className="cosmic-status"><span/><b>MILKY WAY / FACE-ON</b><em>SPIRAL ARM DYNAMICS · INTERACTIVE MAP</em></div>
     {!selected&&<><div className="cosmic-copy"><span>PHYTWIN / COMPUTABLE UNIVERSE</span><h1>PhyTwin<br/>让宇宙成为可计算的孪生。</h1><p>给我们足够的算力，我们能模拟一颗行星、一座星系，乃至整个宇宙。也许真实世界本身，就运行在某个更高维度的数字孪生里。</p><div><button onClick={()=>setSelected('galaxy')}>放大银河系<Maximize2 size={15}/></button><Link to="/lab">进入实时实验室<ArrowRight size={15}/></Link></div></div>
-      <div className="galaxy-marker-layer"><div className="galactic-center-label"><i/><span>银河系中心<small>GALACTIC CENTER · 0 ly</small></span></div><div className="solar-distance-ruler"><span>≈ 26,000 ly</span></div>{Object.entries(OBJECTS).map(([id,item])=><button key={id} className={`galaxy-marker ${id==='solar'?'solar':''}`} style={{left:`${item.screen[0]}%`,top:`${item.screen[1]}%`}} onClick={()=>setSelected(id)}><i/><span><small>{item.kind}</small><b>{item.name}</b>{item.distance&&<em>{item.distance}</em>}</span><Crosshair size={13}/></button>)}</div>
+      <GalaxyAnchorLayer onSelect={openObject} anchorRefs={anchorRefs} rulerRef={rulerRef}/>
       <a className="cosmic-scroll" href="#capability-map"><ArrowDown size={14}/><span>SCROLL TO ENGINEERING SCALE</span></a></>}
-    {selected&&current&&<><button className="cosmic-close" onClick={()=>{setSelected(null)}}><X size={17}/>返回银河系俯视图</button>{selected==='galaxy'&&<div className="galaxy-marker-layer expanded">{Object.entries(OBJECTS).map(([id,item])=><button key={id} className={`galaxy-marker ${id==='solar'?'solar':''}`} style={{left:`${50+(item.screen[0]-50)*1.4}%`,top:`${50+(item.screen[1]-50)*1.4}%`}} onClick={()=>setSelected(id)}><i/><span><small>{item.kind}</small><b>{item.name}</b>{item.distance&&<em>{item.distance}</em>}</span><Crosshair size={13}/></button>)}</div>}<div className="cosmic-detail"><span>{current.kind} / {current.index}</span><h2>{current.name}<small>{current.latin}</small></h2><p>{current.description}</p><div className="cosmic-detail-metric"><span>{current.metric}</span><b>{current.value}</b></div><div className="cosmic-controls-hint"><Rotate3D size={15}/><span>{selected==='galaxy'?'拖动倾斜银河盘':'拖动旋转局部结构'}</span><MousePointer2 size={14}/><span>滚轮缩放</span></div></div><div className="cosmic-model-note"><b>{selected==='galaxy'?'DIFFERENTIAL ROTATION':selected==='solar'?'ORBITAL MOTION':'CONSTELLATION PROJECTION'}</b><span>{selected==='galaxy'?'旋臂粒子角速度随银心半径变化；放大后仍可点击太阳系和星座标记继续探索。':selected==='solar'?'行星具有独立自转与公转动画；为保证可读性，尺寸、距离与周期均采用视觉压缩。':'星座是从地球看到的方向图案，不是银河中的物理分区；总览标记为观测方向投影。'}</span></div></>}
+    {selected&&current&&<><button className="cosmic-close" onClick={closeSelection}><X size={17}/>{selected==='galaxy'?'返回首页':'返回放大后的银河系'}</button>{selected==='galaxy'&&<GalaxyAnchorLayer expanded onSelect={openObject} anchorRefs={anchorRefs} rulerRef={rulerRef}/>}<div className="cosmic-detail"><span>{current.kind} / {current.index}</span><h2>{current.name}<small>{current.latin}</small></h2><p>{current.description}</p><div className="cosmic-detail-metric"><span>{current.metric}</span><b>{current.value}</b>{current.coordinate&&<small>{current.coordinate}</small>}{current.angle&&<small>{current.angle}</small>}</div><div className="cosmic-controls-hint"><Rotate3D size={15}/><span>{selected==='galaxy'?'拖动倾斜银河盘':'拖动旋转局部结构'}</span><MousePointer2 size={14}/><span>滚轮缩放</span></div></div><div className="cosmic-model-note"><b>{selected==='galaxy'?'DIFFERENTIAL ROTATION':selected==='solar'?'ORBITAL MOTION':'IAU GALACTIC COORDINATES'}</b><span>{selected==='galaxy'?'标记使用银河经纬度与代表主星距离换算，拖动时与银河盘共享同一三维坐标系；标签引线仅用于消除重叠。':selected==='solar'?'行星具有独立自转与公转动画；为保证可读性，尺寸、距离与周期均采用视觉压缩。':'星座没有唯一空间位置；总览以详情注明的代表主星为锚点，按 IAU 银河坐标投影，l 为太阳视角银河经度、φ 为银心视角方位角。'}</span></div></>}
     <div className="cosmic-data-note">MILKY WAY · PROCEDURAL FOUR-ARM MODEL<br/>CONSTELLATIONS · EARTH-VIEWED DIRECTION PROJECTION</div>
   </div>
 }

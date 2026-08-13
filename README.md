@@ -1,15 +1,17 @@
 # PhyTwin · CAE 在线实时仿真作品集
 
-[www.phytwin.com](https://www.phytwin.com) 面向 CAE 仿真面试官、力学/流体/多物理场技术负责人的工程能力作品集。网站以“可复现的计算”为核心，包含结构、热、流体浏览器端实时求解、科研级 Plotly 可视化、工程案例和求职简介。
+[www.phytwin.com](https://www.phytwin.com) 面向 CAE 仿真面试官、力学/流体/多物理场技术负责人的工程能力作品集。网站以“可复现的计算”为核心，包含交互式翼型风洞、Three.js 三维热羽流、结构/热/流体浏览器端求解、科研级 Plotly 可视化、工程案例和求职简介。
 
 ## 架构概览
 
 ```mermaid
 flowchart LR
-  A[首页 / 能力 / 案例 / 关于] --> B[React 交互层]
+  A[首页 / 能力 / 实时实验室 / 案例 / 关于] --> B[React 交互层]
   B --> C[浏览器 CAE 求解器]
+  B --> R[Canvas 粒子风洞 / Three.js 热羽流]
   B --> D[FastAPI 计算接口]
   C --> E[Plotly 科研可视化]
+  R --> E
   D --> E
   E --> F[云图 / 曲线 / 残差 / JSON 导出]
 ```

@@ -6,6 +6,7 @@ import { downloadResult, modelMeta, presets, runSolver } from './lib/solver'
 
 const colors = { cobalt: '#3157d5', cyan: '#16a6a1', ember: '#ef6a4c', moss: '#607768' }
 const Plot = lazy(() => import('./components/Plot'))
+const RealtimeLab = lazy(() => import('./pages/RealtimeLab'))
 const plotConfig = { responsive: true, displaylogo: false, toImageButtonOptions: { format: 'png', filename: 'PhyTwin-result', scale: 3 } }
 const baseLayout = {
   font: { family: 'Inter, system-ui, sans-serif', color: '#343a34', size: 11 },
@@ -25,7 +26,7 @@ function Shell({ children, interviewer, setInterviewer }) {
   const [mobile, setMobile] = useState(false)
   const location = useLocation()
   useEffect(() => { setMobile(false); window.scrollTo({ top: 0, behavior: 'smooth' }) }, [location.pathname])
-  const links = [['/', '首页'], ['/capabilities', 'CAE 能力'], ['/simulate', '在线仿真'], ['/projects', '项目案例'], ['/about', '关于我']]
+  const links = [['/', '首页'], ['/capabilities', 'CAE 能力'], ['/lab', '实时实验室'], ['/simulate', '在线仿真'], ['/projects', '项目案例'], ['/about', '关于我']]
   return <div className={interviewer ? 'interviewer-mode' : ''}>
     <header className="topbar">
       <Brand />
@@ -70,8 +71,8 @@ function Home({ interviewer }) {
         <Eyebrow>CAE · COMPUTATION · DIGITAL TWIN</Eyebrow>
         <h1>自研 CAE 在线实时仿真平台<span>专业多物理场仿真能力展示</span></h1>
         <p>面向结构、流体、热与多物理耦合问题，从建模假设到工程结论，提供可复现、可验证、可在线运行的完整计算链路。</p>
-        <div className="hero-actions"><Link className="primary-button" to="/simulate"><Play size={17} fill="currentColor" />运行在线仿真</Link><Link className="text-button" to="/projects">查看工程案例<ArrowRight size={16} /></Link></div>
-        <div className="proof-row"><div><b>6</b><span>CAE 能力方向</span></div><div><b>3</b><span>在线求解模型</span></div><div><b>&lt; 3%</b><span>基准验证误差</span></div></div>
+        <div className="hero-actions"><Link className="primary-button" to="/lab"><Play size={17} fill="currentColor" />体验实时流场</Link><Link className="text-button" to="/simulate">运行工程计算<ArrowRight size={16} /></Link></div>
+        <div className="proof-row"><div><b>6</b><span>CAE 能力方向</span></div><div><b>5</b><span>浏览器仿真模型</span></div><div><b>&lt; 3%</b><span>基准验证误差</span></div></div>
       </div>
       <div className="hero-visual">
         <div className="visual-toolbar"><span><CircleDot size={12} /> STATIC STRUCTURAL</span><span>STEP 12 / 12</span></div>
@@ -89,7 +90,7 @@ function Home({ interviewer }) {
     </section>
 
     <section className="dark-section"><div className="section-shell split-showcase">
-      <div><Eyebrow>LIVE COMPUTE</Eyebrow><h2>不是视频演示，<br />是真正在浏览器中求解。</h2><p>输入几何、材料与边界条件，求解器即时返回场量、残差曲线和工程结论。参数方案可保存，结果可导出。</p><Link className="light-button" to="/simulate">打开仿真工作台<ArrowRight size={16} /></Link></div>
+      <div><Eyebrow>LIVE COMPUTE</Eyebrow><h2>不是视频演示，<br />是真正在浏览器中演化。</h2><p>调节翼型、攻角、温升与湍动参数，实时观察粒子流场和三维热羽流；需要工程指标时，再进入可复现的参数化求解工作台。</p><Link className="light-button" to="/lab">打开实时实验室<ArrowRight size={16} /></Link></div>
       <div className="mini-console"><div className="console-title"><span>求解日志</span><span className="live-dot">LIVE</span></div>{['初始化有限元模型','装配全局刚度矩阵','应用位移与载荷边界','PCG 迭代求解 · 22 steps','后处理等效应力'].map((x,i)=><div className="log-line" key={x}><Check size={14}/><span>0{`0${i+1}`.slice(-2)}</span>{x}<em>{[12,28,43,91,118][i]} ms</em></div>)}<div className="console-result"><span>STATUS</span><b>CONVERGED</b><span>ERROR</span><b>1.6%</b></div></div>
     </div></section>
 
@@ -188,5 +189,5 @@ function About() {
 export default function App() {
   const [interviewer, setInterviewer] = useState(() => localStorage.getItem('phytwin-interviewer') === 'true')
   useEffect(()=>localStorage.setItem('phytwin-interviewer',String(interviewer)),[interviewer])
-  return <Shell interviewer={interviewer} setInterviewer={setInterviewer}><Routes><Route path="/" element={<Home interviewer={interviewer}/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/simulate" element={<Simulator interviewer={interviewer}/>}/><Route path="/projects" element={<Projects/>}/><Route path="/about" element={<About/>}/><Route path="*" element={<Home interviewer={interviewer}/>}/></Routes></Shell>
+  return <Shell interviewer={interviewer} setInterviewer={setInterviewer}><Routes><Route path="/" element={<Home interviewer={interviewer}/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense>}/><Route path="/simulate" element={<Simulator interviewer={interviewer}/>}/><Route path="/projects" element={<Projects/>}/><Route path="/about" element={<About/>}/><Route path="*" element={<Home interviewer={interviewer}/>}/></Routes></Shell>
 }

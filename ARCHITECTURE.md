@@ -6,9 +6,9 @@
 |---|---|---|
 | 前端 UI | `source/src/App.jsx`, `source/src/styles.css` | React 多页面路由、ChatGPT 式交互、Apple 式动效与响应式布局 |
 | 浏览器仿真 | `source/src/lib/solver.js` | 结构梁、二维导热、圆柱势流的确定性求解与输入校验 |
-| 数据可视化 | `react-plotly.js` | 场云图、剖面曲线、对数残差、交互提示和高清 PNG 导出 |
+| 数据可视化 | `Plotly.js CDN + React 适配层` | 场云图、剖面曲线、对数残差、交互提示和高清 PNG 导出 |
 | 后端计算 | `backend/app.py` | FastAPI 统一计算协议，可替换为更高保真 FEM/CFD 内核 |
-| 发布 | `dist/` + `CNAME` | Vite 静态产物通过 GitHub Pages 服务 `www.phytwin.com` |
+| 发布 | `根目录静态产物` + `CNAME` | Vite 构建结果通过 GitHub Pages 服务 `www.phytwin.com` |
 
 ## 2. 页面流程图
 

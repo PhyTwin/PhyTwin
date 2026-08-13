@@ -5,7 +5,7 @@ PhyTwin 为**商业闭源**项目：仓库公开可见，便于查阅与讨论�
 ## 可以做
 
 - 浏览网站与仓库代码、文档
-- 通过 [Issues](https://github.com/Sam-Messiah/PhyTwin/issues) 提意见、建议、缺陷报告
+- 通过 [Issues](https://github.com/PhyTwin/PhyTwin/issues) 提意见、建议、缺陷报告
 
 提 Issue 时请尽量写清：页面地址、复现步骤、期望结果、截图（如有）。
 
@@ -17,4 +17,4 @@ PhyTwin 为**商业闭源**项目：仓库公开可见，便于查阅与讨论�
 
 ## 商业合作 / 授权
 
-如需私有部署、二次开发或商业授权，请发邮件至 phytwin@163.com，或通过 Issue 标注「商业合作」。
+如需私有部署、二次开发或商业授权，请发邮件至 phytwin@outlook.com，或通过 Issue 标注「商业合作」。

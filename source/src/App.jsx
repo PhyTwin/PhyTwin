@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { ArrowRight, Check, ChevronRight, Code2, Download, ExternalLink, Gauge, Mail, Menu, Pause, Play, RotateCcw, Save, X } from 'lucide-react'
+import { ArrowRight, BookOpen, Braces, Calculator, Check, ChevronRight, Code2, Download, ExternalLink, Gauge, Grid3X3, Mail, Menu, Pause, Play, RotateCcw, Save, Sigma, Waves, X } from 'lucide-react'
 import { capabilities, cases, validations } from './data'
 import { downloadResult, modelMeta, presets, runSolver } from './lib/solver'
 
@@ -27,7 +27,7 @@ function Shell({ children }) {
   const [mobile, setMobile] = useState(false)
   const location = useLocation()
   useEffect(() => { setMobile(false); window.scrollTo({ top: 0, behavior: 'auto' }) }, [location.pathname])
-  const links = [['/', '首页'], ['/capabilities', 'CAE 能力'], ['/lab', '实时实验室'], ['/simulate', '在线仿真'], ['/projects', '项目案例'], ['/about', '关于我']]
+  const links = [['/', '首页'], ['/capabilities', 'CAE 能力'], ['/lab', '实时实验室'], ['/simulate', '在线仿真'], ['/projects', '项目案例'], ['/resources', '资源链接'], ['/about', '关于我']]
   return <div className={location.pathname === '/' ? 'home-route' : ''}>
     <header className="topbar">
       <Brand />
@@ -41,7 +41,7 @@ function Shell({ children }) {
     <main>{children}</main>
     <footer>
       <div><Brand /><p>用可复现的计算，把工程判断变成证据。</p></div>
-      <div className="footer-links"><Link to="/simulate">在线仿真</Link><Link to="/projects">案例</Link><a href="https://github.com/PhyTwin/PhyTwin">GitHub</a><a href="mailto:phytwin@outlook.com">phytwin@outlook.com</a></div>
+      <div className="footer-links"><Link to="/simulate">在线仿真</Link><Link to="/projects">案例</Link><Link to="/resources">资源链接</Link><a href="https://github.com/PhyTwin/PhyTwin">GitHub</a><a href="mailto:phytwin@outlook.com">phytwin@outlook.com</a></div>
       <span className="copyright">© 2026 PhyTwin · www.phytwin.com</span>
     </footer>
   </div>
@@ -66,7 +66,7 @@ function FieldPreview({ type = 'stress', compact = false }) {
 function Home() {
   useDocumentTitle('多物理场仿真与计算平台')
   return <>
-    <section className="cosmic-home-hero"><Suspense fallback={<div className="cosmic-fallback"><div className="spinner"/><span>装载真实星空坐标…</span></div>}><CosmicExplorer/></Suspense></section>
+    <section className="cosmic-home-hero"><Suspense fallback={<div className="cosmic-fallback"><div className="spinner"/><span>生成银河系旋臂…</span></div>}><CosmicExplorer/></Suspense></section>
 
     <section className="section-shell capability-section" id="capability-map">
       <SectionTitle eyebrow="CAPABILITY MAP" title="从单场分析到设计决策" lead="每一项能力都对应清晰的物理假设、收敛证据与可交付工程指标。" />
@@ -162,6 +162,54 @@ function Projects() {
   return <><section className="page-hero section-shell"><Eyebrow>ENGINEERING PORTFOLIO</Eyebrow><h1>让每个案例回答一个工程问题</h1><p>完整展示目标、方法、验证、结论与设计影响。</p></section><section className="section-shell project-list">{cases.map((item,i)=><article key={item.title}><div className="project-visual"><FieldPreview type={item.palette}/><span>CASE / 0{i+1}</span></div><div className="project-copy"><Eyebrow>{item.tag}</Eyebrow><h2>{item.title}</h2><p>{item.detail}</p><div className="project-result"><span>KEY RESULT</span><b>{item.result}</b></div><dl><div><dt>工程目标</dt><dd>{['满足屈曲与强度约束下实现轻量化','降低器件结温并均匀化温度场','减少压差阻力并控制尾迹分离'][i]}</dd></div><div><dt>可信度控制</dt><dd>{['缺陷敏感性、网格收敛、材料曲线','能量闭合、热阻对比、网格无关性','y+ 检查、力系数稳定、守恒量监控'][i]}</dd></div><div><dt>工具链</dt><dd>{['Python · FEA · DOE','Python · FDM · CHT','Python · CFD · Plotly'][i]}</dd></div></dl><button className="code-peek"><Code2 size={16}/>查看方法摘要<ChevronRight size={15}/></button></div></article>)}</section></>
 }
 
+const resourceGroups = [
+  {
+    key: 'ODE / PDE', title: '微分方程求解', description: '从符号解、数值积分到浏览器端偏微分方程交互，覆盖建模、验证和教学演示。',
+    items: [
+      { name: 'VisualPDE', subtitle: '浏览器端 PDE 交互仿真', url: 'https://visualpde.com/', icon: Waves, featured: true, tags: ['PDE', '实时可视化', '无需安装'], text: '直接创建、修改并观察一维或二维偏微分方程的时空演化，适合快速探索反应扩散、波动与输运问题。' },
+      { name: 'WolframAlpha', subtitle: '常微分与偏微分方程', url: 'https://www.wolframalpha.com/examples/mathematics/differential-equations', icon: Sigma, featured: true, tags: ['ODE', 'PDE', '符号 / 数值'], text: '用于查询微分方程解析解、数值解、方向场与典型边值问题，是快速核对推导结果的通用入口。' },
+      { name: 'GeoGebra CAS', subtitle: 'SolveODE 符号与数值求解', url: 'https://www.geogebra.org/cas', icon: Braces, tags: ['ODE', 'CAS', 'Runge–Kutta'], text: '在 CAS 中输入 SolveODE(...) 处理常见一、二阶常微分方程，并可将结果继续用于图形分析。' },
+      { name: 'SageMathCell', subtitle: '可复现的开源数学计算', url: 'https://sagecell.sagemath.org/', icon: Code2, tags: ['ODE / PDE', 'Python', '开源'], text: '在线运行 Sage 代码，适合用 desolve、数值积分和符号计算构建可复制、可分享的方程求解过程。' },
+      { name: 'Wave Equation Explorer', subtitle: '交互式波动方程演示', url: 'https://math.uchicago.edu/~luis/pde/wave.html', icon: Waves, tags: ['PDE', '波动方程', '边界条件'], text: '绘制初始位形并观察波的传播，可切换固定端与自由端边界，直观看到边界条件如何改变解。' },
+    ],
+  },
+  {
+    key: 'MATH / 3D', title: '数学计算与三维可视化', description: '通用方程、符号计算与多元微积分三维绘图工具。',
+    items: [
+      { name: 'Number Empire', subtitle: '中文在线方程求解器', url: 'https://zh.numberempire.com/equationsolver.php', icon: Calculator, tags: ['代数方程', '方程组', '中文'], text: '支持线性、多项式、指数、三角与对数方程，以及多个方程组成的方程组；适合快速验证基础计算。' },
+      { name: 'CalcPlot3D / C3D', subtitle: '多元微积分三维绘图', url: 'https://c3d.libretexts.org/CalcPlot3D/index.html', icon: Grid3X3, tags: ['函数曲面', '向量场', '参数曲面'], text: '交互查看函数曲面、空间曲线、隐式与参数曲面、向量场和旋转体，并可自由旋转三维视角。' },
+    ],
+  },
+]
+
+function Resources() {
+  useDocumentTitle('资源链接')
+  return <div className="resources-page">
+    <section className="resource-hero section-shell">
+      <div><Eyebrow>ENGINEERING TOOLKIT</Eyebrow><h1>把可靠的数学工具，<br/>放进同一个入口。</h1><p>面向建模、推导与数值验证精选的在线资源。无需安装软件，即开即用；外部工具会在新标签页打开。</p></div>
+      <div className="resource-hero-orbit" aria-hidden="true"><span>∂u/∂t</span><span>∇²u</span><span>dy/dx</span><i /></div>
+    </section>
+    <section className="section-shell resource-directory">
+      {resourceGroups.map((group) => <div className="resource-group" key={group.key}>
+        <header><span>{group.key}</span><div><h2>{group.title}</h2><p>{group.description}</p></div></header>
+        <div className="resource-grid">{group.items.map((item) => {
+          const Icon = item.icon
+          return <a className={`resource-card${item.featured ? ' featured' : ''}`} href={item.url} target="_blank" rel="noreferrer" key={item.name}>
+            <div className="resource-card-top"><span className="resource-icon"><Icon size={21}/></span>{item.featured && <em>推荐</em>}<ExternalLink size={16}/></div>
+            <small>{item.subtitle}</small><h3>{item.name}</h3><p>{item.text}</p>
+            <div className="resource-tags">{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+          </a>
+        })}</div>
+      </div>)}
+    </section>
+    <section className="section-shell resource-guide">
+      <div><BookOpen size={20}/><span>HOW TO CHOOSE</span></div>
+      <ol><li><b>快速检查解析或数值结果</b><p>优先使用 WolframAlpha 或 GeoGebra CAS。</p></li><li><b>探索 PDE 的时空演化</b><p>使用 VisualPDE，并明确写下初始条件与边界条件。</p></li><li><b>保留可复现计算过程</b><p>使用 SageMathCell，以代码记录公式、参数和求解方法。</p></li></ol>
+      <p className="resource-note">这些链接指向第三方服务。提交保密工程数据前，请先确认对方的隐私政策与使用条款。</p>
+    </section>
+  </div>
+}
+
 function About() {
   useDocumentTitle('关于我')
   return <><section className="about-hero section-shell"><div><Eyebrow>ABOUT / CAREER</Eyebrow><h1>CAE 工程师，<br/>也是仿真工具开发者。</h1><p>我关注的不只是求解器能否跑完，而是计算是否可信、结论能否帮助设计，以及知识能否沉淀为可复用工具。</p><div className="hero-actions"><a className="primary-button" href="mailto:phytwin@outlook.com"><Mail size={17}/>phytwin@outlook.com</a><a className="text-button" href="https://github.com/PhyTwin/PhyTwin" target="_blank" rel="noreferrer">GitHub<ExternalLink size={15}/></a></div></div><div className="profile-panel"><div className="profile-monogram">PT</div><span>CAE / MULTIPHYSICS / CODE</span><p>以第一性原理理解问题<br/>以数值方法构建模型<br/>以工程指标交付结论</p></div></section>
@@ -171,5 +219,5 @@ function About() {
 }
 
 export default function App() {
-  return <Shell><Routes><Route path="/" element={<Home/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense>}/><Route path="/simulate" element={<Simulator/>}/><Route path="/projects" element={<Projects/>}/><Route path="/about" element={<About/>}/><Route path="*" element={<Home/>}/></Routes></Shell>
+  return <Shell><Routes><Route path="/" element={<Home/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense>}/><Route path="/simulate" element={<Simulator/>}/><Route path="/projects" element={<Projects/>}/><Route path="/resources" element={<Resources/>}/><Route path="/about" element={<About/>}/><Route path="*" element={<Home/>}/></Routes></Shell>
 }

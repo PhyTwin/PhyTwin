@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { Link, Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { ArrowRight, BookOpen, Braces, Calculator, Check, ChevronRight, Code2, Download, ExternalLink, Gauge, Grid3X3, Mail, Menu, Pause, Play, RotateCcw, Save, Sigma, Waves, X } from 'lucide-react'
 import { capabilities, cases, validations } from './data'
 import { downloadResult, modelMeta, presets, runSolver } from './lib/solver'
@@ -27,7 +27,7 @@ function Shell({ children }) {
   const [mobile, setMobile] = useState(false)
   const location = useLocation()
   useEffect(() => { setMobile(false); window.scrollTo({ top: 0, behavior: 'auto' }) }, [location.pathname])
-  const links = [['/', '首页'], ['/capabilities', 'CAE 能力'], ['/lab', '实时实验室'], ['/simulate', '在线仿真'], ['/projects', '项目案例'], ['/resources', '资源链接'], ['/about', '关于我']]
+  const links = [['/', '首页'], ['/capabilities', '计算能力'], ['/lab', '实时实验室'], ['/projects', '项目案例'], ['/resources', '资源链接']]
   return <div className={location.pathname === '/' ? 'home-route' : ''}>
     <header className="topbar">
       <Brand />
@@ -41,7 +41,7 @@ function Shell({ children }) {
     <main>{children}</main>
     <footer>
       <div><Brand /><p>用可复现的计算，把工程判断变成证据。</p></div>
-      <div className="footer-links"><Link to="/simulate">在线仿真</Link><Link to="/projects">案例</Link><Link to="/resources">资源链接</Link><a href="https://github.com/PhyTwin/PhyTwin">GitHub</a><a href="mailto:phytwin@outlook.com">phytwin@outlook.com</a></div>
+      <div className="footer-links"><Link to="/lab">实时实验室</Link><Link to="/projects">案例</Link><Link to="/resources">资源链接</Link><a href="https://github.com/PhyTwin/PhyTwin">GitHub</a><a href="mailto:phytwin@outlook.com">phytwin@outlook.com</a></div>
       <span className="copyright">© 2026 PhyTwin · www.phytwin.com</span>
     </footer>
   </div>
@@ -85,7 +85,7 @@ function Home() {
       <div className="case-grid">{cases.map((item) => <Link to="/projects" className="case-card" key={item.title}><FieldPreview type={item.palette} compact /><div className="case-copy"><div><span>{item.type}</span><small>{item.tag}</small></div><h3>{item.title}</h3><p>{item.detail}</p><strong>{item.result}</strong></div></Link>)}</div>
     </section>
 
-    <section className="section-shell contact-banner"><div><Eyebrow>AVAILABLE FOR CAE ROLES</Eyebrow><h2>让复杂物理，变成清晰的工程判断。</h2></div><a className="primary-button" href="mailto:phytwin@outlook.com"><Mail size={17} />联系 PhyTwin</a></section>
+    <section className="section-shell contact-banner"><div><Eyebrow>BUILD A COMPUTABLE TWIN</Eyebrow><h2>把真实世界映射成可以运行、验证与预测的数字孪生。</h2></div><a className="primary-button" href="mailto:phytwin@outlook.com"><Mail size={17} />联系 PhyTwin</a></section>
   </>
 }
 
@@ -94,12 +94,14 @@ function Capabilities() {
   return <>
     <section className="page-hero section-shell"><Eyebrow>CAE CAPABILITIES</Eyebrow><h1>从物理问题到可信结论</h1><p>以验证与确认（V&amp;V）为主线组织建模、求解、后处理和工程决策。</p></section>
     <section className="section-shell process-grid">{['问题定义','数值建模','求解控制','验证确认','工程决策'].map((x,i)=><div key={x}><span>0{i+1}</span><h3>{x}</h3><p>{['识别载荷路径、时间尺度与控制指标','选择方程、单元、材料与边界条件','监控残差、守恒量和目标响应','解析解、实验或高保真模型交叉验证','灵敏度、裕量与优化建议'][i]}</p></div>)}</section>
-    <section className="section-shell capability-detail-list">{capabilities.slice(0,4).map((item,i)=><article key={item.id}><div><span className="detail-index">{item.id}</span><Eyebrow>{item.key}</Eyebrow><h2>{item.title}</h2><p>{item.description}</p><ul>{[
-        ['载荷路径与边界条件审查','网格收敛 / GCI','失效准则与安全裕度'],
-        ['质量与动量守恒','近壁 y+ 控制','残差与积分量双收敛'],
+    <section className="section-shell capability-detail-list">{capabilities.map((item,i)=><article key={item.id}><div><span className="detail-index">{item.id}</span><Eyebrow>{item.key}</Eyebrow><h2>{item.title}</h2><p>{item.description}</p><ul>{[
+        ['电荷守恒与源项闭合','鞘层网格与时间步收敛','输运系数与反应机制审查'],
+        ['散度约束与边界条件审查','频率 / 网格收敛','损耗与功率闭合'],
+        ['质量、动量与能量守恒','激波与近壁分辨率控制','残差与积分量双收敛'],
+        ['界面捕捉与质量平衡','旋转域 / 多相模型审查','压降、流量与空化指标'],
         ['热阻网络与能量闭合','温度相关物性','热点与热流路径识别'],
-        ['场量映射与时间步协调','单向 / 双向耦合','系统指标与局部响应关联'],
-      ][i].map(x=><li key={x}><Check size={15}/>{x}</li>)}</ul></div><FieldPreview type={['stress','flow','thermal','thermal'][i]} /></article>)}</section>
+        ['组分守恒与反应源项','Peclet / Damköhler 分析','浓度与通量交叉验证'],
+      ][i].map(x=><li key={x}><Check size={15}/>{x}</li>)}</ul></div><FieldPreview type={['thermal','stress','flow','flow','thermal','thermal'][i]} /></article>)}</section>
     <section className="section-shell validation"><SectionTitle eyebrow="VERIFICATION" title="精度不是口号，是可以检查的记录" /><div className="validation-table"><div><b>验证算例</b><b>参照方法</b><b>相对误差</b></div>{validations.map(row=><div key={row[0]}>{row.map((x,i)=><span key={x} className={i===2?'good':''}>{x}</span>)}</div>)}</div></section>
   </>
 }
@@ -119,8 +121,8 @@ function ResultPlot({ result, tab }) {
   return <Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{ x: result.x, y: result.y, z: result.z, type: 'heatmap', connectgaps: false, colorscale: result.model==='thermal' ? [[0,'#293480'],[.25,'#2c7bb6'],[.5,'#70cdb5'],[.72,'#f4d35e'],[1,'#d94841']] : [[0,'#213b67'],[.28,'#2e77b5'],[.55,'#79c9b8'],[.78,'#f5c761'],[1,'#dc4b46']], colorbar:{title:{text:`${title.unit}`},thickness:12,outlinewidth:0}, hovertemplate: isFlow?'x=%{x:.3f} m<br>y=%{y:.3f} m<br>U=%{z:.2f} m/s<extra></extra>':'x=%{x:.3f} m<br>y=%{y:.3f} m<br>value=%{z:.2f}<extra></extra>' }]} layout={{...baseLayout,title:{text:`${title.name} · ${title.legend}`,x:.02,font:{size:13}},xaxis:{title:'x (m)',scaleanchor:'y',gridcolor:'#e6e8e3'},yaxis:{title:'y (m)',gridcolor:'#e6e8e3'},height:420}} config={plotConfig} style={{width:'100%'}} /></Suspense>
 }
 
-function Simulator() {
-  useDocumentTitle('在线实时仿真')
+function Simulator({ embedded = false }) {
+  useDocumentTitle(embedded ? '实时实验室' : '在线实时仿真')
   const [model, setModel] = useState('beam'); const [params, setParams] = useState(presets.beam)
   const [result, setResult] = useState(() => runSolver('beam', presets.beam)); const [running, setRunning] = useState(false)
   const [progress, setProgress] = useState(100); const [error, setError] = useState(''); const [tab, setTab] = useState('field')
@@ -133,8 +135,8 @@ function Simulator() {
     setTimeout(()=>{try{const solved=runSolver(model,params);setResult(solved);setProgress(100);setLogs(prev=>[...prev,'收敛判据满足 · 后处理完成']);}catch(e){setError(e.message);setLogs(prev=>[...prev,`错误：${e.message}`])}finally{setRunning(false)}},1200)
   }
   function saveScheme(){localStorage.setItem('phytwin-scheme',JSON.stringify({model,params}));setSaved(true);setTimeout(()=>setSaved(false),1800)}
-  return <section className="simulator-page">
-    <div className="sim-header"><div><Eyebrow>LIVE CAE STUDIO</Eyebrow><h1>在线实时仿真</h1><p>浏览器端计算 · 参数可复现 · 结果可导出</p></div><div className="sim-status"><span className="live-dot">READY</span><small>{modelMeta[model].method}</small></div></div>
+  return <section className={`simulator-page${embedded ? ' embedded-simulator' : ''}`} id="solver-workbench">
+    <div className="sim-header"><div><Eyebrow>PARAMETRIC SOLVER</Eyebrow><h1>参数求解工作台</h1><p>位于实时实验室下方 · 参数可复现 · 结果可导出</p></div><div className="sim-status"><span className="live-dot">READY</span><small>{modelMeta[model].method}</small></div></div>
     <div className="sim-workspace">
       <aside className="parameter-panel">
         <div className="panel-head"><span>01</span><div><b>模型与参数</b><small>INPUT DEFINITION</small></div></div>
@@ -159,7 +161,7 @@ function Simulator() {
 
 function Projects() {
   useDocumentTitle('CAE 项目案例')
-  return <><section className="page-hero section-shell"><Eyebrow>ENGINEERING PORTFOLIO</Eyebrow><h1>让每个案例回答一个工程问题</h1><p>完整展示目标、方法、验证、结论与设计影响。</p></section><section className="section-shell project-list">{cases.map((item,i)=><article key={item.title}><div className="project-visual"><FieldPreview type={item.palette}/><span>CASE / 0{i+1}</span></div><div className="project-copy"><Eyebrow>{item.tag}</Eyebrow><h2>{item.title}</h2><p>{item.detail}</p><div className="project-result"><span>KEY RESULT</span><b>{item.result}</b></div><dl><div><dt>工程目标</dt><dd>{['满足屈曲与强度约束下实现轻量化','降低器件结温并均匀化温度场','减少压差阻力并控制尾迹分离'][i]}</dd></div><div><dt>可信度控制</dt><dd>{['缺陷敏感性、网格收敛、材料曲线','能量闭合、热阻对比、网格无关性','y+ 检查、力系数稳定、守恒量监控'][i]}</dd></div><div><dt>工具链</dt><dd>{['Python · FEA · DOE','Python · FDM · CHT','Python · CFD · Plotly'][i]}</dd></div></dl><button className="code-peek"><Code2 size={16}/>查看方法摘要<ChevronRight size={15}/></button></div></article>)}</section></>
+  return <><section className="page-hero section-shell"><Eyebrow>ENGINEERING PORTFOLIO</Eyebrow><h1>六类物理场，六条可验证的计算链路</h1><p>等离子体、电磁场、气体、液体、热传输与传质计算，从控制方程一直走到工程指标。</p></section><section className="section-shell project-list">{cases.map((item,i)=><article key={item.title}><div className="project-visual"><FieldPreview type={item.palette}/><span>CASE / {String(i+1).padStart(2,'0')}</span></div><div className="project-copy"><Eyebrow>{item.tag}</Eyebrow><h2>{item.title}</h2><p>{item.detail}</p><div className="project-result"><span>KEY RESULT</span><b>{item.result}</b></div><dl><div><dt>工程目标</dt><dd>{item.objective}</dd></div><div><dt>可信度控制</dt><dd>{item.validation}</dd></div><div><dt>工具链</dt><dd>{item.tools}</dd></div></dl><button className="code-peek"><Code2 size={16}/>查看方法摘要<ChevronRight size={15}/></button></div></article>)}</section></>
 }
 
 const resourceGroups = [
@@ -210,14 +212,6 @@ function Resources() {
   </div>
 }
 
-function About() {
-  useDocumentTitle('关于我')
-  return <><section className="about-hero section-shell"><div><Eyebrow>ABOUT / CAREER</Eyebrow><h1>CAE 工程师，<br/>也是仿真工具开发者。</h1><p>我关注的不只是求解器能否跑完，而是计算是否可信、结论能否帮助设计，以及知识能否沉淀为可复用工具。</p><div className="hero-actions"><a className="primary-button" href="mailto:phytwin@outlook.com"><Mail size={17}/>phytwin@outlook.com</a><a className="text-button" href="https://github.com/PhyTwin/PhyTwin" target="_blank" rel="noreferrer">GitHub<ExternalLink size={15}/></a></div></div><div className="profile-panel"><div className="profile-monogram">PT</div><span>CAE / MULTIPHYSICS / CODE</span><p>以第一性原理理解问题<br/>以数值方法构建模型<br/>以工程指标交付结论</p></div></section>
-    <section className="section-shell value-grid">{[['01','工程建模','把真实研发问题转译为正确的物理模型与边界条件。'],['02','数值计算','控制离散、收敛、误差与稳定性，而不是黑盒操作。'],['03','工具开发','用 Python / React 把重复流程产品化，提升仿真效率。'],['04','技术沟通','让客户、设计师与决策者都能读懂仿真证据。']].map(x=><div key={x[0]}><span>{x[0]}</span><h3>{x[1]}</h3><p>{x[2]}</p></div>)}</section>
-    <section className="dark-section"><div className="section-shell skill-stack"><div><Eyebrow>TECHNICAL STACK</Eyebrow><h2>跨越求解、数据与产品界面</h2></div><div>{['结构 / 热 / 流体 / 多物理耦合','FEM / FDM / CFD / V&V','Python / NumPy / SciPy / Matplotlib','React / Plotly / API / GitHub Pages','参数化 / DOE / 优化 / 自动化'].map(x=><span key={x}>{x}</span>)}</div></div></section>
-    <section className="section-shell contact-banner"><div><Eyebrow>LET’S TALK</Eyebrow><h2>期待讨论 CAE、仿真平台与工程研发机会。</h2></div><a className="primary-button" href="mailto:phytwin@outlook.com"><Mail size={17}/>发送邮件</a></section></>
-}
-
 export default function App() {
-  return <Shell><Routes><Route path="/" element={<Home/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense>}/><Route path="/simulate" element={<Simulator/>}/><Route path="/projects" element={<Projects/>}/><Route path="/resources" element={<Resources/>}/><Route path="/about" element={<About/>}/><Route path="*" element={<Home/>}/></Routes></Shell>
+  return <Shell><Routes><Route path="/" element={<Home/>}/><Route path="/capabilities" element={<Capabilities/>}/><Route path="/lab" element={<><Suspense fallback={<div className="route-loader"><div className="spinner"/><span>加载实时实验室…</span></div>}><RealtimeLab/></Suspense><Simulator embedded/></>}/><Route path="/simulate" element={<Navigate to="/lab#solver-workbench" replace/>}/><Route path="/projects" element={<Projects/>}/><Route path="/resources" element={<Resources/>}/><Route path="/about" element={<Navigate to="/" replace/>}/><Route path="*" element={<Home/>}/></Routes></Shell>
 }

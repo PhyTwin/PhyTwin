@@ -20,7 +20,7 @@ function useDocumentTitle(title) {
 }
 
 function Brand() {
-  return <Link className="brand" to="/" aria-label="PhyTwin 首页"><span className="brand-mark">P</span><span><b>PhyTwin</b><small>CAE COMPUTE STUDIO</small></span></Link>
+  return <Link className="brand" to="/" aria-label="PhyTwin 首页"><img className="brand-mark" src="/logo1.png" alt="" aria-hidden="true"/><span><b>PhyTwin</b><small>Physical Digital Twin</small></span></Link>
 }
 
 function Shell({ children }) {
@@ -39,11 +39,11 @@ function Shell({ children }) {
     </header>
     {mobile && <nav className="mobile-nav">{links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'}>{label}<ChevronRight size={16} /></NavLink>)}</nav>}
     <main>{children}</main>
-    <footer>
+    {location.pathname !== '/' && <footer>
       <div><Brand /><p>用可复现的计算，把工程判断变成证据。</p></div>
       <div className="footer-links"><Link to="/lab">实时实验室</Link><Link to="/projects">案例</Link><Link to="/resources">资源链接</Link><a href="https://github.com/PhyTwin/PhyTwin">GitHub</a><a href="mailto:phytwin@outlook.com">phytwin@outlook.com</a></div>
       <span className="copyright">© 2026 PhyTwin · www.phytwin.com</span>
-    </footer>
+    </footer>}
   </div>
 }
 
@@ -64,29 +64,8 @@ function FieldPreview({ type = 'stress', compact = false }) {
 }
 
 function Home() {
-  useDocumentTitle('多物理场仿真与计算平台')
-  return <>
-    <section className="cosmic-home-hero"><Suspense fallback={<div className="cosmic-fallback"><div className="spinner"/><span>生成银河系旋臂…</span></div>}><CosmicExplorer/></Suspense></section>
-
-    <section className="section-shell capability-section" id="capability-map">
-      <SectionTitle eyebrow="CAPABILITY MAP" title="从单场分析到设计决策" lead="每一项能力都对应清晰的物理假设、收敛证据与可交付工程指标。" />
-      <div className="capability-grid">{capabilities.map((item) => <article className="capability-card" key={item.id}>
-        <div className="capability-head"><span>{item.id}</span><i style={{ background: colors[item.color] }} /></div><small>{item.key}</small><h3>{item.title}</h3><p className="subtitle">{item.subtitle}</p><p>{item.description}</p><div className="card-metric"><b>{item.metric}</b><span>{item.label}</span></div>
-      </article>)}</div>
-    </section>
-
-    <section className="dark-section"><div className="section-shell split-showcase">
-      <div><Eyebrow>LIVE COMPUTE</Eyebrow><h2>不是视频演示，<br />是真正在浏览器中演化。</h2><p>调节翼型、攻角、温升与湍动参数，实时观察粒子流场和三维热羽流；需要工程指标时，再进入可复现的参数化求解工作台。</p><Link className="light-button" to="/lab">打开实时实验室<ArrowRight size={16} /></Link></div>
-      <div className="mini-console"><div className="console-title"><span>求解日志</span><span className="live-dot">LIVE</span></div>{['初始化有限元模型','装配全局刚度矩阵','应用位移与载荷边界','PCG 迭代求解 · 22 steps','后处理等效应力'].map((x,i)=><div className="log-line" key={x}><Check size={14}/><span>0{`0${i+1}`.slice(-2)}</span>{x}<em>{[12,28,43,91,118][i]} ms</em></div>)}<div className="console-result"><span>STATUS</span><b>CONVERGED</b><span>ERROR</span><b>1.6%</b></div></div>
-    </div></section>
-
-    <section className="section-shell case-section">
-      <SectionTitle eyebrow="SELECTED WORK" title="工程案例，不止一张云图" lead="把仿真过程转译为设计约束、性能变化与可执行结论。" />
-      <div className="case-grid">{cases.map((item) => <Link to="/projects" className="case-card" key={item.title}><FieldPreview type={item.palette} compact /><div className="case-copy"><div><span>{item.type}</span><small>{item.tag}</small></div><h3>{item.title}</h3><p>{item.detail}</p><strong>{item.result}</strong></div></Link>)}</div>
-    </section>
-
-    <section className="section-shell contact-banner"><div><Eyebrow>BUILD A COMPUTABLE TWIN</Eyebrow><h2>把真实世界映射成可以运行、验证与预测的数字孪生。</h2></div><a className="primary-button" href="mailto:phytwin@outlook.com"><Mail size={17} />联系 PhyTwin</a></section>
-  </>
+  useDocumentTitle('Physical Digital Twin')
+  return <section className="cosmic-home-hero"><Suspense fallback={<div className="cosmic-fallback"><div className="spinner"/><span>生成银河系固定旋臂…</span></div>}><CosmicExplorer/></Suspense></section>
 }
 
 function Capabilities() {

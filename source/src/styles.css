@@ -17,7 +17,7 @@ p { color: #8ea3b5; line-height: 1.75; }
 /* 顶部导航：克制的玻璃层，保持内容成为视觉焦点。 */
 .topbar { height: 76px; padding: 0 max(32px, calc((100vw - 1320px)/2)); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgba(107,140,167,.22); background: rgba(6,16,28,.88); backdrop-filter: blur(18px); }
 .brand { display: flex; align-items: center; gap: 11px; min-width: 190px; }
-.brand-mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #06101c; background: #dcecff; font-weight: 700; }
+.brand-mark { width: 36px; height: 36px; border-radius: 11px; display:block; object-fit:cover; box-shadow:0 0 0 1px rgba(105,211,255,.2),0 8px 22px rgba(0,0,0,.22); }
 .brand > span:last-child { display: grid; line-height: 1.05; }
 .brand b { letter-spacing: -.02em; font-size: 16px; }
 .brand small { color: #668096; font: 500 8px/1.4 "IBM Plex Mono"; letter-spacing: .13em; margin-top: 3px; }
@@ -37,7 +37,7 @@ p { color: #8ea3b5; line-height: 1.75; }
 
 /* 首页宇宙场：亮星来自 J2000 星表，星系与局部示踪场由 Three.js 实时计算。 */
 .home-route .topbar { position:absolute; inset:0 0 auto; color:#eef3ff; border-bottom:1px solid rgba(199,215,255,.12); background:linear-gradient(180deg,rgba(1,2,7,.76),rgba(1,2,7,.1)); backdrop-filter:blur(10px); }
-.home-route .brand-mark { color:#05070c; background:#f0f4ff; }.home-route .brand small,.home-route .desktop-nav a { color:#a6adc1; }.home-route .desktop-nav a.active { color:white; }.home-route .desktop-nav a.active::after { background:#a6b8ff; }.home-route .icon-link,.home-route .mobile-menu { color:#e9efff; border-color:rgba(210,222,255,.23); background:rgba(8,11,19,.38); }
+.home-route .brand small,.home-route .desktop-nav a { color:#a6adc1; }.home-route .desktop-nav a.active { color:white; }.home-route .desktop-nav a.active::after { background:#a6b8ff; }.home-route .icon-link,.home-route .mobile-menu { color:#e9efff; border-color:rgba(210,222,255,.23); background:rgba(8,11,19,.38); }
 .cosmic-home-hero { height:max(760px,100svh); min-height:760px; position:relative; background:#010207; color:white; }
 .cosmic-explorer,.cosmic-canvas,.cosmic-grid { position:absolute; inset:0; }.cosmic-explorer { overflow:hidden; isolation:isolate; }.cosmic-canvas canvas { width:100%; height:100%; display:block; touch-action:none; cursor:crosshair; }
 .cosmic-grid { z-index:1; pointer-events:none; opacity:.18; background-image:linear-gradient(rgba(122,142,190,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(122,142,190,.10) 1px,transparent 1px); background-size:80px 80px; mask-image:linear-gradient(to bottom,transparent 4%,black 28%,black 78%,transparent 100%); }
@@ -222,7 +222,7 @@ main, footer { background:#06101c; }
 .project-visual { background:#081522; }.project-visual>span { color:#c8d9e5; background:rgba(7,17,29,.9); }.project-result { border-color:#263c4d; }
 .profile-panel { background:#07131f; }.profile-panel::before { border-color:#294052; box-shadow:0 0 0 50px #0a1926,0 0 0 51px #294052,0 0 0 100px #0a1926,0 0 0 101px #294052; }.profile-panel p { color:#b3c6d3; }
 .realtime-lab-page { color:#e2eef7; }.lab-intro p { color:#849daf; }.lab-intro-note { border-color:#243a4c; background:#091725; box-shadow:0 12px 35px rgba(0,0,0,.18); }.lab-intro-note b { color:#d9e9f4; }.lab-intro-note span { color:#7891a4; }.lab-method h2 { color:#e0edf6; }.method-steps>div { background:#091725; }.method-steps span { color:#d5e5ef; }.method-steps p { color:#7892a4; }
-footer .brand-mark { color:#06101c; background:#dcecff; }.footer-links,footer p,.copyright { color:#6f8799; }
+.footer-links,footer p,.copyright { color:#6f8799; }
 .mobile-nav { color:#dce9f4; background:#07131f; border-color:#223748; }.mobile-nav a { border-color:#203444; }
 
 @media (max-width: 1100px) {

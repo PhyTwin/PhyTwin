@@ -29,8 +29,8 @@ const OBJECTS = {
   vega: {
     index: '02',
     kind: 'STELLAR SYSTEM',
-    name: '织女星（天琴座 α）',
-    latin: 'α Lyrae · Vega · HIP 91262',
+    name: '天琴座 α',
+    latin: 'α Lyrae · HIP 91262',
     x: -0.24,
     y: -1.96,
     z: 0.02,
@@ -42,7 +42,7 @@ const OBJECTS = {
     value: '≈ 25.04 ly',
     spectral: 'A0Va 高温蓝白主序星',
     temp: '9,602 K',
-    description: '织女星（Vega）是天琴座最亮恒星，全天第五亮星。属于 A0V 型高温蓝白色主序星，质量约 2.13 M☉，光度为太阳的 40 倍。距离太阳极近（25 光年），自转极快（赤道速度 ~236 km/s），呈显著扁球体。'
+    description: '天琴座 α（α Lyrae）是天琴座最亮恒星，全天第五亮星。属于 A0V 型高温蓝白色主序星，质量约 2.13 M☉，光度为太阳的 40 倍。距离太阳极近（约 25 光年），自转极快（赤道速度 ~236 km/s），呈显著扁球体。历史上曾作为天文测光的零星等基准。'
   },
   thuban: {
     index: '03',
@@ -55,12 +55,12 @@ const OBJECTS = {
     markerColor: '#ff8c42',
     markerHex: 0xff8c42,
     labelOffset: [44, -12],
-    distance: '距太阳约 303 光年 (距织女星 280 ly)',
+    distance: '距太阳约 303 光年 (距天琴座 α 约 280 ly)',
     metric: 'DISTANCE FROM SUN',
     value: '≈ 303 ly',
     spectral: 'A0III 白巨星 / 分光双星',
     temp: '9,800 K',
-    description: '天龙座 α（Thuban，右枢）距太阳约 303 光年，距织女星约 280 光年。为 A0III 型巨星组成的分光食双星系统。约公元前 3942 年至前 1793 年间曾是地球北极星，古埃及胡夫金字塔北向通道即精确对准此星。在古文明与现代地外传说中具有重要象征意义。'
+    description: '天龙座 α（Thuban，右枢）距太阳约 303 光年，距天琴座 α 约 280 光年。为 A0III 型巨星组成的分光食双星系统。约公元前 3942 年至前 1793 年间曾是地球北极星，古埃及胡夫金字塔北向通道即精确对准此星。在古文明与现代地外传说中具有重要象征意义。'
   },
   sirius: {
     index: '04',
@@ -672,7 +672,7 @@ export default function CosmicExplorer() {
                 ? '银河系模型包含英仙臂、人马-船底臂、盾牌-南十字臂与矩尺臂四大主旋臂；太阳系标定在距银心 26,700 光年处。'
                 : selected === 'solar'
                 ? '太阳系包含太阳与八大行星轨道运行；尺寸与周期经过比例缩放以保证可视化呈现。'
-                : '天体位置基于天文测距与光谱数据标定：太阳（黄白）、织女星（蓝白）、天龙座α（右枢，橙红标记）、天狼星（白蓝）。'}
+                : '天体位置基于天文测距与光谱数据标定：太阳（黄白）、天琴座 α（蓝白）、天龙座 α（右枢，橙红标记）、天狼星（白蓝）。'}
             </span>
           </div>
         </>
@@ -682,7 +682,7 @@ export default function CosmicExplorer() {
       <div className="cosmic-data-note">
         MILKY WAY · FOUR-ARM BARRED SPIRAL MODEL (GAIA / ASTRONOMICAL SURVEYS)
         <br />
-        SUN ↔ VEGA: ~25 ly · SUN ↔ THUBAN: ~303 ly · VEGA ↔ THUBAN: ~280 ly
+        SUN ↔ α LYRAE: ~25 ly · SUN ↔ THUBAN: ~303 ly · α LYRAE ↔ THUBAN: ~280 ly
       </div>
 
       {/* 滚动提示 */}

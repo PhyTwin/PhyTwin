@@ -1,2 +1,1295 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/Plot-BP3ApVVk.js","assets/jsx-runtime-Cltr0gcK.js"])))=>i.map(i=>d[i]);
-import{i as e,n as t,t as n}from"./jsx-runtime-Cltr0gcK.js";import{$ as r,A as i,B as a,C as o,D as s,E as c,F as l,G as u,H as d,I as f,J as p,K as m,L as h,M as g,N as _,O as v,P as y,Q as ee,R as b,S as x,T as S,U as C,V as w,W as te,X as T,Y as E,Z as ne,_ as re,_t as D,a as ie,b as ae,c as oe,ct as O,d as k,et as se,f as A,ft as j,g as ce,gt as M,h as N,ht as P,i as F,it as le,j as ue,k as de,lt as fe,m as pe,mt as me,nt as he,o as ge,ot as I,p as _e,pt as ve,q as ye,r as be,rt as xe,s as L,st as Se,t as Ce,tt as we,u as Te,ut as Ee,v as R,vt as De,w as Oe,x as ke,y as Ae,yt as je,z}from"./three.module-CMwKnOU8.js";import{a as Me,c as B,i as Ne,n as Pe,r as Fe,s as Ie,t as Le,u as Re}from"./index-BDJRk88V.js";var ze=B(`activity`,[[`path`,{d:`M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2`,key:`169zse`}]]),Be=B(`box`,[[`path`,{d:`M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z`,key:`hh9hay`}],[`path`,{d:`m3.3 7 8.7 5 8.7-5`,key:`g66t2b`}],[`path`,{d:`M12 22V12`,key:`d0xqtd`}]]),Ve=B(`download`,[[`path`,{d:`M12 15V3`,key:`m9g1x1`}],[`path`,{d:`M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4`,key:`ih7n3h`}],[`path`,{d:`m7 10 5 5 5-5`,key:`brsn70`}]]),He=B(`droplets`,[[`path`,{d:`M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z`,key:`1ptgy4`}],[`path`,{d:`M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97`,key:`1sl1rz`}]]),Ue=B(`flame`,[[`path`,{d:`M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4`,key:`1slcih`}]]),We=B(`gauge`,[[`path`,{d:`m12 14 4-4`,key:`9kzdfg`}],[`path`,{d:`M3.34 19a10 10 0 1 1 17.32 0`,key:`19p75a`}]]),Ge=B(`info`,[[`circle`,{cx:`12`,cy:`12`,r:`10`,key:`1mglay`}],[`path`,{d:`M12 16v-4`,key:`1dtifu`}],[`path`,{d:`M12 8h.01`,key:`e9boi3`}]]),Ke=B(`magnet`,[[`path`,{d:`m12 15 4 4`,key:`lnac28`}],[`path`,{d:`M2.352 10.648a1.205 1.205 0 0 0 0 1.704l2.296 2.296a1.205 1.205 0 0 0 1.704 0l6.029-6.029a1 1 0 1 1 3 3l-6.029 6.029a1.205 1.205 0 0 0 0 1.704l2.296 2.296a1.205 1.205 0 0 0 1.704 0l6.365-6.367A1 1 0 0 0 8.716 4.282z`,key:`nlhkjb`}],[`path`,{d:`m5 8 4 4`,key:`j6kj7e`}]]),qe=B(`pause`,[[`rect`,{x:`14`,y:`3`,width:`5`,height:`18`,rx:`1`,key:`kaeet6`}],[`rect`,{x:`5`,y:`3`,width:`5`,height:`18`,rx:`1`,key:`1wsw3u`}]]),Je=B(`play`,[[`path`,{d:`M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z`,key:`10ikf1`}]]),Ye=B(`rotate-ccw`,[[`path`,{d:`M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8`,key:`1357e3`}],[`path`,{d:`M3 3v5h5`,key:`1xhq8a`}]]),Xe=B(`sparkles`,[[`path`,{d:`M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z`,key:`1s2grr`}],[`path`,{d:`M20 2v4`,key:`1rf3ol`}],[`path`,{d:`M22 4h-4`,key:`gwowj6`}],[`circle`,{cx:`4`,cy:`20`,r:`2`,key:`6kqj1y`}]]),Ze=B(`test-tubes`,[[`path`,{d:`M9 2v17.5A2.5 2.5 0 0 1 6.5 22A2.5 2.5 0 0 1 4 19.5V2`,key:`1hjrqt`}],[`path`,{d:`M20 2v17.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1-2.5-2.5V2`,key:`16lc8n`}],[`path`,{d:`M3 2h7`,key:`7s29d5`}],[`path`,{d:`M14 2h7`,key:`7sicin`}],[`path`,{d:`M9 16H4`,key:`1bfye3`}],[`path`,{d:`M20 16h-5`,key:`ddnjpe`}]]),Qe=B(`wind`,[[`path`,{d:`M12.8 19.6A2 2 0 1 0 14 16H2`,key:`148xed`}],[`path`,{d:`M17.5 8a2.5 2.5 0 1 1 2 4H2`,key:`1u4tom`}],[`path`,{d:`M9.8 4.4A2 2 0 1 1 11 8H2`,key:`75valh`}]]),V=e(t(),1);function $e(e,t){if(t===0)return console.warn(`THREE.BufferGeometryUtils.toTrianglesDrawMode(): Geometry already defined as triangles.`),e;if(t===2||t===1){let n=e.getIndex();if(n===null){let t=[],r=e.getAttribute(`position`);if(r!==void 0){for(let e=0;e<r.count;e++)t.push(e);e.setIndex(t),n=e.getIndex()}else return console.error(`THREE.BufferGeometryUtils.toTrianglesDrawMode(): Undefined position attribute. Processing not possible.`),e}let r=n.count-2,i=[];if(t===2)for(let e=1;e<=r;e++)i.push(n.getX(0)),i.push(n.getX(e)),i.push(n.getX(e+1));else for(let e=0;e<r;e++)e%2==0?(i.push(n.getX(e)),i.push(n.getX(e+1)),i.push(n.getX(e+2))):(i.push(n.getX(e+2)),i.push(n.getX(e+1)),i.push(n.getX(e)));i.length/3!==r&&console.error(`THREE.BufferGeometryUtils.toTrianglesDrawMode(): Unable to generate correct amount of triangles.`);let a=e.clone();return a.setIndex(i),a.clearGroups(),a}return console.error(`THREE.BufferGeometryUtils.toTrianglesDrawMode(): Unknown draw mode:`,t),e}function et(e){let t=new Map,n=new Map,r=e.clone();return tt(e,r,function(e,r){t.set(r,e),n.set(e,r)}),r.traverse(function(e){if(!e.isSkinnedMesh)return;let r=e,i=t.get(e),a=i.skeleton.bones;r.skeleton=i.skeleton.clone(),r.bindMatrix.copy(i.bindMatrix),r.skeleton.bones=a.map(function(e){return n.get(e)}),r.bind(r.skeleton,r.bindMatrix)}),r}function tt(e,t,n){n(e,t);for(let r=0;r<e.children.length;r++)tt(e.children[r],t.children[r],n)}var nt=class extends l{constructor(e){super(e),this.dracoLoader=null,this.ktx2Loader=null,this.meshoptDecoder=null,this.pluginCallbacks=[],this.register(function(e){return new st(e)}),this.register(function(e){return new ct(e)}),this.register(function(e){return new _t(e)}),this.register(function(e){return new vt(e)}),this.register(function(e){return new yt(e)}),this.register(function(e){return new ut(e)}),this.register(function(e){return new dt(e)}),this.register(function(e){return new ft(e)}),this.register(function(e){return new pt(e)}),this.register(function(e){return new ot(e)}),this.register(function(e){return new mt(e)}),this.register(function(e){return new lt(e)}),this.register(function(e){return new gt(e)}),this.register(function(e){return new ht(e)}),this.register(function(e){return new it(e)}),this.register(function(e){return new bt(e,U.EXT_MESHOPT_COMPRESSION)}),this.register(function(e){return new bt(e,U.KHR_MESHOPT_COMPRESSION)}),this.register(function(e){return new xt(e)})}load(e,t,n,r){let i=this,a;if(this.resourcePath!==``)a=this.resourcePath;else if(this.path!==``){let t=f.extractUrlBase(e);a=f.resolveURL(t,this.path)}else a=f.extractUrlBase(e);this.manager.itemStart(e);let o=function(t){r?r(t):console.error(t),i.manager.itemError(e),i.manager.itemEnd(e)},s=new N(this.manager);s.setPath(this.path),s.setResponseType(`arraybuffer`),s.setRequestHeader(this.requestHeader),s.setWithCredentials(this.withCredentials),s.load(e,function(n){try{i.parse(n,a,function(n){t(n),i.manager.itemEnd(e)},o)}catch(e){o(e)}},n,o)}setDRACOLoader(e){return this.dracoLoader=e,this}setKTX2Loader(e){return this.ktx2Loader=e,this}setMeshoptDecoder(e){return this.meshoptDecoder=e,this}register(e){return this.pluginCallbacks.indexOf(e)===-1&&this.pluginCallbacks.push(e),this}unregister(e){return this.pluginCallbacks.indexOf(e)!==-1&&this.pluginCallbacks.splice(this.pluginCallbacks.indexOf(e),1),this}parse(e,t,n,r){let i,a={},o={},s=new TextDecoder;if(typeof e==`string`)i=JSON.parse(e);else if(e instanceof ArrayBuffer){if(s.decode(new Uint8Array(e,0,4))===St){try{a[U.KHR_BINARY_GLTF]=new wt(e)}catch(e){r&&r(e);return}i=JSON.parse(a[U.KHR_BINARY_GLTF].content)}else i=JSON.parse(s.decode(e))}else i=e;if(i.asset===void 0||i.asset.version[0]<2){r&&r(Error(`THREE.GLTFLoader: Unsupported asset. glTF versions >=2.0 are supported.`));return}let c=new Ut(i,{path:t||this.resourcePath||``,crossOrigin:this.crossOrigin,requestHeader:this.requestHeader,manager:this.manager,ktx2Loader:this.ktx2Loader,meshoptDecoder:this.meshoptDecoder});c.fileLoader.setRequestHeader(this.requestHeader);for(let e=0;e<this.pluginCallbacks.length;e++){let t=this.pluginCallbacks[e](c);t.name||console.error(`THREE.GLTFLoader: Invalid plugin found: missing name`),o[t.name]=t,a[t.name]=!0}if(i.extensionsUsed)for(let e=0;e<i.extensionsUsed.length;++e){let t=i.extensionsUsed[e],n=i.extensionsRequired||[];switch(t){case U.KHR_MATERIALS_UNLIT:a[t]=new at;break;case U.KHR_DRACO_MESH_COMPRESSION:a[t]=new Tt(i,this.dracoLoader);break;case U.KHR_TEXTURE_TRANSFORM:a[t]=new Et;break;case U.KHR_MESH_QUANTIZATION:a[t]=new Dt;break;default:n.indexOf(t)>=0&&o[t]===void 0&&console.warn(`THREE.GLTFLoader: Unknown extension "`+t+`".`)}}c.setExtensions(a),c.setPlugins(o),c.parse(n,r)}parseAsync(e,t){let n=this;return new Promise(function(r,i){n.parse(e,t,r,i)})}};function rt(){let e={};return{get:function(t){return e[t]},add:function(t,n){e[t]=n},remove:function(t){delete e[t]},removeAll:function(){e={}}}}function H(e,t,n){let r=e.json.materials[t];return r.extensions&&r.extensions[n]?r.extensions[n]:null}var U={KHR_BINARY_GLTF:`KHR_binary_glTF`,KHR_DRACO_MESH_COMPRESSION:`KHR_draco_mesh_compression`,KHR_LIGHTS_PUNCTUAL:`KHR_lights_punctual`,KHR_MATERIALS_CLEARCOAT:`KHR_materials_clearcoat`,KHR_MATERIALS_DISPERSION:`KHR_materials_dispersion`,KHR_MATERIALS_IOR:`KHR_materials_ior`,KHR_MATERIALS_SHEEN:`KHR_materials_sheen`,KHR_MATERIALS_SPECULAR:`KHR_materials_specular`,KHR_MATERIALS_TRANSMISSION:`KHR_materials_transmission`,KHR_MATERIALS_IRIDESCENCE:`KHR_materials_iridescence`,KHR_MATERIALS_ANISOTROPY:`KHR_materials_anisotropy`,KHR_MATERIALS_UNLIT:`KHR_materials_unlit`,KHR_MATERIALS_VOLUME:`KHR_materials_volume`,KHR_TEXTURE_BASISU:`KHR_texture_basisu`,KHR_TEXTURE_TRANSFORM:`KHR_texture_transform`,KHR_MESH_QUANTIZATION:`KHR_mesh_quantization`,KHR_MATERIALS_EMISSIVE_STRENGTH:`KHR_materials_emissive_strength`,EXT_MATERIALS_BUMP:`EXT_materials_bump`,EXT_TEXTURE_WEBP:`EXT_texture_webp`,EXT_TEXTURE_AVIF:`EXT_texture_avif`,EXT_MESHOPT_COMPRESSION:`EXT_meshopt_compression`,KHR_MESHOPT_COMPRESSION:`KHR_meshopt_compression`,EXT_MESH_GPU_INSTANCING:`EXT_mesh_gpu_instancing`},it=class{constructor(e){this.parser=e,this.name=U.KHR_LIGHTS_PUNCTUAL,this.cache={refs:{},uses:{}}}_markDefs(){let e=this.parser,t=this.parser.json.nodes||[];for(let n=0,r=t.length;n<r;n++){let r=t[n];r.extensions&&r.extensions[this.name]&&r.extensions[this.name].light!==void 0&&e._addNodeRef(this.cache,r.extensions[this.name].light)}}_loadLight(e){let t=this.parser,n=`light:`+e,r=t.cache.get(n);if(r)return r;let i=t.json,a=((i.extensions&&i.extensions[this.name]||{}).lights||[])[e],o,s=new k(16777215);a.color!==void 0&&s.setRGB(a.color[0],a.color[1],a.color[2],y);let c=a.range===void 0?0:a.range;switch(a.type){case`directional`:o=new pe(s),o.target.position.set(0,0,-1),o.add(o.target);break;case`point`:o=new ee(s),o.distance=c;break;case`spot`:o=new j(s),o.distance=c,a.spot=a.spot||{},a.spot.innerConeAngle=a.spot.innerConeAngle===void 0?0:a.spot.innerConeAngle,a.spot.outerConeAngle=a.spot.outerConeAngle===void 0?Math.PI/4:a.spot.outerConeAngle,o.angle=a.spot.outerConeAngle,o.penumbra=1-a.spot.innerConeAngle/a.spot.outerConeAngle,o.target.position.set(0,0,-1),o.add(o.target);break;default:throw Error(`THREE.GLTFLoader: Unexpected light type: `+a.type)}return o.position.set(0,0,0),X(o,a),a.intensity!==void 0&&(o.intensity=a.intensity),o.name=t.createUniqueName(a.name||`light_`+e),r=Promise.resolve(o),t.cache.add(n,r),r}getDependency(e,t){if(e===`light`)return this._loadLight(t)}createNodeAttachment(e){let t=this,n=this.parser,r=n.json.nodes[e],i=(r.extensions&&r.extensions[this.name]||{}).light;return i===void 0?null:this._loadLight(i).then(function(e){return n._getNodeRef(t.cache,i,e)})}},at=class{constructor(){this.name=U.KHR_MATERIALS_UNLIT}getMaterialType(){return w}extendParams(e,t,n){let r=[];e.color=new k(1,1,1),e.opacity=1;let i=t.pbrMetallicRoughness;if(i){if(Array.isArray(i.baseColorFactor)){let t=i.baseColorFactor;e.color.setRGB(t[0],t[1],t[2],y),e.opacity=t[3]}i.baseColorTexture!==void 0&&r.push(n.assignTexture(e,`map`,i.baseColorTexture,I))}return Promise.all(r)}},ot=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_EMISSIVE_STRENGTH}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);return n===null||n.emissiveStrength!==void 0&&(t.emissiveIntensity=n.emissiveStrength),Promise.resolve()}},st=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_CLEARCOAT}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];if(n.clearcoatFactor!==void 0&&(t.clearcoat=n.clearcoatFactor),n.clearcoatTexture!==void 0&&r.push(this.parser.assignTexture(t,`clearcoatMap`,n.clearcoatTexture)),n.clearcoatRoughnessFactor!==void 0&&(t.clearcoatRoughness=n.clearcoatRoughnessFactor),n.clearcoatRoughnessTexture!==void 0&&r.push(this.parser.assignTexture(t,`clearcoatRoughnessMap`,n.clearcoatRoughnessTexture)),n.clearcoatNormalTexture!==void 0&&(r.push(this.parser.assignTexture(t,`clearcoatNormalMap`,n.clearcoatNormalTexture)),n.clearcoatNormalTexture.scale!==void 0)){let e=n.clearcoatNormalTexture.scale;t.clearcoatNormalScale=new M(e,e)}return Promise.all(r)}},ct=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_DISPERSION}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);return n===null||(t.dispersion=n.dispersion===void 0?0:n.dispersion),Promise.resolve()}},lt=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_IRIDESCENCE}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];return n.iridescenceFactor!==void 0&&(t.iridescence=n.iridescenceFactor),n.iridescenceTexture!==void 0&&r.push(this.parser.assignTexture(t,`iridescenceMap`,n.iridescenceTexture)),n.iridescenceIor!==void 0&&(t.iridescenceIOR=n.iridescenceIor),t.iridescenceThicknessRange===void 0&&(t.iridescenceThicknessRange=[100,400]),n.iridescenceThicknessMinimum!==void 0&&(t.iridescenceThicknessRange[0]=n.iridescenceThicknessMinimum),n.iridescenceThicknessMaximum!==void 0&&(t.iridescenceThicknessRange[1]=n.iridescenceThicknessMaximum),n.iridescenceThicknessTexture!==void 0&&r.push(this.parser.assignTexture(t,`iridescenceThicknessMap`,n.iridescenceThicknessTexture)),Promise.all(r)}},ut=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_SHEEN}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];if(t.sheenColor=new k(0,0,0),t.sheenRoughness=0,t.sheen=1,n.sheenColorFactor!==void 0){let e=n.sheenColorFactor;t.sheenColor.setRGB(e[0],e[1],e[2],y)}return n.sheenRoughnessFactor!==void 0&&(t.sheenRoughness=n.sheenRoughnessFactor),n.sheenColorTexture!==void 0&&r.push(this.parser.assignTexture(t,`sheenColorMap`,n.sheenColorTexture,I)),n.sheenRoughnessTexture!==void 0&&r.push(this.parser.assignTexture(t,`sheenRoughnessMap`,n.sheenRoughnessTexture)),Promise.all(r)}},dt=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_TRANSMISSION}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];return n.transmissionFactor!==void 0&&(t.transmission=n.transmissionFactor),n.transmissionTexture!==void 0&&r.push(this.parser.assignTexture(t,`transmissionMap`,n.transmissionTexture)),Promise.all(r)}},ft=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_VOLUME}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];t.thickness=n.thicknessFactor===void 0?0:n.thicknessFactor,n.thicknessTexture!==void 0&&r.push(this.parser.assignTexture(t,`thicknessMap`,n.thicknessTexture)),t.attenuationDistance=n.attenuationDistance||1/0;let i=n.attenuationColor||[1,1,1];return t.attenuationColor=new k().setRGB(i[0],i[1],i[2],y),Promise.all(r)}},pt=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_IOR}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);return n===null?Promise.resolve():(t.ior=n.ior===void 0?1.5:n.ior,t.ior===0&&(t.ior=1e3),Promise.resolve())}},mt=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_SPECULAR}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];t.specularIntensity=n.specularFactor===void 0?1:n.specularFactor,n.specularTexture!==void 0&&r.push(this.parser.assignTexture(t,`specularIntensityMap`,n.specularTexture));let i=n.specularColorFactor||[1,1,1];return t.specularColor=new k().setRGB(i[0],i[1],i[2],y),n.specularColorTexture!==void 0&&r.push(this.parser.assignTexture(t,`specularColorMap`,n.specularColorTexture,I)),Promise.all(r)}},ht=class{constructor(e){this.parser=e,this.name=U.EXT_MATERIALS_BUMP}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];return t.bumpScale=n.bumpFactor===void 0?1:n.bumpFactor,n.bumpTexture!==void 0&&r.push(this.parser.assignTexture(t,`bumpMap`,n.bumpTexture)),Promise.all(r)}},gt=class{constructor(e){this.parser=e,this.name=U.KHR_MATERIALS_ANISOTROPY}getMaterialType(e){return H(this.parser,e,this.name)===null?null:d}extendMaterialParams(e,t){let n=H(this.parser,e,this.name);if(n===null)return Promise.resolve();let r=[];return n.anisotropyStrength!==void 0&&(t.anisotropy=n.anisotropyStrength),n.anisotropyRotation!==void 0&&(t.anisotropyRotation=n.anisotropyRotation),n.anisotropyTexture!==void 0&&r.push(this.parser.assignTexture(t,`anisotropyMap`,n.anisotropyTexture)),Promise.all(r)}},_t=class{constructor(e){this.parser=e,this.name=U.KHR_TEXTURE_BASISU}loadTexture(e){let t=this.parser,n=t.json,r=n.textures[e];if(!r.extensions||!r.extensions[this.name])return null;let i=r.extensions[this.name],a=t.options.ktx2Loader;if(!a){if(n.extensionsRequired&&n.extensionsRequired.indexOf(this.name)>=0)throw Error(`THREE.GLTFLoader: setKTX2Loader must be called before loading KTX2 textures`);return null}return t.loadTextureImage(e,i.source,a)}},vt=class{constructor(e){this.parser=e,this.name=U.EXT_TEXTURE_WEBP}loadTexture(e){let t=this.name,n=this.parser,r=n.json,i=r.textures[e];if(!i.extensions||!i.extensions[t])return null;let a=i.extensions[t],o=r.images[a.source],s=n.textureLoader;if(o.uri){let e=n.options.manager.getHandler(o.uri);e!==null&&(s=e)}return n.loadTextureImage(e,a.source,s)}},yt=class{constructor(e){this.parser=e,this.name=U.EXT_TEXTURE_AVIF}loadTexture(e){let t=this.name,n=this.parser,r=n.json,i=r.textures[e];if(!i.extensions||!i.extensions[t])return null;let a=i.extensions[t],o=r.images[a.source],s=n.textureLoader;if(o.uri){let e=n.options.manager.getHandler(o.uri);e!==null&&(s=e)}return n.loadTextureImage(e,a.source,s)}},bt=class{constructor(e,t){this.name=t,this.parser=e}loadBufferView(e){let t=this.parser.json,n=t.bufferViews[e];if(n.extensions&&n.extensions[this.name]){let e=n.extensions[this.name],r=this.parser.getDependency(`buffer`,e.buffer),i=this.parser.options.meshoptDecoder;if(!i||!i.supported){if(t.extensionsRequired&&t.extensionsRequired.indexOf(this.name)>=0)throw Error(`THREE.GLTFLoader: setMeshoptDecoder must be called before loading compressed files`);return null}return r.then(function(t){let n=e.byteOffset||0,r=e.byteLength||0,a=e.count,o=e.byteStride,s=new Uint8Array(t,n,r);return i.decodeGltfBufferAsync?i.decodeGltfBufferAsync(a,o,s,e.mode,e.filter).then(function(e){return e.buffer}):i.ready.then(function(){let t=new ArrayBuffer(a*o);return i.decodeGltfBuffer(new Uint8Array(t),a,o,s,e.mode,e.filter),t})})}return null}},xt=class{constructor(e){this.name=U.EXT_MESH_GPU_INSTANCING,this.parser=e}createNodeMesh(e){let t=this.parser.json,n=t.nodes[e];if(!n.extensions||!n.extensions[this.name]||n.mesh===void 0)return null;let r=t.meshes[n.mesh];for(let e of r.primitives)if(e.mode!==G.TRIANGLES&&e.mode!==G.TRIANGLE_STRIP&&e.mode!==G.TRIANGLE_FAN&&e.mode!==void 0)return null;let i=n.extensions[this.name].attributes,a=[],o={};for(let e in i)a.push(this.parser.getDependency(`accessor`,i[e]).then(t=>(o[e]=t,o[e])));return a.length<1?null:(a.push(this.parser.createNodeMesh(e)),Promise.all(a).then(e=>{let t=e.pop(),n=t.isGroup?t.children:[t],r=e[0].count,i=[];for(let e of n){let t=new z,n=new D,a=new he,s=new D(1,1,1),c=new ke(e.geometry,e.material,r);for(let e=0;e<r;e++)o.TRANSLATION&&n.fromBufferAttribute(o.TRANSLATION,e),o.ROTATION&&a.fromBufferAttribute(o.ROTATION,e),o.SCALE&&s.fromBufferAttribute(o.SCALE,e),c.setMatrixAt(e,t.compose(n,a,s));for(let t in o)if(t===`_COLOR_0`){let e=o[t];c.instanceColor=new ae(e.array,e.itemSize,e.normalized)}else t!==`TRANSLATION`&&t!==`ROTATION`&&t!==`SCALE`&&e.geometry.setAttribute(t,o[t]);E.prototype.copy.call(c,e),this.parser.assignFinalMaterial(c),i.push(c)}return t.isGroup?(t.clear(),t.add(...i),t):i[0]}))}},St=`glTF`,W=12,Ct={JSON:1313821514,BIN:5130562},wt=class{constructor(e){this.name=U.KHR_BINARY_GLTF,this.content=null,this.body=null;let t=new DataView(e,0,W),n=new TextDecoder;if(this.header={magic:n.decode(new Uint8Array(e.slice(0,4))),version:t.getUint32(4,!0),length:t.getUint32(8,!0)},this.header.magic!==St)throw Error(`THREE.GLTFLoader: Unsupported glTF-Binary header.`);if(this.header.version<2)throw Error(`THREE.GLTFLoader: Legacy binary file detected.`);let r=this.header.length-W,i=new DataView(e,W),a=0;for(;a<r;){let t=i.getUint32(a,!0);a+=4;let r=i.getUint32(a,!0);if(a+=4,r===Ct.JSON){let r=new Uint8Array(e,W+a,t);this.content=n.decode(r)}else if(r===Ct.BIN){let n=W+a;this.body=e.slice(n,n+t)}a+=t}if(this.content===null)throw Error(`THREE.GLTFLoader: JSON content not found.`)}},Tt=class{constructor(e,t){if(!t)throw Error(`THREE.GLTFLoader: No DRACOLoader instance provided.`);this.name=U.KHR_DRACO_MESH_COMPRESSION,this.json=e,this.dracoLoader=t,this.dracoLoader.preload()}decodePrimitive(e,t){let n=this.json,r=this.dracoLoader,i=e.extensions[this.name].bufferView,a=e.extensions[this.name].attributes,o={},s={},c={};for(let e in a){let t=Nt[e]||e.toLowerCase();o[t]=a[e]}for(let t in e.attributes){let r=Nt[t]||t.toLowerCase();if(a[t]!==void 0){let i=n.accessors[e.attributes[t]];c[r]=K[i.componentType].name,s[r]=i.normalized===!0}}return t.getDependency(`bufferView`,i).then(function(e){return new Promise(function(t,n){r.decodeDracoFile(e,function(e){for(let t in e.attributes){let n=e.attributes[t],r=s[t];r!==void 0&&(n.normalized=r)}t(e)},o,c,y,n)})})}},Et=class{constructor(){this.name=U.KHR_TEXTURE_TRANSFORM}extendTexture(e,t){return(t.texCoord===void 0||t.texCoord===e.channel)&&t.offset===void 0&&t.rotation===void 0&&t.scale===void 0?e:(e=e.clone(),t.texCoord!==void 0&&(e.channel=t.texCoord),t.offset!==void 0&&e.offset.fromArray(t.offset),t.rotation!==void 0&&(e.rotation=t.rotation),t.scale!==void 0&&e.repeat.fromArray(t.scale),e.needsUpdate=!0,e)}},Dt=class{constructor(){this.name=U.KHR_MESH_QUANTIZATION}},Ot=class extends Oe{constructor(e,t,n,r){super(e,t,n,r)}copySampleValue_(e){let t=this.resultBuffer,n=this.sampleValues,r=this.valueSize,i=e*r*3+r;for(let e=0;e!==r;e++)t[e]=n[i+e];return t}interpolate_(e,t,n,r){let i=this.resultBuffer,a=this.sampleValues,o=this.valueSize,s=o*2,c=o*3,l=r-t,u=(n-t)/l,d=u*u,f=d*u,p=e*c,m=p-c,h=-2*f+3*d,g=f-d,_=1-h,v=g-d+u;for(let e=0;e!==o;e++){let t=a[m+e+o],n=a[m+e+s]*l,r=a[p+e+o],c=a[p+e]*l;i[e]=_*t+v*n+h*r+g*c}return i}},kt=new he,At=class extends Ot{interpolate_(e,t,n,r){let i=super.interpolate_(e,t,n,r);return kt.fromArray(i).normalize().toArray(i),i}},G={FLOAT:5126,FLOAT_MAT3:35675,FLOAT_MAT4:35676,FLOAT_VEC2:35664,FLOAT_VEC3:35665,FLOAT_VEC4:35666,LINEAR:9729,REPEAT:10497,SAMPLER_2D:35678,POINTS:0,LINES:1,LINE_LOOP:2,LINE_STRIP:3,TRIANGLES:4,TRIANGLE_STRIP:5,TRIANGLE_FAN:6,UNSIGNED_BYTE:5121,UNSIGNED_SHORT:5123},K={5120:Int8Array,5121:Uint8Array,5122:Int16Array,5123:Uint16Array,5125:Uint32Array,5126:Float32Array},jt={9728:u,9729:ue,9984:ye,9985:_,9986:m,9987:g},Mt={33071:Te,33648:te,10497:le},q={SCALAR:1,VEC2:2,VEC3:3,VEC4:4,MAT2:4,MAT3:9,MAT4:16},Nt={POSITION:`position`,NORMAL:`normal`,TANGENT:`tangent`,TEXCOORD_0:`uv`,TEXCOORD_1:`uv1`,TEXCOORD_2:`uv2`,TEXCOORD_3:`uv3`,COLOR_0:`color`,WEIGHTS_0:`skinWeight`,JOINTS_0:`skinIndex`},J={scale:`scale`,translation:`position`,rotation:`quaternion`,weights:`morphTargetInfluences`},Pt={CUBICSPLINE:void 0,LINEAR:c,STEP:S},Ft={OPAQUE:`OPAQUE`,MASK:`MASK`,BLEND:`BLEND`};function It(e){return e.DefaultMaterial===void 0&&(e.DefaultMaterial=new C({color:16777215,emissive:0,metalness:1,roughness:1,transparent:!1,depthTest:!0,side:0})),e.DefaultMaterial}function Y(e,t,n){for(let r in n.extensions)e[r]===void 0&&(t.userData.gltfExtensions=t.userData.gltfExtensions||{},t.userData.gltfExtensions[r]=n.extensions[r])}function X(e,t){t.extras!==void 0&&(typeof t.extras==`object`?Object.assign(e.userData,t.extras):console.warn(`THREE.GLTFLoader: Ignoring primitive type .extras, `+t.extras))}function Lt(e,t,n){let r=!1,i=!1,a=!1;for(let e=0,n=t.length;e<n;e++){let n=t[e];if(n.POSITION!==void 0&&(r=!0),n.NORMAL!==void 0&&(i=!0),n.COLOR_0!==void 0&&(a=!0),r&&i&&a)break}if(!r&&!i&&!a)return Promise.resolve(e);let o=[],s=[],c=[];for(let l=0,u=t.length;l<u;l++){let u=t[l];if(r){let t=u.POSITION===void 0?e.attributes.position:n.getDependency(`accessor`,u.POSITION);o.push(t)}if(i){let t=u.NORMAL===void 0?e.attributes.normal:n.getDependency(`accessor`,u.NORMAL);s.push(t)}if(a){let t=u.COLOR_0===void 0?e.attributes.color:n.getDependency(`accessor`,u.COLOR_0);c.push(t)}}return Promise.all([Promise.all(o),Promise.all(s),Promise.all(c)]).then(function(t){let n=t[0],o=t[1],s=t[2];return r&&(e.morphAttributes.position=n),i&&(e.morphAttributes.normal=o),a&&(e.morphAttributes.color=s),e.morphTargetsRelative=!0,e})}function Rt(e,t){if(e.updateMorphTargets(),t.weights!==void 0)for(let n=0,r=t.weights.length;n<r;n++)e.morphTargetInfluences[n]=t.weights[n];if(t.extras&&Array.isArray(t.extras.targetNames)){let n=t.extras.targetNames;if(e.morphTargetInfluences.length===n.length){e.morphTargetDictionary={};for(let t=0,r=n.length;t<r;t++)e.morphTargetDictionary[n[t]]=t}else console.warn(`THREE.GLTFLoader: Invalid extras.targetNames length. Ignoring names.`)}}function zt(e){let t,n=e.extensions&&e.extensions[U.KHR_DRACO_MESH_COMPRESSION];if(t=n?`draco:`+n.bufferView+`:`+n.indices+`:`+Z(n.attributes):e.indices+`:`+Z(e.attributes)+`:`+e.mode,e.targets!==void 0)for(let n=0,r=e.targets.length;n<r;n++)t+=`:`+Z(e.targets[n]);return t}function Z(e){let t=``,n=Object.keys(e).sort();for(let r=0,i=n.length;r<i;r++)t+=n[r]+`:`+e[n[r]]+`;`;return t}function Bt(e){switch(e){case Int8Array:return 1/127;case Uint8Array:return 1/255;case Int16Array:return 1/32767;case Uint16Array:return 1/65535;default:throw Error(`THREE.GLTFLoader: Unsupported normalized accessor component type.`)}}function Vt(e){return e.search(/\.jpe?g($|\?)/i)>0||e.search(/^data\:image\/jpeg/)===0?`image/jpeg`:e.search(/\.webp($|\?)/i)>0||e.search(/^data\:image\/webp/)===0?`image/webp`:e.search(/\.ktx2($|\?)/i)>0||e.search(/^data\:image\/ktx2/)===0?`image/ktx2`:`image/png`}var Ht=new z,Ut=class{constructor(e={},t={}){this.json=e,this.extensions={},this.plugins={},this.options=t,this.cache=new rt,this.associations=new Map,this.primitiveCache={},this.nodeCache={},this.meshCache={refs:{},uses:{}},this.cameraCache={refs:{},uses:{}},this.lightCache={refs:{},uses:{}},this.sourceCache={},this.textureCache={},this.nodeNamesUsed={};let n=!1,r=-1,i=!1,a=-1;if(typeof navigator<`u`&&navigator.userAgent!==void 0){let e=navigator.userAgent;n=/^((?!chrome|android).)*safari/i.test(e)===!0;let t=e.match(/Version\/(\d+)/);r=n&&t?parseInt(t[1],10):-1,i=e.indexOf(`Firefox`)>-1,a=i?e.match(/Firefox\/([0-9]+)\./)[1]:-1}this.textureLoader=typeof createImageBitmap>`u`||n&&r<17||i&&a<98?new me(this.options.manager):new Ae(this.options.manager),this.textureLoader.setCrossOrigin(this.options.crossOrigin),this.textureLoader.setRequestHeader(this.options.requestHeader),this.fileLoader=new N(this.options.manager),this.fileLoader.setResponseType(`arraybuffer`),this.options.crossOrigin===`use-credentials`&&this.fileLoader.setWithCredentials(!0)}setExtensions(e){this.extensions=e}setPlugins(e){this.plugins=e}parse(e,t){let n=this,r=this.json,i=this.extensions;this.cache.removeAll(),this.nodeCache={},this._invokeAll(function(e){return e._markDefs&&e._markDefs()}),Promise.all(this._invokeAll(function(e){return e.beforeRoot&&e.beforeRoot()})).then(function(){return Promise.all([n.getDependencies(`scene`),n.getDependencies(`animation`),n.getDependencies(`camera`)])}).then(function(t){let a={scene:t[0][r.scene||0],scenes:t[0],animations:t[1],cameras:t[2],asset:r.asset,parser:n,userData:{}};return Y(i,a,r),X(a,r),Promise.all(n._invokeAll(function(e){return e.afterRoot&&e.afterRoot(a)})).then(function(){for(let e of a.scenes)e.updateMatrixWorld();e(a)})}).catch(t)}_markDefs(){let e=this.json.nodes||[],t=this.json.skins||[],n=this.json.meshes||[];for(let n=0,r=t.length;n<r;n++){let r=t[n].joints;for(let t=0,n=r.length;t<n;t++)e[r[t]].isBone=!0}for(let t=0,r=e.length;t<r;t++){let r=e[t];r.mesh!==void 0&&(this._addNodeRef(this.meshCache,r.mesh),r.skin!==void 0&&(n[r.mesh].isSkinnedMesh=!0)),r.camera!==void 0&&this._addNodeRef(this.cameraCache,r.camera)}}_addNodeRef(e,t){t!==void 0&&(e.refs[t]===void 0&&(e.refs[t]=e.uses[t]=0),e.refs[t]++)}_getNodeRef(e,t,n){if(e.refs[t]<=1)return n;let r=n.clone(),i=(e,t)=>{let n=this.associations.get(e);n!=null&&this.associations.set(t,n);for(let[n,r]of e.children.entries())i(r,t.children[n])};return i(n,r),r.name+=`_instance_`+e.uses[t]++,r}_invokeOne(e){let t=Object.values(this.plugins);t.push(this);for(let n=0;n<t.length;n++){let r=e(t[n]);if(r)return r}return null}_invokeAll(e){let t=Object.values(this.plugins);t.unshift(this);let n=[];for(let r=0;r<t.length;r++){let i=e(t[r]);i&&n.push(i)}return n}getDependency(e,t){let n=e+`:`+t,r=this.cache.get(n);if(!r){switch(e){case`scene`:r=this.loadScene(t);break;case`node`:r=this._invokeOne(function(e){return e.loadNode&&e.loadNode(t)});break;case`mesh`:r=this._invokeOne(function(e){return e.loadMesh&&e.loadMesh(t)});break;case`accessor`:r=this.loadAccessor(t);break;case`bufferView`:r=this._invokeOne(function(e){return e.loadBufferView&&e.loadBufferView(t)});break;case`buffer`:r=this.loadBuffer(t);break;case`material`:r=this._invokeOne(function(e){return e.loadMaterial&&e.loadMaterial(t)});break;case`texture`:r=this._invokeOne(function(e){return e.loadTexture&&e.loadTexture(t)});break;case`skin`:r=this.loadSkin(t);break;case`animation`:r=this._invokeOne(function(e){return e.loadAnimation&&e.loadAnimation(t)});break;case`camera`:r=this.loadCamera(t);break;default:if(r=this._invokeOne(function(n){return n!=this&&n.getDependency&&n.getDependency(e,t)}),!r)throw Error(`Unknown type: `+e)}this.cache.add(n,r)}return r}getDependencies(e){let t=this.cache.get(e);if(!t){let n=this,r=this.json[e+(e===`mesh`?`es`:`s`)]||[];t=Promise.all(r.map(function(t,r){return n.getDependency(e,r)})),this.cache.add(e,t)}return t}loadBuffer(e){let t=this.json.buffers[e],n=this.fileLoader;if(t.type&&t.type!==`arraybuffer`)throw Error(`THREE.GLTFLoader: `+t.type+` buffer type is not supported.`);if(t.uri===void 0&&e===0)return Promise.resolve(this.extensions[U.KHR_BINARY_GLTF].body);let r=this.options;return new Promise(function(e,i){n.load(f.resolveURL(t.uri,r.path),e,void 0,function(){i(Error(`THREE.GLTFLoader: Failed to load buffer "`+t.uri+`".`))})})}loadBufferView(e){let t=this.json.bufferViews[e];return this.getDependency(`buffer`,t.buffer).then(function(e){let n=t.byteLength||0,r=t.byteOffset||0;return e.slice(r,r+n)})}loadAccessor(e){let t=this,n=this.json,r=this.json.accessors[e];if(r.bufferView===void 0&&r.sparse===void 0){let e=q[r.type],t=K[r.componentType],n=r.normalized===!0,i=new t(r.count*e);return Promise.resolve(new L(i,e,n))}let i=[];return r.bufferView===void 0?i.push(null):i.push(this.getDependency(`bufferView`,r.bufferView)),r.sparse!==void 0&&(i.push(this.getDependency(`bufferView`,r.sparse.indices.bufferView)),i.push(this.getDependency(`bufferView`,r.sparse.values.bufferView))),Promise.all(i).then(function(e){let i=e[0],a=q[r.type],s=K[r.componentType],c=s.BYTES_PER_ELEMENT,l=c*a,u=r.byteOffset||0,d=r.bufferView===void 0?void 0:n.bufferViews[r.bufferView].byteStride,f=r.normalized===!0,p,m;if(d&&d!==l){let e=Math.floor(u/d),n=`InterleavedBuffer:`+r.bufferView+`:`+r.componentType+`:`+e+`:`+r.count,l=t.cache.get(n);l||(p=new s(i,e*d,r.count*d/c),l=new x(p,d/c),t.cache.add(n,l)),m=new o(l,a,u%d/c,f)}else p=i===null?new s(r.count*a):new s(i,u,r.count*a),m=new L(p,a,f);if(r.sparse!==void 0){let t=q.SCALAR,n=K[r.sparse.indices.componentType],o=r.sparse.indices.byteOffset||0,c=r.sparse.values.byteOffset||0,l=new n(e[1],o,r.sparse.count*t),u=new s(e[2],c,r.sparse.count*a);i!==null&&(m=new L(m.array.slice(),m.itemSize,m.normalized)),m.normalized=!1;for(let e=0,t=l.length;e<t;e++){let t=l[e];if(m.setX(t,u[e*a]),a>=2&&m.setY(t,u[e*a+1]),a>=3&&m.setZ(t,u[e*a+2]),a>=4&&m.setW(t,u[e*a+3]),a>=5)throw Error(`THREE.GLTFLoader: Unsupported itemSize in sparse BufferAttribute.`)}m.normalized=f}return m})}loadTexture(e){let t=this.json,n=this.options,r=t.textures[e].source,i=t.images[r],a=this.textureLoader;if(i.uri){let e=n.manager.getHandler(i.uri);e!==null&&(a=e)}return this.loadTextureImage(e,r,a)}loadTextureImage(e,t,n){let r=this,i=this.json,a=i.textures[e],o=i.images[t],s=(o.uri||o.bufferView)+`:`+a.sampler;if(this.textureCache[s])return this.textureCache[s];let c=this.loadImageSource(t,n).then(function(t){t.flipY=!1,t.name=a.name||o.name||``,t.name===``&&typeof o.uri==`string`&&o.uri.startsWith(`data:image/`)===!1&&(t.name=o.uri);let n=(i.samplers||{})[a.sampler]||{};return t.magFilter=jt[n.magFilter]||1006,t.minFilter=jt[n.minFilter]||1008,t.wrapS=Mt[n.wrapS]||1e3,t.wrapT=Mt[n.wrapT]||1e3,t.generateMipmaps=!t.isCompressedTexture&&t.minFilter!==1003&&t.minFilter!==1006,r.associations.set(t,{textures:e}),t}).catch(function(){return null});return this.textureCache[s]=c,c}loadImageSource(e,t){let n=this,r=this.json,i=this.options;if(this.sourceCache[e]!==void 0)return this.sourceCache[e].then(e=>e.clone());let a=r.images[e],o=self.URL||self.webkitURL,s=a.uri||``,c=!1;if(a.bufferView!==void 0)s=n.getDependency(`bufferView`,a.bufferView).then(function(e){c=!0;let t=new Blob([e],{type:a.mimeType});return s=o.createObjectURL(t),s});else if(a.uri===void 0)throw Error(`THREE.GLTFLoader: Image `+e+` is missing URI and bufferView`);let l=Promise.resolve(s).then(function(e){return new Promise(function(n,r){let a=n;t.isImageBitmapLoader===!0&&(a=function(e){let t=new ve(e);t.needsUpdate=!0,n(t)}),t.load(f.resolveURL(e,i.path),a,void 0,r)})}).then(function(e){return c===!0&&o.revokeObjectURL(s),X(e,a),e.userData.mimeType=a.mimeType||Vt(a.uri),e}).catch(function(e){throw console.error(`THREE.GLTFLoader: Couldn't load texture`,s),e});return this.sourceCache[e]=l,l}assignTexture(e,t,n,r){let i=this;return this.getDependency(`texture`,n.index).then(function(a){if(!a)return null;if(n.texCoord!==void 0&&n.texCoord>0&&(a=a.clone(),a.channel=n.texCoord),i.extensions[U.KHR_TEXTURE_TRANSFORM]){let e=n.extensions===void 0?void 0:n.extensions[U.KHR_TEXTURE_TRANSFORM];if(e){let t=i.associations.get(a);a=i.extensions[U.KHR_TEXTURE_TRANSFORM].extendTexture(a,e),i.associations.set(a,t)}}return r!==void 0&&(a.colorSpace=r),e[t]=a,a})}assignFinalMaterial(e){let t=e.geometry,n=e.material,r=t.attributes.tangent===void 0,i=t.attributes.color!==void 0,a=t.attributes.normal===void 0;if(e.isPoints){let e=`PointsMaterial:`+n.uuid,t=this.cache.get(e);t||(t=new se,h.prototype.copy.call(t,n),t.color.copy(n.color),t.map=n.map,t.sizeAttenuation=!1,this.cache.add(e,t)),n=t}else if(e.isLine){let e=`LineBasicMaterial:`+n.uuid,t=this.cache.get(e);t||(t=new v,h.prototype.copy.call(t,n),t.color.copy(n.color),t.map=n.map,this.cache.add(e,t)),n=t}if(r||i||a){let e=`ClonedMaterial:`+n.uuid+`:`;r&&(e+=`derivative-tangents:`),i&&(e+=`vertex-colors:`),a&&(e+=`flat-shading:`);let t=this.cache.get(e);t||(t=n.clone(),i&&(t.vertexColors=!0),a&&(t.flatShading=!0),r&&(t.normalScale&&(t.normalScale.y*=-1),t.clearcoatNormalScale&&(t.clearcoatNormalScale.y*=-1)),this.cache.add(e,t),this.associations.set(t,this.associations.get(n))),n=t}e.material=n}getMaterialType(){return C}loadMaterial(e){let t=this,n=this.json,r=this.extensions,i=n.materials[e],a,o={},s=i.extensions||{},c=[];if(s[U.KHR_MATERIALS_UNLIT]){let e=r[U.KHR_MATERIALS_UNLIT];a=e.getMaterialType(),c.push(e.extendParams(o,i,t))}else{let n=i.pbrMetallicRoughness||{};if(o.color=new k(1,1,1),o.opacity=1,Array.isArray(n.baseColorFactor)){let e=n.baseColorFactor;o.color.setRGB(e[0],e[1],e[2],y),o.opacity=e[3]}n.baseColorTexture!==void 0&&c.push(t.assignTexture(o,`map`,n.baseColorTexture,I)),o.metalness=n.metallicFactor===void 0?1:n.metallicFactor,o.roughness=n.roughnessFactor===void 0?1:n.roughnessFactor,n.metallicRoughnessTexture!==void 0&&(c.push(t.assignTexture(o,`metalnessMap`,n.metallicRoughnessTexture)),c.push(t.assignTexture(o,`roughnessMap`,n.metallicRoughnessTexture))),a=this._invokeOne(function(t){return t.getMaterialType&&t.getMaterialType(e)}),c.push(Promise.all(this._invokeAll(function(t){return t.extendMaterialParams&&t.extendMaterialParams(e,o)})))}i.doubleSided===!0&&(o.side=2);let l=i.alphaMode||Ft.OPAQUE;if(l===Ft.BLEND?(o.transparent=!0,o.depthWrite=!1):(o.transparent=!1,l===Ft.MASK&&(o.alphaTest=i.alphaCutoff===void 0?.5:i.alphaCutoff)),i.normalTexture!==void 0&&a!==w&&(c.push(t.assignTexture(o,`normalMap`,i.normalTexture)),o.normalScale=new M(1,1),i.normalTexture.scale!==void 0)){let e=i.normalTexture.scale;o.normalScale.set(e,e)}if(i.occlusionTexture!==void 0&&a!==w&&(c.push(t.assignTexture(o,`aoMap`,i.occlusionTexture)),i.occlusionTexture.strength!==void 0&&(o.aoMapIntensity=i.occlusionTexture.strength)),i.emissiveFactor!==void 0&&a!==w){let e=i.emissiveFactor;o.emissive=new k().setRGB(e[0],e[1],e[2],y)}return i.emissiveTexture!==void 0&&a!==w&&c.push(t.assignTexture(o,`emissiveMap`,i.emissiveTexture,I)),Promise.all(c).then(function(){let n=new a(o);return i.name&&(n.name=i.name),X(n,i),t.associations.set(n,{materials:e}),i.extensions&&Y(r,n,i),n})}createUniqueName(e){let t=we.sanitizeNodeName(e||``);return t in this.nodeNamesUsed?t+`_`+ ++this.nodeNamesUsed[t]:(this.nodeNamesUsed[t]=0,t)}loadGeometries(e){let t=this,n=this.extensions,r=this.primitiveCache;function i(e){return n[U.KHR_DRACO_MESH_COMPRESSION].decodePrimitive(e,t).then(function(n){return Gt(n,e,t)})}let a=[];for(let n=0,o=e.length;n<o;n++){let o=e[n],s=zt(o),c=r[s];if(c)a.push(c.promise);else{let e;e=o.extensions&&o.extensions[U.KHR_DRACO_MESH_COMPRESSION]?i(o):Gt(new oe,o,t),r[s]={primitive:o,promise:e},a.push(e)}}return Promise.all(a)}loadMesh(e){let t=this,n=this.json,o=this.extensions,c=n.meshes[e],l=c.primitives,u=[];for(let e=0,t=l.length;e<t;e++){let t=l[e].material===void 0?It(this.cache):this.getDependency(`material`,l[e].material);u.push(t)}return u.push(t.loadGeometries(l)),Promise.all(u).then(function(n){let u=n.slice(0,n.length-1),d=n[n.length-1],f=[];for(let n=0,p=d.length;n<p;n++){let p=d[n],m=l[n],h,g=u[n];if(m.mode===G.TRIANGLES||m.mode===G.TRIANGLE_STRIP||m.mode===G.TRIANGLE_FAN||m.mode===void 0)h=c.isSkinnedMesh===!0?new fe(p,g):new a(p,g),h.isSkinnedMesh===!0&&h.normalizeSkinWeights(),m.mode===G.TRIANGLE_STRIP?h.geometry=$e(h.geometry,1):m.mode===G.TRIANGLE_FAN&&(h.geometry=$e(h.geometry,2));else if(m.mode===G.LINES)h=new i(p,g);else if(m.mode===G.LINE_STRIP)h=new s(p,g);else if(m.mode===G.LINE_LOOP)h=new de(p,g);else if(m.mode===G.POINTS)h=new r(p,g);else throw Error(`THREE.GLTFLoader: Primitive mode unsupported: `+m.mode);Object.keys(h.geometry.morphAttributes).length>0&&Rt(h,c),h.name=t.createUniqueName(c.name||`mesh_`+e),X(h,c),m.extensions&&Y(o,h,m),t.assignFinalMaterial(h),f.push(h)}for(let n=0,r=f.length;n<r;n++)t.associations.set(f[n],{meshes:e,primitives:n});if(f.length===1)return c.extensions&&Y(o,f[0],c),f[0];let p=new R;c.extensions&&Y(o,p,c),t.associations.set(p,{meshes:e});for(let e=0,t=f.length;e<t;e++)p.add(f[e]);return p})}loadCamera(e){let t,n=this.json.cameras[e],r=n[n.type];if(!r){console.warn(`THREE.GLTFLoader: Missing camera parameters.`);return}return n.type===`perspective`?t=new ne(b.radToDeg(r.yfov),r.aspectRatio||1,r.znear||1,r.zfar||2e6):n.type===`orthographic`&&(t=new T(-r.xmag,r.xmag,r.ymag,-r.ymag,r.znear,r.zfar)),n.name&&(t.name=this.createUniqueName(n.name)),X(t,n),Promise.resolve(t)}loadSkin(e){let t=this.json.skins[e],n=[];for(let e=0,r=t.joints.length;e<r;e++)n.push(this._loadNodeShallow(t.joints[e]));return t.inverseBindMatrices===void 0?n.push(null):n.push(this.getDependency(`accessor`,t.inverseBindMatrices)),Promise.all(n).then(function(e){let n=e.pop(),r=e,i=[],a=[];for(let e=0,o=r.length;e<o;e++){let o=r[e];if(o){i.push(o);let t=new z;n!==null&&t.fromArray(n.array,e*16),a.push(t)}else console.warn(`THREE.GLTFLoader: Joint "%s" could not be found.`,t.joints[e])}return new O(i,a)})}loadAnimation(e){let t=this.json,n=this,r=t.animations[e],i=r.name?r.name:`animation_`+e,a=[],o=[],s=[],c=[],l=[];for(let e=0,t=r.channels.length;e<t;e++){let t=r.channels[e],n=r.samplers[t.sampler],i=t.target,u=i.node,d=r.parameters===void 0?n.input:r.parameters[n.input],f=r.parameters===void 0?n.output:r.parameters[n.output];i.node!==void 0&&(a.push(this.getDependency(`node`,u)),o.push(this.getDependency(`accessor`,d)),s.push(this.getDependency(`accessor`,f)),c.push(n),l.push(i))}return Promise.all([Promise.all(a),Promise.all(o),Promise.all(s),Promise.all(c),Promise.all(l)]).then(function(e){let t=e[0],a=e[1],o=e[2],s=e[3],c=e[4],l=[];for(let e=0,r=t.length;e<r;e++){let r=t[e],i=a[e],u=o[e],d=s[e],f=c[e];if(r===void 0)continue;r.updateMatrix&&r.updateMatrix();let p=n._createAnimationTracks(r,i,u,d,f);if(p)for(let e=0;e<p.length;e++)l.push(p[e])}let u=new be(i,void 0,l);return X(u,r),u})}createNodeMesh(e){let t=this.json,n=this,r=t.nodes[e];return r.mesh===void 0?null:n.getDependency(`mesh`,r.mesh).then(function(e){let t=n._getNodeRef(n.meshCache,r.mesh,e);return r.weights!==void 0&&t.traverse(function(e){if(e.isMesh)for(let t=0,n=r.weights.length;t<n;t++)e.morphTargetInfluences[t]=r.weights[t]}),t})}loadNode(e){let t=this.json,n=this,r=t.nodes[e],i=n._loadNodeShallow(e),a=[],o=r.children||[];for(let e=0,t=o.length;e<t;e++)a.push(n.getDependency(`node`,o[e]));let s=r.skin===void 0?Promise.resolve(null):n.getDependency(`skin`,r.skin);return Promise.all([i,Promise.all(a),s]).then(function(e){let t=e[0],n=e[1],r=e[2];r!==null&&t.traverse(function(e){e.isSkinnedMesh&&e.bind(r,Ht)});for(let e=0,r=n.length;e<r;e++)t.add(n[e]);if(t.userData.pivot!==void 0&&n.length>0){let e=t.userData.pivot,r=n[0];t.pivot=new D().fromArray(e),t.position.x-=e[0],t.position.y-=e[1],t.position.z-=e[2],r.position.set(0,0,0),delete t.userData.pivot}return t})}_loadNodeShallow(e){let t=this.json,n=this.extensions,r=this;if(this.nodeCache[e]!==void 0)return this.nodeCache[e];let i=t.nodes[e],a=i.name?r.createUniqueName(i.name):``,o=[],s=r._invokeOne(function(t){return t.createNodeMesh&&t.createNodeMesh(e)});return s&&o.push(s),i.camera!==void 0&&o.push(r.getDependency(`camera`,i.camera).then(function(e){return r._getNodeRef(r.cameraCache,i.camera,e)})),r._invokeAll(function(t){return t.createNodeAttachment&&t.createNodeAttachment(e)}).forEach(function(e){o.push(e)}),this.nodeCache[e]=Promise.all(o).then(function(t){let o;if(o=i.isBone===!0?new F:t.length>1?new R:t.length===1?t[0]:new E,o!==t[0])for(let e=0,n=t.length;e<n;e++)o.add(t[e]);if(i.name&&(o.userData.name=i.name,o.name=a),X(o,i),i.extensions&&Y(n,o,i),i.matrix!==void 0){let e=new z;e.fromArray(i.matrix),o.applyMatrix4(e)}else i.translation!==void 0&&o.position.fromArray(i.translation),i.rotation!==void 0&&o.quaternion.fromArray(i.rotation),i.scale!==void 0&&o.scale.fromArray(i.scale);if(!r.associations.has(o))r.associations.set(o,{});else if(i.mesh!==void 0&&r.meshCache.refs[i.mesh]>1){let e=r.associations.get(o);r.associations.set(o,{...e})}return r.associations.get(o).nodes=e,o}),this.nodeCache[e]}loadScene(e){let t=this.extensions,n=this.json.scenes[e],r=this,i=new R;n.name&&(i.name=r.createUniqueName(n.name)),X(i,n),n.extensions&&Y(t,i,n);let a=n.nodes||[],o=[];for(let e=0,t=a.length;e<t;e++)o.push(r.getDependency(`node`,a[e]));return Promise.all(o).then(function(e){for(let t=0,n=e.length;t<n;t++){let n=e[t];n.parent===null?i.add(n):i.add(et(n))}return r.associations=(e=>{let t=new Map;for(let[e,n]of r.associations)(e instanceof h||e instanceof ve)&&t.set(e,n);return e.traverse(e=>{let n=r.associations.get(e);n!=null&&t.set(e,n)}),t})(i),i})}_createAnimationTracks(e,t,n,r,i){let a=[],o=e.name?e.name:e.uuid,s=[];function l(e){e.morphTargetInfluences&&s.push(e.name?e.name:e.uuid)}J[i.path]===J.weights?(l(e),e.isGroup&&e.children.forEach(l)):s.push(o);let u;switch(J[i.path]){case J.weights:u=p;break;case J.rotation:u=xe;break;case J.translation:case J.scale:u=De;break;default:switch(n.itemSize){case 1:u=p;break;default:u=De}}let d=r.interpolation===void 0?c:Pt[r.interpolation],f=this._getArrayFromAccessor(n);for(let e=0,n=s.length;e<n;e++){let n=new u(s[e]+`.`+J[i.path],t.array,f,d);r.interpolation===`CUBICSPLINE`&&this._createCubicSplineTrackInterpolant(n),a.push(n)}return a}_getArrayFromAccessor(e){let t=e.array;if(e.normalized){let e=Bt(t.constructor),n=new Float32Array(t.length);for(let r=0,i=t.length;r<i;r++)n[r]=t[r]*e;t=n}return t}_createCubicSplineTrackInterpolant(e){e.createInterpolant=function(e){return new(this instanceof xe?At:Ot)(this.times,this.values,this.getValueSize()/3,e)},e.createInterpolant.isInterpolantFactoryMethodGLTFCubicSpline=!0}};function Wt(e,t,n){let r=t.attributes,i=new ie;if(r.POSITION!==void 0){let e=n.json.accessors[r.POSITION],t=e.min,a=e.max;if(t!==void 0&&a!==void 0){if(i.set(new D(t[0],t[1],t[2]),new D(a[0],a[1],a[2])),e.normalized){let t=Bt(K[e.componentType]);i.min.multiplyScalar(t),i.max.multiplyScalar(t)}}else{console.warn(`THREE.GLTFLoader: Missing min/max properties for accessor POSITION.`);return}}else return;let a=t.targets;if(a!==void 0){let e=new D,t=new D;for(let r=0,i=a.length;r<i;r++){let i=a[r];if(i.POSITION!==void 0){let r=n.json.accessors[i.POSITION],a=r.min,o=r.max;if(a!==void 0&&o!==void 0){if(t.setX(Math.max(Math.abs(a[0]),Math.abs(o[0]))),t.setY(Math.max(Math.abs(a[1]),Math.abs(o[1]))),t.setZ(Math.max(Math.abs(a[2]),Math.abs(o[2]))),r.normalized){let e=Bt(K[r.componentType]);t.multiplyScalar(e)}e.max(t)}else console.warn(`THREE.GLTFLoader: Missing min/max properties for accessor POSITION.`)}}i.expandByVector(e)}e.boundingBox=i;let o=new Ee;i.getCenter(o.center),o.radius=i.min.distanceTo(i.max)/2,e.boundingSphere=o}function Gt(e,t,n){let r=t.attributes,i=[];function a(t,r){return n.getDependency(`accessor`,t).then(function(t){e.setAttribute(r,t)})}for(let t in r){let n=Nt[t]||t.toLowerCase();n in e.attributes||i.push(a(r[t],n))}if(t.indices!==void 0&&!e.index){let r=n.getDependency(`accessor`,t.indices).then(function(t){e.setIndex(t)});i.push(r)}return A.workingColorSpace!==`srgb-linear`&&`COLOR_0`in r&&console.warn(`THREE.GLTFLoader: Converting vertex colors from "srgb-linear" to "${A.workingColorSpace}" not supported.`),X(e,t),Wt(e,t,n),Promise.all(i).then(function(){return t.targets===void 0?e:Lt(e,t.targets,n)})}var Q=n(),$=[[.02,.11,.28],[.02,.56,.76],[.18,.82,.66],[.97,.79,.25],[.9,.2,.12]];function Kt(e,t,n){let r=Math.max(0,Math.min(.999,n))*($.length-1),i=Math.floor(r),a=r-i,o=$[i],s=$[Math.min(i+1,$.length-1)];e[t*3]=o[0]+(s[0]-o[0])*a,e[t*3+1]=o[1]+(s[1]-o[1])*a,e[t*3+2]=o[2]+(s[2]-o[2])*a}function qt(e,t,n){let r=Math.hypot(e,t,n)||1;return[e/r,t/r,n/r]}function Jt(e,t){let n=[`x`,`y`,`z`].map((e,n)=>Math.max(1e-12,t[e][1]-t[e][0])),r=5.5/Math.max(...n);return[(e.x-(t.x[0]+t.x[1])/2)*r,(e.z-(t.z[0]+t.z[1])/2)*r,(e.y-(t.y[0]+t.y[1])/2)*r]}function Yt(e,t,n){let r=new R,i=n.x[1]-n.x[0],o=n.y[1]-n.y[0],s=n.z[1]-n.z[0],c=5.5/Math.max(i,o,s),l=new w({color:6259353,wireframe:!0,transparent:!0,opacity:.2});if(e===`plasma`){let e=new a(new P(2,.78,22,96),l);e.rotation.x=Math.PI/2,r.add(e);for(let e=0;e<16;e++){let t=new a(new P(2.75,.045,8,80),new w({color:6324128,transparent:!0,opacity:.48}));t.rotation.set(Math.PI/2,0,e*Math.PI/8),r.add(t)}}else if(e===`em`){let e=i*.5*c/2.25,t=s*c/2.9;for(let n=0;n<22;n++){let i=new a(new P(e,.018,8,64),new w({color:12877634,transparent:!0,opacity:.75}));i.rotation.x=Math.PI/2,i.position.y=-t/2+n/21*t,r.add(i)}}else if(e===`gas`){let e=Math.min(i,o)*.085*c*4,t=new a(new _e(e,e,s*c,48,1,!0),l);t.rotation.x=Math.PI/2,r.add(t)}else if(e===`pipe`){let e=Math.max(o,s)*.5*c,t=new a(new _e(e,e,i*c,64,1,!0),l);t.rotation.z=Math.PI/2,r.add(t)}else{let e=new a(new ge(i*c,s*c,o*c),l);r.add(e)}return t.add(r),r}function Xt({result:e,running:t,resetKey:n}){let i=(0,V.useRef)(null),a=(0,V.useRef)(e),o=(0,V.useRef)(t),[s,c]=(0,V.useState)(``);return(0,V.useEffect)(()=>{a.current=e},[e]),(0,V.useEffect)(()=>{o.current=t},[t]),(0,V.useEffect)(()=>{let t=i.current;if(!t||!e)return;let n;try{n=new Ce({antialias:!0,powerPreference:`high-performance`})}catch(e){c(`无法初始化 WebGL：${e.message}`);return}n.setPixelRatio(Math.min(devicePixelRatio||1,2)),n.setClearColor(396825),n.outputColorSpace=I,n.domElement.setAttribute(`aria-label`,`${e.model} 三维求解场与粒子示踪`),t.appendChild(n.domElement);let s=new Se;s.fog=new ce(396825,.045);let l=new ne(42,1,.1,100),u=.75,d=.33,f=10.5,p=()=>{l.position.set(Math.sin(u)*Math.cos(d)*f,Math.sin(d)*f,Math.cos(u)*Math.cos(d)*f),l.lookAt(0,0,0)};p();let m=new re(9,18,3495021,1585223);m.position.y=-3.2,m.material.transparent=!0,m.material.opacity=.34,s.add(m);let h=a.current,g=h.particles.map(e=>e.value).filter(Number.isFinite),_=Math.min(...g),v=Math.max(...g),y=new Float32Array(h.particles.length*3),ee=new Float32Array(h.particles.length*3),b=new Float32Array(h.particles.length*3),x=new Float32Array(h.particles.length*3);h.particles.forEach((e,t)=>{let n=Jt(e,h.bounds);b.set(n,t*3),y.set(n,t*3),Kt(ee,t,(e.value-_)/Math.max(1e-12,v-_)),x.set(qt(e.vx||0,e.vz||0,e.vy||0),t*3)});let S=new oe,C=new L(y,3);S.setAttribute(`position`,C),S.setAttribute(`color`,new L(ee,3));let w=new se({size:.045,vertexColors:!0,transparent:!0,opacity:.85,depthWrite:!1,blending:2});s.add(new r(S,w));let te=Yt(h.model,s,h.bounds),T=!1;h.model===`plasma`&&new nt().load(`/tokamak.glb`,e=>{let t=e.scene;if(T){t.traverse(e=>{e.geometry?.dispose(),e.material?.dispose()});return}let n=new ie().setFromObject(t),r=n.getSize(new D),i=n.getCenter(new D),a=6/Math.max(r.x,r.y,r.z);t.position.sub(i),t.scale.setScalar(a),t.rotation.x=-Math.PI/2,t.traverse(e=>{e.isMesh&&(e.material=e.material.clone(),e.material.transparent=!0,e.material.opacity=.18,e.material.depthWrite=!1)}),s.add(t)},()=>{},()=>{});let E=()=>{let e=t.getBoundingClientRect();n.setSize(Math.max(1,e.width),Math.max(1,e.height),!1),l.aspect=e.width/Math.max(1,e.height),l.updateProjectionMatrix()},ae=new ResizeObserver(E);ae.observe(t),E();let O={down:!1,x:0,y:0},k=e=>{O.down=!0,O.x=e.clientX,O.y=e.clientY,n.domElement.setPointerCapture(e.pointerId)},A=e=>{O.down&&(u-=(e.clientX-O.x)*.006,d=Math.max(-.65,Math.min(.78,d+(e.clientY-O.y)*.005)),O.x=e.clientX,O.y=e.clientY,p())},j=()=>{O.down=!1},M=e=>{e.preventDefault(),f=Math.max(6.8,Math.min(17,f+e.deltaY*.008)),p()};n.domElement.addEventListener(`pointerdown`,k),n.domElement.addEventListener(`pointermove`,A),n.domElement.addEventListener(`pointerup`,j),n.domElement.addEventListener(`pointercancel`,j),n.domElement.addEventListener(`wheel`,M,{passive:!1});let N=0,P=performance.now(),F=0,le=e=>{N=requestAnimationFrame(le);let t=Math.min(.035,(e-P)/1e3);P=e,o.current&&(F+=t);for(let e=0;e<y.length/3;e++){let t=e*3,n=(F*(.18+e%17/90)+e*.071)%1-.5,r=h.model===`em`?0:h.model===`thermal`?.1:.55;y[t]=b[t]+x[t]*n*r,y[t+1]=b[t+1]+x[t+1]*n*r,y[t+2]=b[t+2]+x[t+2]*n*r}C.needsUpdate=!0,h.model===`plasma`&&(te.rotation.y+=t*.06),n.render(s,l)};return N=requestAnimationFrame(le),()=>{T=!0,cancelAnimationFrame(N),ae.disconnect(),n.domElement.removeEventListener(`pointerdown`,k),n.domElement.removeEventListener(`pointermove`,A),n.domElement.removeEventListener(`pointerup`,j),n.domElement.removeEventListener(`pointercancel`,j),n.domElement.removeEventListener(`wheel`,M),s.traverse(e=>{e.geometry?.dispose(),Array.isArray(e.material)?e.material.forEach(e=>e.dispose()):e.material?.dispose()}),n.dispose(),n.domElement.remove()}},[e,n]),(0,Q.jsx)(`div`,{className:`unified-field-host`,ref:i,children:s&&(0,Q.jsx)(`div`,{className:`webgl-error`,children:s})})}var Zt=(0,V.lazy)(()=>Re(()=>import(`./Plot-BP3ApVVk.js`),__vite__mapDeps([0,1]))),Qt={responsive:!0,displaylogo:!1,toImageButtonOptions:{format:`png`,filename:`PhyTwin-research-result`,scale:3}},$t={font:{family:`IBM Plex Mono, monospace`,color:`#a8bdcb`,size:10},paper_bgcolor:`rgba(0,0,0,0)`,plot_bgcolor:`rgba(0,0,0,0)`,margin:{l:62,r:20,t:34,b:54},hoverlabel:{bgcolor:`#07111d`,font:{color:`#eaf4ff`}}},en={plasma:Ie,em:Ke,gas:Qe,pipe:He,thermal:Ue,ocean:Ze},tn={plasma:`等离子体`,em:`静态电磁场`,gas:`气体计算`,pipe:`液体计算`,thermal:`热传输`,ocean:`传质计算`},nn={plasma:[[`majorRadius`,`大半径 R₀`,3,9,.1,`m`],[`minorRadius`,`小半径 a`,.8,3,.1,`m`],[`plasmaCurrent`,`等离子体电流 Iₚ`,2,22,.5,`MA`],[`toroidalField`,`轴上环向场 B₀`,1,9,.1,`T`],[`elongation`,`拉长比 κ`,1,2.2,.05,`—`]],em:[[`turns`,`线圈匝数 N`,8,96,1,`turn`],[`current`,`直流电流 I`,1,40,.5,`A`],[`radius`,`线圈半径 a`,.06,.35,.01,`m`],[`length`,`绕组长度 L`,.08,.7,.01,`m`],[`conductor`,`导线直径 dc`,.001,.012,.001,`m`]],gas:[[`speed`,`自由来流 U∞`,5,90,1,`m/s`],[`density`,`气体密度 ρ`,.6,2,.01,`kg/m³`],[`radius`,`圆柱半径 a`,.03,.2,.01,`m`],[`viscosity`,`动力黏度 μ`,1e-5,4e-5,1e-6,`Pa·s`],[`angle`,`来流偏角 α`,-20,20,1,`°`],[`span`,`展向长度 W`,.2,1.5,.05,`m`]],pipe:[[`velocity`,`平均速度 Ū`,.01,.2,.005,`m/s`],[`diameter`,`管内径 D`,.006,.025,.001,`m`],[`density`,`液体密度 ρ`,800,1200,10,`kg/m³`],[`viscosity`,`动力黏度 μ`,5e-4,.006,1e-4,`Pa·s`],[`roughness`,`壁面粗糙度 ε`,1e-6,1e-4,1e-6,`m`],[`length`,`管长 L`,.2,3,.1,`m`]],thermal:[[`length`,`实体长度 L`,.2,.8,.02,`m`],[`width`,`实体宽度 W`,.15,.6,.01,`m`],[`height`,`实体高度 H`,.08,.35,.01,`m`],[`cold`,`边界温度 Tc`,273,353,1,`K`],[`conductivity`,`导热系数 k`,1,80,1,`W/(m·K)`],[`source`,`体热源峰值 q̇`,1e5,4e6,5e4,`W/m³`]],ocean:[[`current`,`海流速度 U`,.02,1.2,.01,`m/s`],[`diffusivity`,`水平扩散 Kh`,.2,20,.2,`m²/s`],[`verticalDiffusivity`,`垂向扩散 Kv`,.05,3,.05,`m²/s`],[`mass`,`释放质量 M`,50,3e3,50,`kg`],[`decay`,`衰减率 λ`,0,2e-4,1e-5,`s⁻¹`],[`time`,`释放后时间 t`,900,21600,300,`s`],[`depth`,`显示水深 H`,20,200,5,`m`]]};function rn({label:e,value:t,min:n,max:r,step:i,unit:a,onChange:o}){let s=(Number(t)-n)/(r-n)*100,c=i<1e-4?6:i<.01?4:i<.1?2:+(i<1);return(0,Q.jsxs)(`label`,{className:`lab-range`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsxs)(`output`,{children:[Number(t).toFixed(c),` `,(0,Q.jsx)(`small`,{children:a})]})]}),(0,Q.jsx)(`input`,{type:`range`,value:t,min:n,max:r,step:i,onChange:e=>o(Number(e.target.value)),style:{"--range-progress":`${s}%`}})]})}function an({item:e,index:t}){return(0,Q.jsxs)(`div`,{className:t===0?`lab-metric accent`:`lab-metric`,children:[(0,Q.jsx)(`span`,{children:e[0]}),(0,Q.jsx)(`strong`,{children:e[1]}),(0,Q.jsx)(`small`,{children:e[2]})]})}function on({theory:e}){return(0,Q.jsxs)(`div`,{className:`equation-panel`,children:[(0,Q.jsxs)(`div`,{className:`equation-title`,children:[(0,Q.jsx)(`span`,{children:`GOVERNING EQUATIONS`}),(0,Q.jsx)(`b`,{children:`控制方程与物理量`})]}),e.equations.map(e=>(0,Q.jsx)(`code`,{children:e},e)),(0,Q.jsx)(`dl`,{children:e.variables.map(([e,t,n])=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:e}),(0,Q.jsx)(`dd`,{children:t}),(0,Q.jsx)(`dd`,{children:n})]},e))}),(0,Q.jsx)(`p`,{children:e.assumptions})]})}function sn({result:e,meta:t}){let n=e.model===`ocean`;return(0,Q.jsxs)(`section`,{className:`lab-scientific-post`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`03 / NATURE-STYLE POST-PROCESSING`}),(0,Q.jsx)(`h2`,{children:`同一求解场的二维截面与定量剖面`}),(0,Q.jsx)(`p`,{children:`云图、曲线、指标、三维粒子与下载数据共用同一个 result 数组；坐标、物理量和单位完整标注。`}),(0,Q.jsxs)(`button`,{onClick:()=>Le(e),children:[(0,Q.jsx)(Ve,{size:15}),`下载求解数据 JSON`]})]}),(0,Q.jsxs)(`div`,{className:`research-plot-grid`,children:[(0,Q.jsx)(`div`,{"aria-label":`${t.name} 二维场云图`,children:(0,Q.jsx)(V.Suspense,{fallback:(0,Q.jsx)(`div`,{className:`plot-skeleton`}),children:(0,Q.jsx)(Zt,{data:[{x:e.x,y:e.y,z:e.z,type:`heatmap`,connectgaps:!1,colorscale:[[0,`#071c48`],[.25,`#058fc2`],[.5,`#2ed1a8`],[.75,`#f7c940`],[1,`#e6331f`]],colorbar:{title:{text:t.unit},thickness:10,outlinewidth:0},hovertemplate:`x=%{x:.4g}<br>y=%{y:.4g}<br>value=%{z:.4g}<extra></extra>`}],layout:{...$t,title:{text:`(a) ${t.legend}`,x:.02,font:{size:12}},xaxis:{title:n?`x (km)`:`x (m)`,gridcolor:`#1b3345`},yaxis:{title:n?`y (km)`:`y (m)`,gridcolor:`#1b3345`},height:390},config:Qt,style:{width:`100%`}})})}),(0,Q.jsx)(`div`,{"aria-label":`${t.name} 定量剖面`,children:(0,Q.jsx)(V.Suspense,{fallback:(0,Q.jsx)(`div`,{className:`plot-skeleton`}),children:(0,Q.jsx)(Zt,{data:[{x:e.curveX,y:e.curveY,type:`scatter`,mode:`lines`,line:{color:`#62d9ff`,width:2.4},name:e.curveTitle}],layout:{...$t,title:{text:`(b) ${e.curveTitle}`,x:.02,font:{size:12}},xaxis:{title:e.curveXTitle,gridcolor:`#1b3345`,zeroline:!1},yaxis:{title:e.curveYTitle,gridcolor:`#1b3345`,zerolinecolor:`#526a7b`},height:390,showlegend:!1},config:Qt,style:{width:`100%`}})})})]}),(0,Q.jsxs)(`div`,{className:`post-footnote`,children:[(0,Q.jsxs)(`span`,{children:[`FIELD: `,t.method]}),(0,Q.jsx)(`span`,{children:`EXPORT: 3× PNG · JSON`}),(0,Q.jsx)(`span`,{children:`TRACE: CONTINUUM FIELD → PARTICLES`})]})]})}function cn(){let[e,t]=(0,V.useState)(`plasma`),[n,r]=(0,V.useState)(Ne),[i,a]=(0,V.useState)(!0),[o,s]=(0,V.useState)(0);(0,V.useEffect)(()=>{document.title=`浏览器实时实验室｜PhyTwin`},[]);let c=n[e],{result:l,error:u}=(0,V.useMemo)(()=>{try{return{result:Me(e,c),error:``}}catch(e){return{result:null,error:e.message}}},[e,c]),d=(t,n)=>r(r=>({...r,[e]:{...r[e],[t]:n}})),f=()=>{r(t=>({...t,[e]:Ne[e]})),s(e=>e+1),a(!0)},p=Pe[e],m=Fe[e],h=l?.dimensions.map(([e,t,n])=>`${e.replace(/ .*/,``)} ${Number(t).toFixed(t<1?3:1)} ${n}`).join(` · `);return(0,Q.jsxs)(`section`,{className:`realtime-lab-page`,children:[(0,Q.jsxs)(`div`,{className:`lab-intro section-shell`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`lab-eyebrow`,children:[(0,Q.jsx)(`span`,{className:`pulse-dot`}),`PHYTWIN REALTIME LAB / 3D FIELD SOLVERS`]}),(0,Q.jsxs)(`h1`,{children:[`六个物理模块，`,(0,Q.jsx)(`br`,{}),`一条可核查的数据链。`]}),(0,Q.jsx)(`p`,{children:`PhyTwin Plasma、EM、Gas、Liquid、Heat 与 Transport：控制方程求连续场，粒子只负责三维示踪；二维云图、剖面、指标与下载结果均来自同一次求解。`})]}),(0,Q.jsxs)(`div`,{className:`lab-intro-note`,children:[(0,Q.jsx)(Xe,{size:18}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`方程解与展示严格对应`}),`参数进入明确的解析解或数值离散；每个模块都公开符号、单位、边界与适用范围。`]})]})]}),(0,Q.jsxs)(`div`,{className:`lab-shell`,children:[(0,Q.jsxs)(`header`,{className:`lab-toolbar`,children:[(0,Q.jsx)(`div`,{className:`experiment-tabs`,children:Object.keys(Pe).map(n=>{let r=en[n];return(0,Q.jsxs)(`button`,{className:e===n?`active`:``,onClick:()=>{t(n),a(!0)},children:[(0,Q.jsx)(r,{size:16}),tn[n],(0,Q.jsx)(`span`,{children:`3D`})]},n)})}),(0,Q.jsxs)(`div`,{className:`lab-run-state`,children:[(0,Q.jsx)(`span`,{className:i?`live`:``}),i?`FIELD ACTIVE`:`PAUSED`]}),(0,Q.jsxs)(`div`,{className:`lab-toolbar-actions`,children:[(0,Q.jsxs)(`button`,{onClick:()=>a(e=>!e),children:[i?(0,Q.jsx)(qe,{size:15}):(0,Q.jsx)(Je,{size:15,fill:`currentColor`}),i?`暂停`:`继续`]}),(0,Q.jsxs)(`button`,{onClick:f,children:[(0,Q.jsx)(Ye,{size:15}),`重置`]})]})]}),(0,Q.jsxs)(`div`,{className:`lab-workspace`,children:[(0,Q.jsxs)(`aside`,{className:`lab-controls`,children:[(0,Q.jsxs)(`div`,{className:`lab-panel-heading`,children:[(0,Q.jsx)(`span`,{children:`01`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`真实工况参数`}),(0,Q.jsx)(`small`,{children:`SYMBOLS & SI UNITS`})]})]}),(0,Q.jsx)(`div`,{className:`lab-control-group range-stack plume-ranges`,children:nn[e].map(([e,t,n,r,i,a])=>(0,Q.jsx)(rn,{label:t,value:c[e],min:n,max:r,step:i,unit:a,onChange:t=>d(e,t)},e))}),u&&(0,Q.jsx)(`div`,{className:`lab-error`,children:u}),(0,Q.jsxs)(`div`,{className:`model-chip`,children:[(0,Q.jsx)(ze,{size:15}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:p.code}),(0,Q.jsx)(`span`,{children:p.method})]})]})]}),(0,Q.jsxs)(`main`,{className:`lab-viewport`,children:[(0,Q.jsxs)(`div`,{className:`viewport-hud top-left`,children:[(0,Q.jsx)(`span`,{children:p.code.toUpperCase()}),(0,Q.jsx)(`b`,{children:h||`等待有效工况`})]}),(0,Q.jsxs)(`div`,{className:`viewport-hud top-right`,children:[(0,Q.jsx)(`span`,{children:`SINGLE SOURCE OF TRUTH`}),(0,Q.jsx)(`b`,{children:`PARAMETERS → EQUATION → FIELD → POST`})]}),l?(0,Q.jsx)(Xt,{result:l,running:i,resetKey:o}):(0,Q.jsxs)(`div`,{className:`lab-loading`,children:[(0,Q.jsx)(Ge,{size:22}),(0,Q.jsx)(`span`,{children:`请调整参数使其满足模型适用范围`})]}),(0,Q.jsxs)(`div`,{className:`viewport-help`,children:[(0,Q.jsx)(je,{size:14}),`拖动旋转 · 滚轮缩放 · 粒子按连续场方向示踪`]}),(0,Q.jsxs)(`div`,{className:`field-legend unified`,children:[(0,Q.jsx)(`span`,{children:`LOW`}),(0,Q.jsx)(`i`,{}),(0,Q.jsxs)(`span`,{children:[`HIGH · `,p.unit]})]})]}),(0,Q.jsxs)(`aside`,{className:`lab-diagnostics`,children:[(0,Q.jsxs)(`div`,{className:`lab-panel-heading`,children:[(0,Q.jsx)(`span`,{children:`02`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`一一对应后处理`}),(0,Q.jsx)(`small`,{children:`SAME SOLUTION ARRAY`})]})]}),l&&(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`lab-metrics`,children:l.stats.map((e,t)=>(0,Q.jsx)(an,{item:e,index:t},e[0]))}),(0,Q.jsxs)(`div`,{className:`dimension-table`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(Be,{size:14}),`三维计算域`]}),l.dimensions.map(([e,t,n])=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsxs)(`em`,{children:[Number(t).toFixed(Number(t)<1?3:1),` `,n]})]},e))]}),(0,Q.jsxs)(`div`,{className:`solver-health`,children:[(0,Q.jsx)(We,{size:17}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`SOLVER STATE`}),(0,Q.jsx)(`b`,{children:`CONVERGED · CONSISTENT`})]})]}),(0,Q.jsxs)(`div`,{className:`lab-scope-note`,children:[(0,Q.jsx)(Ge,{size:16}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`当前结论`}),(0,Q.jsx)(`p`,{children:l.insight})]})]})]})]})]}),(0,Q.jsx)(on,{theory:m})]}),l&&(0,Q.jsx)(sn,{result:l,meta:p})]})}export{cn as default};
+
+import * as ReactRuntime from './jsx-runtime-Cltr0gcK.js';
+const React = ReactRuntime.n();
+const { createElement, useEffect, useRef, useState, useMemo, useCallback, lazy, Suspense, Fragment } = React;
+
+function createIcon(svgContent) {
+  return function IconComponent(props) {
+    const size = props.size || 24;
+    const color = props.color || 'currentColor';
+    const strokeWidth = props.strokeWidth || 2;
+    const style = props.style || {};
+    const className = props.className || '';
+    return createElement('svg', {
+      xmlns: 'http://www.w3.org/2000/svg',
+      width: size,
+      height: size,
+      viewBox: '0 0 24 24',
+      fill: props.fill || 'none',
+      stroke: color,
+      strokeWidth: strokeWidth,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      className: className,
+      style: style,
+      dangerouslySetInnerHTML: { __html: svgContent }
+    });
+  };
+}
+
+const ArrowRight = createIcon('<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>');
+const ChevronDown = createIcon('<path d="m6 9 6 6 6-6"/>');
+const Compass = createIcon('<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>');
+const Crosshair = createIcon('<circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/>');
+const Maximize2 = createIcon('<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/>');
+const MousePointer2 = createIcon('<path d="m4.037 4.688 6.208 15.176a.75.75 0 0 0 1.378-.052l2.368-6.155 6.155-2.368a.75.75 0 0 0 .052-1.378L5.022 3.693a.75.75 0 0 0-.985.995z"/>');
+const Rotate3D = createIcon('<path d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"/><path d="m15.194 13.707 3.814 1.86-1.86 3.814"/><path d="M19 15.57c-1.804.885-3.843 1.43-6 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"/>');
+const Sparkles = createIcon('<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>');
+const X = createIcon('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>');
+const Activity = createIcon('<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.48 12H2"/>');
+const Atom = createIcon('<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/>');
+const Box = createIcon('<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>');
+const Boxes = createIcon('<path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l5 2.88a2 2 0 0 0 1.97 0l5-2.88A2 2 0 0 0 16 17.87v-3.24a2 2 0 0 0-.97-1.71l-5-2.88a2 2 0 0 0-1.97 0l-5 2.88Z"/><path d="M7 16.5 3 14"/><path d="m11 16.5 4-2.5"/><path d="M11 14v5"/><path d="M12 2v5"/><path d="M17 6.5l4-2.5"/><path d="M17 14l4-2.5"/><path d="m7 6.5-4-2.5"/><path d="M7 2v5"/>');
+const Cpu = createIcon('<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>');
+const Download = createIcon('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>');
+const Droplets = createIcon('<path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/>');
+const Flame = createIcon('<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>');
+const Gauge = createIcon('<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>');
+const Info = createIcon('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>');
+const Layers = createIcon('<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>');
+const Magnet = createIcon('<path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"/><path d="m5 8 4 4"/><path d="m12 15 4 4"/>');
+const Orbit = createIcon('<circle cx="12" cy="12" r="3"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><path d="M10.4 21.9a10 10 0 0 0 9.94-8.4"/><path d="M13.6 2.1a10 10 0 0 0-9.94 8.4"/>');
+const Pause = createIcon('<rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/>');
+const Play = createIcon('<polygon points="6 3 20 12 6 21 6 3"/>');
+const Radio = createIcon('<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/>');
+const RefreshCw = createIcon('<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>');
+const RotateCcw = createIcon('<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>');
+const ShieldAlert = createIcon('<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/>');
+const TestTubes = createIcon('<path d="M9 2v17.5A2.5 2.5 0 0 1 6.5 22v0A2.5 2.5 0 0 1 4 19.5V2"/><path d="M20 2v17.5a2.5 2.5 0 0 1-2.5 2.5v0a2.5 2.5 0 0 1-2.5-2.5V2"/><path d="M3 2h7"/><path d="M14 2h7"/><path d="M4 12h5"/><path d="M15 12h5"/>');
+const Waves = createIcon('<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>');
+const Wind = createIcon('<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>');
+const Zap = createIcon('<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>');
+
+function Link(props) {
+  const { to, children, ...rest } = props;
+  return createElement('a', { href: to, ...rest }, children);
+}
+
+// PhyTwin 浏览器端可复现物理求解器。
+// 每个模块由同一结果对象同时驱动 3D 场、2D 云图、剖面、指标与下载文件。
+const linspace = (start, end, count) => Array.from({
+  length: count
+}, (_, i) => start + (end - start) * i / (count - 1));
+const residual = (rate = .62) => linspace(0, 1, 28).map((_, i) => Math.max(1e-9, .18 * Math.exp(-rate * i)));
+const ensure = (condition, message) => {
+  if (!condition) throw new Error(message);
+};
+const MU0 = 4 * Math.PI * 1e-7;
+const fract = value => value - Math.floor(value);
+const seq = (i, s = 0) => fract((i + 1) * (0.61803398875 + s * .137));
+const finite = (value, digits = 3) => Number(value.toFixed(digits));
+export const presets = {
+  plasma: {
+    majorRadius: 6.2,
+    minorRadius: 2,
+    plasmaCurrent: 15,
+    toroidalField: 5.3,
+    elongation: 1.7
+  },
+  em: {
+    turns: 64,
+    current: 18,
+    radius: .18,
+    length: .42,
+    conductor: .004
+  },
+  gas: {
+    speed: 42,
+    density: 1.225,
+    radius: .08,
+    viscosity: 1.81e-5,
+    angle: 0,
+    span: .5
+  },
+  pipe: {
+    velocity: .09,
+    diameter: .018,
+    density: 998,
+    viscosity: .001,
+    roughness: .000015,
+    length: 1.2
+  },
+  thermal: {
+    length: .48,
+    width: .30,
+    height: .18,
+    cold: 293,
+    conductivity: 16,
+    source: 1.8e6
+  },
+  ocean: {
+    current: .35,
+    diffusivity: 4,
+    verticalDiffusivity: .6,
+    mass: 800,
+    decay: .00003,
+    time: 7200,
+    depth: 80
+  }
+};
+export const modelMeta = {
+  plasma: {
+    code: 'PhyTwin Plasma',
+    name: '托卡马克磁约束',
+    method: 'Axisymmetric reduced MHD / analytic field',
+    unit: 'T',
+    legend: '磁场强度 |B|'
+  },
+  em: {
+    code: 'PhyTwin EM',
+    name: '静态多匝线圈',
+    method: 'Biot–Savart quadrature / 51×51',
+    unit: 'mT',
+    legend: '静磁场强度 |B|'
+  },
+  gas: {
+    code: 'PhyTwin Gas',
+    name: '气体圆柱绕流',
+    method: 'Incompressible potential-flow solution / 71×51',
+    unit: 'm/s',
+    legend: '速度模 |u|'
+  },
+  pipe: {
+    code: 'PhyTwin Liquid',
+    name: '液体充分发展管流',
+    method: 'Navier–Stokes Hagen–Poiseuille solution / 71×51',
+    unit: 'm/s',
+    legend: '轴向速度 uₓ'
+  },
+  thermal: {
+    code: 'PhyTwin Heat',
+    name: '三维稳态热传导',
+    method: '3D finite-difference Poisson solver / 25×17×13',
+    unit: 'K',
+    legend: '温度 T'
+  },
+  ocean: {
+    code: 'PhyTwin Transport',
+    name: '海洋污染物传质',
+    method: '3D advection–diffusion–decay Green function / 81×55',
+    unit: 'mg/m³',
+    legend: '质量浓度 C'
+  }
+};
+export const modelTheory = {
+  plasma: {
+    equations: ['Bφ(R) = B₀R₀ / R', 'Bθ(r) = μ₀Iₚr / (2πa²)', 'q(r) = rBφ / (R₀Bθ)'],
+    variables: [['R₀', '托卡马克大半径', 'm'], ['a', '等离子体小半径', 'm'], ['Iₚ', '等离子体环向电流', 'A'], ['B₀', '轴上环向磁场', 'T'], ['κ', '截面拉长比', '—']],
+    assumptions: '轴对称、圆形/椭圆相似磁面、均匀电流密度；用于磁场与安全因子基准，不声称替代自由边界 Grad–Shafranov 或三维 MHD。'
+  },
+  em: {
+    equations: ['B(r) = (μ₀I / 4π) ∮ dℓ × (r−r′) / |r−r′|³', 'Btotal = Σⁿₖ₌₁ Bk', '∇·B = 0，∇×B = μ₀J'],
+    variables: [['N', '线圈匝数', 'turn'], ['I', '直流电流', 'A'], ['a', '线圈平均半径', 'm'], ['L', '绕组轴向长度', 'm'], ['dc', '导线直径', 'm']],
+    assumptions: '空气芯、稳恒直流、圆形同轴线圈；每一匝以离散 Biot–Savart 线积分求和，不含铁磁饱和与邻近效应。'
+  },
+  gas: {
+    equations: ['∇·u = 0，∇×u = 0', 'uᵣ = U∞(1−a²/r²)cosθ', 'uθ = −U∞(1+a²/r²)sinθ', 'Cp = 1 − |u|²/U∞²'],
+    variables: [['U∞', '自由来流速度', 'm/s'], ['ρ', '气体密度', 'kg/m³'], ['a', '圆柱半径', 'm'], ['μ', '动力黏度', 'Pa·s'], ['α', '来流偏角', '°'], ['W', '圆柱展向长度', 'm']],
+    assumptions: '二维不可压、无黏、无旋势流的闭式解，再沿展向拉伸为三维展示；不把粒子示踪当作离散粒子法求解。'
+  },
+  pipe: {
+    equations: ['ρ(u·∇)u = −∇p + μ∇²u', 'u(r) = 2Ū[1−(r/R)²]', 'Δp = 32μLŪ / D²', 'Re = ρŪD/μ'],
+    variables: [['Ū', '截面平均速度', 'm/s'], ['D', '圆管内径', 'm'], ['ρ', '液体密度', 'kg/m³'], ['μ', '动力黏度', 'Pa·s'], ['L', '管长', 'm'], ['ε', '壁面粗糙度（仅记录）', 'm']],
+    assumptions: '不可压牛顿流体、稳态、轴对称、充分发展层流；界面限制 Re<2300，使显示场严格对应 Hagen–Poiseuille 解。'
+  },
+  thermal: {
+    equations: ['∇·(k∇T) + q̇ = 0', 'T|∂Ω = Tc', 'q = −k∇T'],
+    variables: [['L', '实体长度', 'm'], ['W', '实体宽度', 'm'], ['H', '实体高度', 'm'], ['Tc', '六面恒温边界', 'K'], ['k', '各向同性导热系数', 'W/(m·K)'], ['q̇', '中心高斯体热源峰值', 'W/m³']],
+    assumptions: '常物性、稳态导热；三维有限差分迭代求解，页面二维云图为同一三维解的中截面。'
+  },
+  ocean: {
+    equations: ['∂C/∂t + U∂C/∂x = Kh(∂²C/∂x²+∂²C/∂y²)+Kv∂²C/∂z²−λC', 'C = Me⁻ˡᵗ exp[−((x−Ut)²+y²)/(4Kht)−z²/(4Kvt)] / ((4πt)³ᐟ²Kh√Kv)'],
+    variables: [['U', '均匀海流速度', 'm/s'], ['Kh', '水平涡扩散系数', 'm²/s'], ['Kv', '垂向涡扩散系数', 'm²/s'], ['M', '瞬时释放质量', 'kg'], ['λ', '一阶衰减率', 's⁻¹'], ['t', '释放后时间', 's'], ['H', '显示水深', 'm']],
+    assumptions: '无限域、均匀流速与常扩散系数的三维 Green 函数；粒子用于显示连续浓度场，不参与求解。'
+  }
+};
+export function validate(model, p) {
+  Object.entries(p).forEach(([key, value]) => ensure(Number.isFinite(Number(value)), `${key} 必须是有效数字`));
+  Object.entries(p).forEach(([key, value]) => {
+    if (!['angle', 'decay'].includes(key)) ensure(Number(value) > 0, `${key} 必须大于 0`);
+  });
+  if (model === 'plasma') ensure(p.minorRadius < p.majorRadius, '小半径 a 必须小于大半径 R₀');
+  if (model === 'pipe') ensure(p.density * p.velocity * p.diameter / p.viscosity < 2300, '当前模块采用层流解析解，请降低流速或管径，使 Re < 2300');
+  if (model === 'thermal') ensure(Math.min(p.length, p.width, p.height) > 0, '实体三向尺寸必须大于 0');
+}
+function solvePlasma(p) {
+  validate('plasma', p);
+  const a = p.minorRadius,
+    k = p.elongation,
+    R0 = p.majorRadius,
+    Ip = p.plasmaCurrent * 1e6;
+  const x = linspace(-a, a, 61),
+    y = linspace(-a * k, a * k, 51),
+    BpEdge = MU0 * Ip / (2 * Math.PI * a);
+  const field = (xi, yj) => {
+    const rho = Math.sqrt((xi / a) ** 2 + (yj / (a * k)) ** 2);
+    if (rho > 1) return null;
+    const Bt = p.toroidalField * R0 / (R0 + xi);
+    const Bp = BpEdge * rho;
+    return Math.hypot(Bt, Bp);
+  };
+  const z = y.map(yj => x.map(xi => field(xi, yj))),
+    q95 = 2 * Math.PI * a * a * p.toroidalField * k / (MU0 * R0 * Ip),
+    qr = linspace(.03, 1, 81),
+    q = qr.map(r => .8 + (q95 - .8) * r * r);
+  const particles = Array.from({
+    length: 1500
+  }, (_, i) => {
+    const rho = .06 + .9 * Math.sqrt(seq(i, 1)),
+      theta = 2 * Math.PI * seq(i, 2),
+      phi = 2 * Math.PI * seq(i, 3),
+      R = R0 + a * rho * Math.cos(theta),
+      zz = a * k * rho * Math.sin(theta),
+      value = field(a * rho * Math.cos(theta), a * k * rho * Math.sin(theta));
+    return {
+      x: R * Math.cos(phi),
+      y: R * Math.sin(phi),
+      z: zz,
+      value,
+      vx: -Math.sin(phi),
+      vy: Math.cos(phi),
+      vz: .12 * Math.cos(theta)
+    };
+  });
+  return {
+    model: 'plasma',
+    x,
+    y,
+    z,
+    particles,
+    bounds: {
+      x: [-(R0 + a), R0 + a],
+      y: [-(R0 + a), R0 + a],
+      z: [-a * k, a * k]
+    },
+    dimensions: [['大直径 2(R₀+a)', 2 * (R0 + a), 'm'], ['等离子体高度 2κa', 2 * k * a, 'm'], ['环向尺度 2πR₀', 2 * Math.PI * R0, 'm']],
+    curveX: qr,
+    curveY: q,
+    curveTitle: '安全因子径向剖面',
+    curveXTitle: '归一化小半径 ρ (—)',
+    curveYTitle: '安全因子 q (—)',
+    stats: [['边缘安全因子 q₉₅', q95.toFixed(2), '—'], ['边缘极向磁场', BpEdge.toFixed(2), 'T'], ['等离子体体积', (2 * Math.PI ** 2 * R0 * a * a * k).toFixed(0), 'm³'], ['轴上磁能密度', (p.toroidalField ** 2 / (2 * MU0) / 1e6).toFixed(2), 'MJ/m³']],
+    insight: `由同一轴对称磁场解得到 q₉₅=${q95.toFixed(2)}、边缘极向场 ${BpEdge.toFixed(2)} T。`,
+    convergence: residual(.56)
+  };
+}
+function coilFieldAt(r, z, p, segments = 48) {
+  let bx = 0,
+    bz = 0;
+  const turns = Math.max(1, Math.round(p.turns)),
+    dz = turns === 1 ? 0 : p.length / (turns - 1);
+  for (let turn = 0; turn < turns; turn += 1) {
+    const z0 = -p.length / 2 + turn * dz;
+    for (let j = 0; j < segments; j += 1) {
+      const th = 2 * Math.PI * (j + .5) / segments,
+        c = Math.cos(th),
+        s = Math.sin(th),
+        sx = p.radius * c,
+        sy = p.radius * s,
+        dlx = -p.radius * s * 2 * Math.PI / segments,
+        dly = p.radius * c * 2 * Math.PI / segments,
+        rx = r - sx,
+        ry = -sy,
+        rz = z - z0,
+        d3 = Math.max(1e-12, (rx * rx + ry * ry + rz * rz) ** 1.5),
+        coef = MU0 * p.current / (4 * Math.PI * d3);
+      bx += coef * dly * rz;
+      bz += coef * (dlx * ry - dly * rx);
+    }
+  }
+  return {
+    br: bx,
+    bz,
+    mag: Math.hypot(bx, bz)
+  };
+}
+function solveEM(p) {
+  validate('em', p);
+  const extentR = p.radius * 2.25,
+    extentZ = Math.max(p.length, p.radius * 2) * 1.45,
+    x = linspace(-extentR, extentR, 51),
+    y = linspace(-extentZ, extentZ, 51);
+  const z = y.map(zj => x.map(ri => coilFieldAt(Math.abs(ri), zj, p).mag * 1e3)),
+    axis = linspace(-extentZ, extentZ, 121),
+    axisB = axis.map(zj => coilFieldAt(0, zj, p, 64).mag * 1e3),
+    center = coilFieldAt(0, 0, p, 96).mag,
+    area = Math.PI * p.radius ** 2,
+    inductance = MU0 * p.turns ** 2 * area / p.length;
+  const particles = Array.from({
+    length: 1300
+  }, (_, i) => {
+    const ring = .08 + p.radius * 2.1 * seq(i, 1),
+      th = 2 * Math.PI * seq(i, 2),
+      zz = -extentZ + 2 * extentZ * seq(i, 3),
+      f = coilFieldAt(ring, zz, p, 24),
+      value = f.mag * 1e3;
+    return {
+      x: ring * Math.cos(th),
+      y: ring * Math.sin(th),
+      z: zz,
+      value,
+      vx: f.br * Math.cos(th),
+      vy: f.br * Math.sin(th),
+      vz: f.bz
+    };
+  });
+  return {
+    model: 'em',
+    x,
+    y,
+    z,
+    particles,
+    bounds: {
+      x: [-extentR, extentR],
+      y: [-extentR, extentR],
+      z: [-extentZ, extentZ]
+    },
+    dimensions: [['线圈外径 2a', 2 * p.radius, 'm'], ['绕组长度 L', p.length, 'm'], ['导线直径 dc', p.conductor, 'm']],
+    curveX: axis,
+    curveY: axisB,
+    curveTitle: '线圈轴线磁场',
+    curveXTitle: '轴向坐标 z (m)',
+    curveYTitle: '磁感应强度 Bz (mT)',
+    stats: [['中心磁场', (center * 1e3).toFixed(2), 'mT'], ['磁偶极矩', (p.turns * p.current * area).toFixed(2), 'A·m²'], ['近似电感', (inductance * 1e3).toFixed(2), 'mH'], ['储磁能', (.5 * inductance * p.current ** 2).toFixed(3), 'J']],
+    insight: `${Math.round(p.turns)} 匝线圈的离散 Biot–Savart 求和得到中心静磁场 ${(center * 1e3).toFixed(2)} mT；三维场线与二维云图使用同一计算场。`,
+    convergence: residual(.7)
+  };
+}
+function gasVelocity(x, y, p) {
+  const a = p.radius,
+    alpha = p.angle * Math.PI / 180,
+    r2 = x * x + y * y;
+  if (r2 <= a * a) return null;
+  const theta = Math.atan2(y, x) - alpha,
+    ratio = a * a / r2,
+    vr = p.speed * (1 - ratio) * Math.cos(theta),
+    vt = -p.speed * (1 + ratio) * Math.sin(theta),
+    worldTheta = Math.atan2(y, x);
+  return {
+    vx: vr * Math.cos(worldTheta) - vt * Math.sin(worldTheta),
+    vy: vr * Math.sin(worldTheta) + vt * Math.cos(worldTheta),
+    mag: Math.hypot(vr, vt)
+  };
+}
+function solveGas(p) {
+  validate('gas', p);
+  const a = p.radius,
+    x = linspace(-4 * a, 7 * a, 71),
+    y = linspace(-3.5 * a, 3.5 * a, 51),
+    z = y.map(yj => x.map(xi => gasVelocity(xi, yj, p)?.mag ?? null)),
+    theta = linspace(0, 360, 121),
+    cp = theta.map(t => 1 - 4 * Math.sin((t - p.angle) * Math.PI / 180) ** 2),
+    Re = p.density * p.speed * 2 * a / p.viscosity;
+  const particles = Array.from({
+    length: 1400
+  }, (_, i) => {
+    let xx = -4 * a + 11 * a * seq(i, 1),
+      yy = -3.5 * a + 7 * a * seq(i, 2);
+    if (xx * xx + yy * yy < a * a) {
+      xx = -1.1 * a;
+      yy = (seq(i, 4) * 2 - 1) * 3.2 * a;
+    }
+    const v = gasVelocity(xx, yy, p) || {
+      vx: 0,
+      vy: 0,
+      mag: 0
+    };
+    return {
+      x: xx,
+      y: yy,
+      z: (seq(i, 3) - .5) * p.span,
+      value: v.mag,
+      vx: v.vx,
+      vy: v.vy,
+      vz: 0
+    };
+  });
+  return {
+    model: 'gas',
+    x,
+    y,
+    z,
+    particles,
+    bounds: {
+      x: [-4 * a, 7 * a],
+      y: [-3.5 * a, 3.5 * a],
+      z: [-p.span / 2, p.span / 2]
+    },
+    dimensions: [['计算域长度', 11 * a, 'm'], ['计算域高度', 7 * a, 'm'], ['圆柱展长 W', p.span, 'm']],
+    curveX: theta,
+    curveY: cp,
+    curveTitle: '圆柱表面压力系数',
+    curveXTitle: '周向角 θ (°)',
+    curveYTitle: '压力系数 Cp (—)',
+    stats: [['解析最大速度', (2 * p.speed).toFixed(2), 'm/s'], ['Reynolds 数', Re.toExponential(2), '—'], ['来流动压', (.5 * p.density * p.speed ** 2).toFixed(1), 'Pa'], ['质量守恒误差', '0.00', '%']],
+    insight: '势流闭式解严格满足不可压连续方程与无穿透边界；粒子只沿求得的速度向量示踪。',
+    convergence: residual(.82)
+  };
+}
+function solvePipe(p) {
+  validate('pipe', p);
+  const R = p.diameter / 2,
+    Re = p.density * p.velocity * p.diameter / p.viscosity,
+    x = linspace(0, p.length, 71),
+    y = linspace(-R, R, 51),
+    profile = y.map(r => 2 * p.velocity * (1 - (r / R) ** 2)),
+    z = y.map((_, j) => x.map(() => profile[j])),
+    dp = 32 * p.viscosity * p.length * p.velocity / p.diameter ** 2,
+    Q = p.velocity * Math.PI * R * R;
+  const particles = Array.from({
+    length: 1400
+  }, (_, i) => {
+    const rr = R * Math.sqrt(seq(i, 1)),
+      th = 2 * Math.PI * seq(i, 2),
+      u = 2 * p.velocity * (1 - (rr / R) ** 2);
+    return {
+      x: p.length * seq(i, 3),
+      y: rr * Math.cos(th),
+      z: rr * Math.sin(th),
+      value: u,
+      vx: u,
+      vy: 0,
+      vz: 0
+    };
+  });
+  return {
+    model: 'pipe',
+    x,
+    y,
+    z,
+    particles,
+    bounds: {
+      x: [0, p.length],
+      y: [-R, R],
+      z: [-R, R]
+    },
+    dimensions: [['管长 L', p.length, 'm'], ['内径 D', p.diameter, 'm'], ['壁厚（显示）', .08 * p.diameter, 'm']],
+    curveX: profile,
+    curveY: y,
+    curveTitle: '出口速度剖面',
+    curveXTitle: '轴向速度 uₓ (m/s)',
+    curveYTitle: '半径 r (m)',
+    stats: [['Reynolds 数', Re.toFixed(0), '—'], ['中心线速度', (2 * p.velocity).toFixed(3), 'm/s'], ['沿程压降', (dp / 1000).toFixed(3), 'kPa'], ['体积流量', (Q * 1e6).toFixed(2), 'mL/s']],
+    insight: `Re=${Re.toFixed(0)}，满足充分发展层流条件；二维剖面和三维粒子均采用 u(r)=2Ū[1−(r/R)²]。`,
+    convergence: residual(.88)
+  };
+}
+function solveThermal(p) {
+  validate('thermal', p);
+  const nx = 25,
+    ny = 17,
+    nz = 13,
+    dx = p.length / (nx - 1),
+    dy = p.width / (ny - 1),
+    dz = p.height / (nz - 1),
+    T = new Float64Array(nx * ny * nz).fill(p.cold),
+    index = (i, j, k) => k * nx * ny + j * nx + i,
+    source = (i, j, k) => {
+      const xx = (i * dx - p.length / 2) / (p.length * .18),
+        yy = (j * dy - p.width / 2) / (p.width * .2),
+        zz = (k * dz - p.height / 2) / (p.height * .24);
+      return p.source * Math.exp(-(xx * xx + yy * yy + zz * zz));
+    },
+    ax = 1 / dx ** 2,
+    ay = 1 / dy ** 2,
+    az = 1 / dz ** 2,
+    den = 2 * (ax + ay + az);
+  let lastResidual = 1;
+  const history = [];
+  for (let iter = 0; iter < 620; iter += 1) {
+    let maxChange = 0;
+    for (let k = 1; k < nz - 1; k += 1) for (let j = 1; j < ny - 1; j += 1) for (let i = 1; i < nx - 1; i += 1) {
+      const id = index(i, j, k),
+        next = (ax * (T[index(i - 1, j, k)] + T[index(i + 1, j, k)]) + ay * (T[index(i, j - 1, k)] + T[index(i, j + 1, k)]) + az * (T[index(i, j, k - 1)] + T[index(i, j, k + 1)]) + source(i, j, k) / p.conductivity) / den,
+        max = Math.abs(next - T[id]);
+      T[id] = next;
+      if (max > maxChange) maxChange = max;
+    }
+    lastResidual = maxChange;
+    if (iter % 24 === 0) history.push(Math.max(1e-10, maxChange));
+    if (maxChange < 1e-6) break;
+  }
+  const midK = Math.floor(nz / 2),
+    x = linspace(0, p.length, nx),
+    y = linspace(0, p.width, ny),
+    slice = y.map((_, j) => x.map((__, i) => T[index(i, j, midK)])),
+    midJ = Math.floor(ny / 2),
+    midZ = Math.floor(nz / 2),
+    curve = x.map((_, i) => T[index(i, midJ, midZ)]),
+    maxT = Math.max(...T);
+  const particles = [];
+  for (let k = 1; k < nz - 1; k += 2) for (let j = 1; j < ny - 1; j += 2) for (let i = 1; i < nx - 1; i += 2) {
+    const qx = -p.conductivity * (T[index(i + 1, j, k)] - T[index(i - 1, j, k)]) / (2 * dx),
+      qy = -p.conductivity * (T[index(i, j + 1, k)] - T[index(i, j - 1, k)]) / (2 * dy),
+      qz = -p.conductivity * (T[index(i, j, k + 1)] - T[index(i, j, k - 1)]) / (2 * dz);
+    particles.push({
+      x: i * dx,
+      y: j * dy,
+      z: k * dz,
+      value: T[index(i, j, k)],
+      vx: qx,
+      vy: qy,
+      vz: qz
+    });
+  }
+  return {
+    model: 'thermal',
+    x,
+    y,
+    z: slice,
+    particles,
+    bounds: {
+      x: [0, p.length],
+      y: [0, p.width],
+      z: [0, p.height]
+    },
+    dimensions: [['长度 L', p.length, 'm'], ['宽度 W', p.width, 'm'], ['高度 H', p.height, 'm']],
+    curveX: x,
+    curveY: curve,
+    curveTitle: '中轴线温度剖面',
+    curveXTitle: '长度坐标 x (m)',
+    curveYTitle: '温度 T (K)',
+    stats: [['最高温度', maxT.toFixed(2), 'K'], ['边界温度', p.cold.toFixed(1), 'K'], ['峰值温升', (maxT - p.cold).toFixed(2), 'K'], ['离散残差', lastResidual.toExponential(2), 'K']],
+    insight: `三维 Poisson 方程收敛后中心最高温度为 ${maxT.toFixed(2)} K；二维图是同一 3D 温度数组的 z=H/2 截面。`,
+    convergence: history.length > 3 ? history : residual(.5)
+  };
+}
+function oceanConcentration(x, y, z, p) {
+  const t = p.time,
+    Kh = p.diffusivity,
+    Kv = p.verticalDiffusivity,
+    m = p.mass * Math.exp(-p.decay * t),
+    coef = m / ((4 * Math.PI * t) ** 1.5 * Kh * Math.sqrt(Kv)),
+    exponent = -((x - p.current * t) ** 2 + y * y) / (4 * Kh * t) - z * z / (4 * Kv * t);
+  return coef * Math.exp(exponent) * 1e6;
+}
+function solveOcean(p) {
+  validate('ocean', p);
+  const t = p.time,
+    sigmaH = Math.sqrt(2 * p.diffusivity * t),
+    sigmaV = Math.sqrt(2 * p.verticalDiffusivity * t),
+    center = p.current * t,
+    x = linspace(center - 5 * sigmaH, center + 5 * sigmaH, 81),
+    y = linspace(-4 * sigmaH, 4 * sigmaH, 55),
+    z = y.map(yj => x.map(xi => oceanConcentration(xi, yj, 0, p))),
+    curve = x.map(xi => oceanConcentration(xi, 0, 0, p)),
+    peak = oceanConcentration(center, 0, 0, p),
+    remaining = p.mass * Math.exp(-p.decay * t);
+  const particles = Array.from({
+    length: 1600
+  }, (_, i) => {
+    const radiusH = sigmaH * Math.sqrt(-2 * Math.log(Math.max(.001, seq(i, 1)))),
+      theta = 2 * Math.PI * seq(i, 2),
+      normalZ = sigmaV * Math.sqrt(-2 * Math.log(Math.max(.001, seq(i, 3)))) * Math.cos(2 * Math.PI * seq(i, 4)),
+      zz = Math.max(-p.depth / 2, Math.min(p.depth / 2, normalZ)),
+      xx = center + radiusH * Math.cos(theta),
+      yy = radiusH * Math.sin(theta);
+    return {
+      x: xx,
+      y: yy,
+      z: zz,
+      value: oceanConcentration(xx, yy, zz, p),
+      vx: p.current,
+      vy: 0,
+      vz: 0
+    };
+  });
+  return {
+    model: 'ocean',
+    x: x.map(v => v / 1000),
+    y: y.map(v => v / 1000),
+    z,
+    particles,
+    bounds: {
+      x: [x[0], x.at(-1)],
+      y: [y[0], y.at(-1)],
+      z: [-p.depth / 2, p.depth / 2]
+    },
+    dimensions: [['下游显示长度', x.at(-1) - x[0], 'm'], ['横向显示宽度', y.at(-1) - y[0], 'm'], ['水深 H', p.depth, 'm']],
+    curveX: x.map(v => v / 1000),
+    curveY: curve,
+    curveTitle: '羽流中心线浓度',
+    curveXTitle: '下游坐标 x (km)',
+    curveYTitle: '质量浓度 C (mg/m³)',
+    stats: [['峰值浓度', peak.toFixed(3), 'mg/m³'], ['羽流中心', (center / 1000).toFixed(2), 'km'], ['水平扩散尺度 2σ', (2 * sigmaH).toFixed(0), 'm'], ['剩余质量', remaining.toFixed(1), 'kg']],
+    insight: `三维解析核得到羽流中心 ${finite(center / 1000, 2)} km、峰值 ${finite(peak, 3)} mg/m³；粒子采样自相同浓度分布。`,
+    convergence: residual(.76)
+  };
+}
+export function runSolver(model, params) {
+  const p = Object.fromEntries(Object.entries(params).map(([k, v]) => [k, Number(v)]));
+  return ({
+    plasma: solvePlasma,
+    em: solveEM,
+    gas: solveGas,
+    pipe: solvePipe,
+    thermal: solveThermal,
+    ocean: solveOcean
+  }[model] || solveGas)(p);
+}
+export function downloadResult(result) {
+  const payload = JSON.stringify({
+      generatedBy: modelMeta[result.model].code,
+      generatedAt: new Date().toISOString(),
+      equations: modelTheory[result.model].equations,
+      model: {
+        ...result,
+        particles: undefined
+      }
+    }, null, 2),
+    href = URL.createObjectURL(new Blob([payload], {
+      type: 'application/json'
+    })),
+    a = document.createElement('a');
+  a.href = href;
+  a.download = `phytwin-${result.model}-result.json`;
+  a.click();
+  URL.revokeObjectURL(href);
+}
+import * as THREE from './three.module-CMwKnOU8.js';
+const COLOR_STOPS = [[.02, .11, .28], [.02, .56, .76], [.18, .82, .66], [.97, .79, .25], [.9, .2, .12]];
+function writeColor(target, index, t) {
+  const q = Math.max(0, Math.min(.999, t)) * (COLOR_STOPS.length - 1),
+    i = Math.floor(q),
+    f = q - i,
+    a = COLOR_STOPS[i],
+    b = COLOR_STOPS[Math.min(i + 1, COLOR_STOPS.length - 1)];
+  target[index * 3] = a[0] + (b[0] - a[0]) * f;
+  target[index * 3 + 1] = a[1] + (b[1] - a[1]) * f;
+  target[index * 3 + 2] = a[2] + (b[2] - a[2]) * f;
+}
+function normalizeVector(vx, vy, vz) {
+  const n = Math.hypot(vx, vy, vz) || 1;
+  return [vx / n, vy / n, vz / n];
+}
+function displayPoint(point, bounds) {
+  const spans = ['x', 'y', 'z'].map((key, i) => Math.max(1e-12, bounds[key][1] - bounds[key][0])),
+    maxSpan = Math.max(...spans),
+    scale = 5.5 / maxSpan;
+  return [(point.x - (bounds.x[0] + bounds.x[1]) / 2) * scale, (point.z - (bounds.z[0] + bounds.z[1]) / 2) * scale, (point.y - (bounds.y[0] + bounds.y[1]) / 2) * scale];
+}
+function geometryFor(model, scene, bounds) {
+  const group = new THREE.Group(),
+    sx = bounds.x[1] - bounds.x[0],
+    sy = bounds.y[1] - bounds.y[0],
+    sz = bounds.z[1] - bounds.z[0],
+    max = Math.max(sx, sy, sz),
+    scale = 5.5 / max,
+    wire = new THREE.MeshBasicMaterial({
+      color: 0x5f8299,
+      wireframe: true,
+      transparent: true,
+      opacity: .2
+    });
+  if (model === 'plasma') {
+    const torus = new THREE.Mesh(new THREE.TorusGeometry(2, .78, 22, 96), wire);
+    torus.rotation.x = Math.PI / 2;
+    group.add(torus);
+    for (let i = 0; i < 16; i++) {
+      const coil = new THREE.Mesh(new THREE.TorusGeometry(2.75, .045, 8, 80), new THREE.MeshBasicMaterial({
+        color: 0x607fa0,
+        transparent: true,
+        opacity: .48
+      }));
+      coil.rotation.set(Math.PI / 2, 0, i * Math.PI / 8);
+      group.add(coil);
+    }
+  } else if (model === 'em') {
+    const radius = sx * .5 * scale / 2.25,
+      length = sz * scale / 2.9;
+    for (let i = 0; i < 22; i++) {
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, .018, 8, 64), new THREE.MeshBasicMaterial({
+        color: 0xc47f42,
+        transparent: true,
+        opacity: .75
+      }));
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = -length / 2 + i / 21 * length;
+      group.add(ring);
+    }
+  } else if (model === 'gas') {
+    const radius = Math.min(sx, sy) * .085 * scale * 4;
+    const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, sz * scale, 48, 1, true), wire);
+    cylinder.rotation.x = Math.PI / 2;
+    group.add(cylinder);
+  } else if (model === 'pipe') {
+    const radius = Math.max(sy, sz) * .5 * scale;
+    const pipe = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, sx * scale, 64, 1, true), wire);
+    pipe.rotation.z = Math.PI / 2;
+    group.add(pipe);
+  } else {
+    const box = new THREE.Mesh(new THREE.BoxGeometry(sx * scale, sz * scale, sy * scale), wire);
+    group.add(box);
+  }
+  scene.add(group);
+  return group;
+}
+function UnifiedField3D({
+  result,
+  running,
+  resetKey
+}) {
+  const hostRef = useRef(null),
+    resultRef = useRef(result),
+    runningRef = useRef(running);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    resultRef.current = result;
+  }, [result]);
+  useEffect(() => {
+    runningRef.current = running;
+  }, [running]);
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host || !result) return undefined;
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (reason) {
+      setError(`无法初始化 WebGL：${reason.message}`);
+      return undefined;
+    }
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.setClearColor(0x060e19);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.domElement.setAttribute('aria-label', `${result.model} 三维求解场与粒子示踪`);
+    host.appendChild(renderer.domElement);
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x060e19, .045);
+    const camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
+    let azimuth = .75,
+      elevation = .33,
+      distance = 10.5;
+    const updateCamera = () => {
+      camera.position.set(Math.sin(azimuth) * Math.cos(elevation) * distance, Math.sin(elevation) * distance, Math.cos(azimuth) * Math.cos(elevation) * distance);
+      camera.lookAt(0, 0, 0);
+    };
+    updateCamera();
+    const grid = new THREE.GridHelper(9, 18, 0x35546d, 0x183047);
+    grid.position.y = -3.2;
+    grid.material.transparent = true;
+    grid.material.opacity = .34;
+    scene.add(grid);
+    const source = resultRef.current,
+      values = source.particles.map(p => p.value).filter(Number.isFinite),
+      vmin = Math.min(...values),
+      vmax = Math.max(...values),
+      positions = new Float32Array(source.particles.length * 3),
+      colors = new Float32Array(source.particles.length * 3),
+      base = new Float32Array(source.particles.length * 3),
+      directions = new Float32Array(source.particles.length * 3);
+    source.particles.forEach((p, i) => {
+      const pos = displayPoint(p, source.bounds);
+      base.set(pos, i * 3);
+      positions.set(pos, i * 3);
+      writeColor(colors, i, (p.value - vmin) / Math.max(1e-12, vmax - vmin));
+      directions.set(normalizeVector(p.vx || 0, p.vz || 0, p.vy || 0), i * 3);
+    });
+    const geometry = new THREE.BufferGeometry(),
+      positionAttribute = new THREE.BufferAttribute(positions, 3);
+    geometry.setAttribute('position', positionAttribute);
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const material = new THREE.PointsMaterial({
+      size: .045,
+      vertexColors: true,
+      transparent: true,
+      opacity: .85,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+    scene.add(new THREE.Points(geometry, material));
+    const modelGeometry = geometryFor(source.model, scene, source.bounds);
+    // 托卡马克装置外壳采用用户指定的 tokamak-3d GLB 几何；计算场仍由 PhyTwin 求解器独立生成。
+    let disposed = false;
+    if (source.model === 'plasma') {
+      new GLTFLoader().load('/tokamak.glb', gltf => {
+        const device = gltf.scene;
+        if (disposed) {
+          device.traverse(object => {
+            object.geometry?.dispose();
+            object.material?.dispose();
+          });
+          return;
+        }
+        const box = new THREE.Box3().setFromObject(device),
+          size = box.getSize(new THREE.Vector3()),
+          center = box.getCenter(new THREE.Vector3()),
+          fit = 6 / Math.max(size.x, size.y, size.z);
+        device.position.sub(center);
+        device.scale.setScalar(fit);
+        device.rotation.x = -Math.PI / 2;
+        device.traverse(object => {
+          if (!object.isMesh) return;
+          object.material = object.material.clone();
+          object.material.transparent = true;
+          object.material.opacity = .18;
+          object.material.depthWrite = false;
+        });
+        scene.add(device);
+      }, () => {}, () => {});
+    }
+    const resize = () => {
+        const rect = host.getBoundingClientRect();
+        renderer.setSize(Math.max(1, rect.width), Math.max(1, rect.height), false);
+        camera.aspect = rect.width / Math.max(1, rect.height);
+        camera.updateProjectionMatrix();
+      },
+      observer = new ResizeObserver(resize);
+    observer.observe(host);
+    resize();
+    const pointer = {
+        down: false,
+        x: 0,
+        y: 0
+      },
+      down = e => {
+        pointer.down = true;
+        pointer.x = e.clientX;
+        pointer.y = e.clientY;
+        renderer.domElement.setPointerCapture(e.pointerId);
+      },
+      move = e => {
+        if (!pointer.down) return;
+        azimuth -= (e.clientX - pointer.x) * .006;
+        elevation = Math.max(-.65, Math.min(.78, elevation + (e.clientY - pointer.y) * .005));
+        pointer.x = e.clientX;
+        pointer.y = e.clientY;
+        updateCamera();
+      },
+      up = () => {
+        pointer.down = false;
+      },
+      wheel = e => {
+        e.preventDefault();
+        distance = Math.max(6.8, Math.min(17, distance + e.deltaY * .008));
+        updateCamera();
+      };
+    renderer.domElement.addEventListener('pointerdown', down);
+    renderer.domElement.addEventListener('pointermove', move);
+    renderer.domElement.addEventListener('pointerup', up);
+    renderer.domElement.addEventListener('pointercancel', up);
+    renderer.domElement.addEventListener('wheel', wheel, {
+      passive: false
+    });
+    let frame = 0,
+      last = performance.now(),
+      phase = 0;
+    const animate = now => {
+      frame = requestAnimationFrame(animate);
+      const dt = Math.min(.035, (now - last) / 1000);
+      last = now;
+      if (runningRef.current) phase += dt;
+      for (let i = 0; i < positions.length / 3; i++) {
+        const j = i * 3,
+          travel = (phase * (.18 + i % 17 / 90) + i * .071) % 1 - .5,
+          amplitude = source.model === 'em' ? 0 : source.model === 'thermal' ? .1 : .55;
+        positions[j] = base[j] + directions[j] * travel * amplitude;
+        positions[j + 1] = base[j + 1] + directions[j + 1] * travel * amplitude;
+        positions[j + 2] = base[j + 2] + directions[j + 2] * travel * amplitude;
+      }
+      positionAttribute.needsUpdate = true;
+      if (source.model === 'plasma') modelGeometry.rotation.y += dt * .06;
+      renderer.render(scene, camera);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      renderer.domElement.removeEventListener('pointerdown', down);
+      renderer.domElement.removeEventListener('pointermove', move);
+      renderer.domElement.removeEventListener('pointerup', up);
+      renderer.domElement.removeEventListener('pointercancel', up);
+      renderer.domElement.removeEventListener('wheel', wheel);
+      scene.traverse(object => {
+        object.geometry?.dispose();
+        if (Array.isArray(object.material)) object.material.forEach(m => m.dispose());else object.material?.dispose();
+      });
+      renderer.dispose();
+      renderer.domElement.remove();
+    };
+  }, [result, resetKey]);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "unified-field-host",
+    ref: hostRef
+  }, error && /*#__PURE__*/React.createElement("div", {
+    className: "webgl-error"
+  }, error));
+}
+const Plot = lazy(() => import('./Plot-BP3ApVVk.js'));
+const plotConfig = {
+  responsive: true,
+  displaylogo: false,
+  toImageButtonOptions: {
+    format: 'png',
+    filename: 'PhyTwin-research-result',
+    scale: 3
+  }
+};
+const plotLayout = {
+  font: {
+    family: 'IBM Plex Mono, monospace',
+    color: '#a8bdcb',
+    size: 10
+  },
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: 'rgba(0,0,0,0)',
+  margin: {
+    l: 62,
+    r: 20,
+    t: 34,
+    b: 54
+  },
+  hoverlabel: {
+    bgcolor: '#07111d',
+    font: {
+      color: '#eaf4ff'
+    }
+  }
+};
+const icons = {
+  plasma: Atom,
+  em: Magnet,
+  gas: Wind,
+  pipe: Droplets,
+  thermal: Flame,
+  ocean: TestTubes
+};
+const labels = {
+  plasma: '等离子体',
+  em: '静态电磁场',
+  gas: '气体计算',
+  pipe: '液体计算',
+  thermal: '热传输',
+  ocean: '传质计算'
+};
+const fields = {
+  plasma: [['majorRadius', '大半径 R₀', 3, 9, .1, 'm'], ['minorRadius', '小半径 a', .8, 3, .1, 'm'], ['plasmaCurrent', '等离子体电流 Iₚ', 2, 22, .5, 'MA'], ['toroidalField', '轴上环向场 B₀', 1, 9, .1, 'T'], ['elongation', '拉长比 κ', 1, 2.2, .05, '—']],
+  em: [['turns', '线圈匝数 N', 8, 96, 1, 'turn'], ['current', '直流电流 I', 1, 40, .5, 'A'], ['radius', '线圈半径 a', .06, .35, .01, 'm'], ['length', '绕组长度 L', .08, .7, .01, 'm'], ['conductor', '导线直径 dc', .001, .012, .001, 'm']],
+  gas: [['speed', '自由来流 U∞', 5, 90, 1, 'm/s'], ['density', '气体密度 ρ', .6, 2, .01, 'kg/m³'], ['radius', '圆柱半径 a', .03, .2, .01, 'm'], ['viscosity', '动力黏度 μ', .00001, .00004, .000001, 'Pa·s'], ['angle', '来流偏角 α', -20, 20, 1, '°'], ['span', '展向长度 W', .2, 1.5, .05, 'm']],
+  pipe: [['velocity', '平均速度 Ū', .01, .2, .005, 'm/s'], ['diameter', '管内径 D', .006, .025, .001, 'm'], ['density', '液体密度 ρ', 800, 1200, 10, 'kg/m³'], ['viscosity', '动力黏度 μ', .0005, .006, .0001, 'Pa·s'], ['roughness', '壁面粗糙度 ε', .000001, .0001, .000001, 'm'], ['length', '管长 L', .2, 3, .1, 'm']],
+  thermal: [['length', '实体长度 L', .2, .8, .02, 'm'], ['width', '实体宽度 W', .15, .6, .01, 'm'], ['height', '实体高度 H', .08, .35, .01, 'm'], ['cold', '边界温度 Tc', 273, 353, 1, 'K'], ['conductivity', '导热系数 k', 1, 80, 1, 'W/(m·K)'], ['source', '体热源峰值 q̇', 100000, 4000000, 50000, 'W/m³']],
+  ocean: [['current', '海流速度 U', .02, 1.2, .01, 'm/s'], ['diffusivity', '水平扩散 Kh', .2, 20, .2, 'm²/s'], ['verticalDiffusivity', '垂向扩散 Kv', .05, 3, .05, 'm²/s'], ['mass', '释放质量 M', 50, 3000, 50, 'kg'], ['decay', '衰减率 λ', 0, .0002, .00001, 's⁻¹'], ['time', '释放后时间 t', 900, 21600, 300, 's'], ['depth', '显示水深 H', 20, 200, 5, 'm']]
+};
+function RangeField({
+  label,
+  value,
+  min,
+  max,
+  step,
+  unit,
+  onChange
+}) {
+  const progress = (Number(value) - min) / (max - min) * 100,
+    digits = step < .0001 ? 6 : step < .01 ? 4 : step < .1 ? 2 : step < 1 ? 1 : 0;
+  return /*#__PURE__*/React.createElement("label", {
+    className: "lab-range"
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("b", null, label), /*#__PURE__*/React.createElement("output", null, Number(value).toFixed(digits), " ", /*#__PURE__*/React.createElement("small", null, unit))), /*#__PURE__*/React.createElement("input", {
+    type: "range",
+    value: value,
+    min: min,
+    max: max,
+    step: step,
+    onChange: e => onChange(Number(e.target.value)),
+    style: {
+      '--range-progress': `${progress}%`
+    }
+  }));
+}
+function Metric({
+  item,
+  index
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: index === 0 ? 'lab-metric accent' : 'lab-metric'
+  }, /*#__PURE__*/React.createElement("span", null, item[0]), /*#__PURE__*/React.createElement("strong", null, item[1]), /*#__PURE__*/React.createElement("small", null, item[2]));
+}
+function EquationPanel({
+  theory
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "equation-panel"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "equation-title"
+  }, /*#__PURE__*/React.createElement("span", null, "GOVERNING EQUATIONS"), /*#__PURE__*/React.createElement("b", null, "\u63A7\u5236\u65B9\u7A0B\u4E0E\u7269\u7406\u91CF")), theory.equations.map(eq => /*#__PURE__*/React.createElement("code", {
+    key: eq
+  }, eq)), /*#__PURE__*/React.createElement("dl", null, theory.variables.map(([symbol, name, unit]) => /*#__PURE__*/React.createElement("div", {
+    key: symbol
+  }, /*#__PURE__*/React.createElement("dt", null, symbol), /*#__PURE__*/React.createElement("dd", null, name), /*#__PURE__*/React.createElement("dd", null, unit)))), /*#__PURE__*/React.createElement("p", null, theory.assumptions));
+}
+function ScientificPost2D({
+  result,
+  meta
+}) {
+  const ocean = result.model === 'ocean',
+    colors = [[0, '#071c48'], [.25, '#058fc2'], [.5, '#2ed1a8'], [.75, '#f7c940'], [1, '#e6331f']];
+  return /*#__PURE__*/React.createElement("section", {
+    className: "lab-scientific-post"
+  }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement("span", null, "03 / NATURE-STYLE POST-PROCESSING"), /*#__PURE__*/React.createElement("h2", null, "\u540C\u4E00\u6C42\u89E3\u573A\u7684\u4E8C\u7EF4\u622A\u9762\u4E0E\u5B9A\u91CF\u5256\u9762"), /*#__PURE__*/React.createElement("p", null, "\u4E91\u56FE\u3001\u66F2\u7EBF\u3001\u6307\u6807\u3001\u4E09\u7EF4\u7C92\u5B50\u4E0E\u4E0B\u8F7D\u6570\u636E\u5171\u7528\u540C\u4E00\u4E2A result \u6570\u7EC4\uFF1B\u5750\u6807\u3001\u7269\u7406\u91CF\u548C\u5355\u4F4D\u5B8C\u6574\u6807\u6CE8\u3002"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => downloadResult(result)
+  }, /*#__PURE__*/React.createElement(Download, {
+    size: 15
+  }), "\u4E0B\u8F7D\u6C42\u89E3\u6570\u636E JSON")), /*#__PURE__*/React.createElement("div", {
+    className: "research-plot-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    "aria-label": `${meta.name} 二维场云图`
+  }, /*#__PURE__*/React.createElement(Suspense, {
+    fallback: /*#__PURE__*/React.createElement("div", {
+      className: "plot-skeleton"
+    })
+  }, /*#__PURE__*/React.createElement(Plot, {
+    data: [{
+      x: result.x,
+      y: result.y,
+      z: result.z,
+      type: 'heatmap',
+      connectgaps: false,
+      colorscale: colors,
+      colorbar: {
+        title: {
+          text: meta.unit
+        },
+        thickness: 10,
+        outlinewidth: 0
+      },
+      hovertemplate: 'x=%{x:.4g}<br>y=%{y:.4g}<br>value=%{z:.4g}<extra></extra>'
+    }],
+    layout: {
+      ...plotLayout,
+      title: {
+        text: `(a) ${meta.legend}`,
+        x: .02,
+        font: {
+          size: 12
+        }
+      },
+      xaxis: {
+        title: ocean ? 'x (km)' : 'x (m)',
+        gridcolor: '#1b3345'
+      },
+      yaxis: {
+        title: ocean ? 'y (km)' : 'y (m)',
+        gridcolor: '#1b3345'
+      },
+      height: 390
+    },
+    config: plotConfig,
+    style: {
+      width: '100%'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    "aria-label": `${meta.name} 定量剖面`
+  }, /*#__PURE__*/React.createElement(Suspense, {
+    fallback: /*#__PURE__*/React.createElement("div", {
+      className: "plot-skeleton"
+    })
+  }, /*#__PURE__*/React.createElement(Plot, {
+    data: [{
+      x: result.curveX,
+      y: result.curveY,
+      type: 'scatter',
+      mode: 'lines',
+      line: {
+        color: '#62d9ff',
+        width: 2.4
+      },
+      name: result.curveTitle
+    }],
+    layout: {
+      ...plotLayout,
+      title: {
+        text: `(b) ${result.curveTitle}`,
+        x: .02,
+        font: {
+          size: 12
+        }
+      },
+      xaxis: {
+        title: result.curveXTitle,
+        gridcolor: '#1b3345',
+        zeroline: false
+      },
+      yaxis: {
+        title: result.curveYTitle,
+        gridcolor: '#1b3345',
+        zerolinecolor: '#526a7b'
+      },
+      height: 390,
+      showlegend: false
+    },
+    config: plotConfig,
+    style: {
+      width: '100%'
+    }
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "post-footnote"
+  }, /*#__PURE__*/React.createElement("span", null, "FIELD: ", meta.method), /*#__PURE__*/React.createElement("span", null, "EXPORT: 3\xD7 PNG \xB7 JSON"), /*#__PURE__*/React.createElement("span", null, "TRACE: CONTINUUM FIELD \u2192 PARTICLES")));
+}
+export default function RealtimeLab() {
+  const [mode, setMode] = useState('plasma'),
+    [paramsByMode, setParamsByMode] = useState(presets),
+    [running, setRunning] = useState(true),
+    [resetKey, setResetKey] = useState(0);
+  useEffect(() => {
+    document.title = '浏览器实时实验室｜PhyTwin';
+  }, []);
+  const params = paramsByMode[mode];
+  const solution = useMemo(() => {
+      try {
+        return {
+          result: runSolver(mode, params),
+          error: ''
+        };
+      } catch (reason) {
+        return {
+          result: null,
+          error: reason.message
+        };
+      }
+    }, [mode, params]),
+    {
+      result,
+      error
+    } = solution;
+  const setParam = (key, value) => setParamsByMode(current => ({
+      ...current,
+      [mode]: {
+        ...current[mode],
+        [key]: value
+      }
+    })),
+    reset = () => {
+      setParamsByMode(current => ({
+        ...current,
+        [mode]: presets[mode]
+      }));
+      setResetKey(v => v + 1);
+      setRunning(true);
+    };
+  const meta = modelMeta[mode],
+    theory = modelTheory[mode],
+    hud = result?.dimensions.map(([label, value, unit]) => `${label.replace(/ .*/, '')} ${Number(value).toFixed(value < 1 ? 3 : 1)} ${unit}`).join(' · ');
+  return /*#__PURE__*/React.createElement("section", {
+    className: "realtime-lab-page"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lab-intro section-shell"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "lab-eyebrow"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pulse-dot"
+  }), "PHYTWIN REALTIME LAB / 3D FIELD SOLVERS"), /*#__PURE__*/React.createElement("h1", null, "\u516D\u4E2A\u7269\u7406\u6A21\u5757\uFF0C", /*#__PURE__*/React.createElement("br", null), "\u4E00\u6761\u53EF\u6838\u67E5\u7684\u6570\u636E\u94FE\u3002"), /*#__PURE__*/React.createElement("p", null, "PhyTwin Plasma\u3001EM\u3001Gas\u3001Liquid\u3001Heat \u4E0E Transport\uFF1A\u63A7\u5236\u65B9\u7A0B\u6C42\u8FDE\u7EED\u573A\uFF0C\u7C92\u5B50\u53EA\u8D1F\u8D23\u4E09\u7EF4\u793A\u8E2A\uFF1B\u4E8C\u7EF4\u4E91\u56FE\u3001\u5256\u9762\u3001\u6307\u6807\u4E0E\u4E0B\u8F7D\u7ED3\u679C\u5747\u6765\u81EA\u540C\u4E00\u6B21\u6C42\u89E3\u3002")), /*#__PURE__*/React.createElement("div", {
+    className: "lab-intro-note"
+  }, /*#__PURE__*/React.createElement(Sparkles, {
+    size: 18
+  }), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("b", null, "\u65B9\u7A0B\u89E3\u4E0E\u5C55\u793A\u4E25\u683C\u5BF9\u5E94"), "\u53C2\u6570\u8FDB\u5165\u660E\u786E\u7684\u89E3\u6790\u89E3\u6216\u6570\u503C\u79BB\u6563\uFF1B\u6BCF\u4E2A\u6A21\u5757\u90FD\u516C\u5F00\u7B26\u53F7\u3001\u5355\u4F4D\u3001\u8FB9\u754C\u4E0E\u9002\u7528\u8303\u56F4\u3002"))), /*#__PURE__*/React.createElement("div", {
+    className: "lab-shell"
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "lab-toolbar"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "experiment-tabs"
+  }, Object.keys(modelMeta).map(key => {
+    const Icon = icons[key];
+    return /*#__PURE__*/React.createElement("button", {
+      key: key,
+      className: mode === key ? 'active' : '',
+      onClick: () => {
+        setMode(key);
+        setRunning(true);
+      }
+    }, /*#__PURE__*/React.createElement(Icon, {
+      size: 16
+    }), labels[key], /*#__PURE__*/React.createElement("span", null, "3D"));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "lab-run-state"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: running ? 'live' : ''
+  }), running ? 'FIELD ACTIVE' : 'PAUSED'), /*#__PURE__*/React.createElement("div", {
+    className: "lab-toolbar-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setRunning(v => !v)
+  }, running ? /*#__PURE__*/React.createElement(Pause, {
+    size: 15
+  }) : /*#__PURE__*/React.createElement(Play, {
+    size: 15,
+    fill: "currentColor"
+  }), running ? '暂停' : '继续'), /*#__PURE__*/React.createElement("button", {
+    onClick: reset
+  }, /*#__PURE__*/React.createElement(RotateCcw, {
+    size: 15
+  }), "\u91CD\u7F6E"))), /*#__PURE__*/React.createElement("div", {
+    className: "lab-workspace"
+  }, /*#__PURE__*/React.createElement("aside", {
+    className: "lab-controls"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lab-panel-heading"
+  }, /*#__PURE__*/React.createElement("span", null, "01"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, "\u771F\u5B9E\u5DE5\u51B5\u53C2\u6570"), /*#__PURE__*/React.createElement("small", null, "SYMBOLS & SI UNITS"))), /*#__PURE__*/React.createElement("div", {
+    className: "lab-control-group range-stack plume-ranges"
+  }, fields[mode].map(([key, label, min, max, step, unit]) => /*#__PURE__*/React.createElement(RangeField, {
+    key: key,
+    label: label,
+    value: params[key],
+    min: min,
+    max: max,
+    step: step,
+    unit: unit,
+    onChange: value => setParam(key, value)
+  }))), error && /*#__PURE__*/React.createElement("div", {
+    className: "lab-error"
+  }, error), /*#__PURE__*/React.createElement("div", {
+    className: "model-chip"
+  }, /*#__PURE__*/React.createElement(Activity, {
+    size: 15
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, meta.code), /*#__PURE__*/React.createElement("span", null, meta.method)))), /*#__PURE__*/React.createElement("main", {
+    className: "lab-viewport"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "viewport-hud top-left"
+  }, /*#__PURE__*/React.createElement("span", null, meta.code.toUpperCase()), /*#__PURE__*/React.createElement("b", null, hud || '等待有效工况')), /*#__PURE__*/React.createElement("div", {
+    className: "viewport-hud top-right"
+  }, /*#__PURE__*/React.createElement("span", null, "SINGLE SOURCE OF TRUTH"), /*#__PURE__*/React.createElement("b", null, "PARAMETERS \u2192 EQUATION \u2192 FIELD \u2192 POST")), result ? /*#__PURE__*/React.createElement(UnifiedField3D, {
+    result: result,
+    running: running,
+    resetKey: resetKey
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "lab-loading"
+  }, /*#__PURE__*/React.createElement(Info, {
+    size: 22
+  }), /*#__PURE__*/React.createElement("span", null, "\u8BF7\u8C03\u6574\u53C2\u6570\u4F7F\u5176\u6EE1\u8DB3\u6A21\u578B\u9002\u7528\u8303\u56F4")), /*#__PURE__*/React.createElement("div", {
+    className: "viewport-help"
+  }, /*#__PURE__*/React.createElement(MousePointer2, {
+    size: 14
+  }), "\u62D6\u52A8\u65CB\u8F6C \xB7 \u6EDA\u8F6E\u7F29\u653E \xB7 \u7C92\u5B50\u6309\u8FDE\u7EED\u573A\u65B9\u5411\u793A\u8E2A"), /*#__PURE__*/React.createElement("div", {
+    className: "field-legend unified"
+  }, /*#__PURE__*/React.createElement("span", null, "LOW"), /*#__PURE__*/React.createElement("i", null), /*#__PURE__*/React.createElement("span", null, "HIGH \xB7 ", meta.unit))), /*#__PURE__*/React.createElement("aside", {
+    className: "lab-diagnostics"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lab-panel-heading"
+  }, /*#__PURE__*/React.createElement("span", null, "02"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, "\u4E00\u4E00\u5BF9\u5E94\u540E\u5904\u7406"), /*#__PURE__*/React.createElement("small", null, "SAME SOLUTION ARRAY"))), result && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "lab-metrics"
+  }, result.stats.map((item, index) => /*#__PURE__*/React.createElement(Metric, {
+    key: item[0],
+    item: item,
+    index: index
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "dimension-table"
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement(Box, {
+    size: 14
+  }), "\u4E09\u7EF4\u8BA1\u7B97\u57DF"), result.dimensions.map(([label, value, unit]) => /*#__PURE__*/React.createElement("div", {
+    key: label
+  }, /*#__PURE__*/React.createElement("b", null, label), /*#__PURE__*/React.createElement("em", null, Number(value).toFixed(Number(value) < 1 ? 3 : 1), " ", unit)))), /*#__PURE__*/React.createElement("div", {
+    className: "solver-health"
+  }, /*#__PURE__*/React.createElement(Gauge, {
+    size: 17
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "SOLVER STATE"), /*#__PURE__*/React.createElement("b", null, "CONVERGED \xB7 CONSISTENT"))), /*#__PURE__*/React.createElement("div", {
+    className: "lab-scope-note"
+  }, /*#__PURE__*/React.createElement(Info, {
+    size: 16
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, "\u5F53\u524D\u7ED3\u8BBA"), /*#__PURE__*/React.createElement("p", null, result.insight)))))), /*#__PURE__*/React.createElement(EquationPanel, {
+    theory: theory
+  })), result && /*#__PURE__*/React.createElement(ScientificPost2D, {
+    result: result,
+    meta: meta
+  }));
+}

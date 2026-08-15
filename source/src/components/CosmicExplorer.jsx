@@ -6,7 +6,7 @@ import * as THREE from 'three'
 // 银河系刚体缓慢自转速率
 const GALAXY_ROTATION_RATE = Math.PI * 2 / (12 * 60 * 60)
 
-// 真实天文天体数据（无猎户臂/ORION SPUR）
+// 真实天文天体数据标定
 const OBJECTS = {
   solar: {
     index: '01',
@@ -113,7 +113,7 @@ const GALAXY_INFO = {
   description: '银河系是一个中等质量的棒旋星系（SBbc 型），由约 1000~4000 亿颗恒星及致密星际介质构成。中央核心包含约 415 万 M☉ 的超大质量黑洞人马座 A* (Sgr A*)。主要旋臂包括英仙臂、人马-船底臂、盾牌-南十字臂和矩尺臂，太阳系距银心约 26,700 光年。'
 }
 
-// 仅四大主旋臂标注（无猎户臂）
+// 银河系四大主旋臂标注
 const SPIRAL_ARMS = [
   { id: 'perseus', name: '英仙臂 (Perseus Arm)', latin: 'Major Outer Arm', x: -1.45, y: -2.48, color: '#86c8ff' },
   { id: 'sagittarius', name: '人马-船底臂 (Sagittarius Arm)', latin: 'Major Inner Arm', x: 1.95, y: -1.35, color: '#6db8ff' },

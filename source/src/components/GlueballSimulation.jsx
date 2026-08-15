@@ -436,10 +436,10 @@ export default function GlueballSimulation() {
               <b>1. 非阿贝尔规范场自相互作用</b>
             </div>
             <code>
-              G_{\mu\nu}^a = \partial_\mu A_\nu^a - \partial_\nu A_\mu^a + g f^{abc} A_\mu^b A_\nu^c
+              {"G_{μν}^a = ∂_μ A_ν^a - ∂_ν A_μ^a + g f^{abc} A_μ^b A_ν^c"}
             </code>
             <p>
-              不同于光子（不带电荷、场方程线性），QCD 胶子场自身携带色荷（$SU(3)$ 生成元），三胶子与四胶子自耦合项产生极强的非线性聚集效应。
+              不同于光子（不带电荷、场方程线性），QCD 胶子场自身携带色荷（SU(3) 生成元），三胶子与四胶子自耦合项产生极强的非线性聚集效应。
             </p>
           </div>
 
@@ -449,7 +449,7 @@ export default function GlueballSimulation() {
               <b>2. 色通量管收缩与线性禁闭势</b>
             </div>
             <code>
-              V_{\text{QCD}}(r) = -\frac{4}{3}\frac{\alpha_s}{r} + \sigma r \quad (\sigma \approx 1\text{ GeV/fm})
+              {"V_{QCD}(r) = -(4/3)(α_s / r) + σ r  (σ ≈ 1 GeV/fm)"}
             </code>
             <p>
               当两个色源被拉开时，真空超导效应使色电场线被压缩成一维致密“通量管”（Flux Tube），能量随距离线性增加，促使闭合形成孤子纽结。
@@ -462,7 +462,7 @@ export default function GlueballSimulation() {
               <b>3. 质量凝聚（无夸克的纯场质量）</b>
             </div>
             <code>
-              M_{\text{glueball}} = \langle 0 | \Theta_{\mu}^\mu | 0 \rangle_{\text{anomaly}} = \frac{\beta(g)}{2g} \langle G^2 \rangle
+              {"M_{glueball} = ⟨0 | Θ_μ^μ | 0⟩_{anomaly} = [β(g)/(2g)] ⟨G^2⟩ ≈ 1.7 GeV/c²"}
             </code>
             <p>
               胶球没有任何构成夸克（即没有夸克静止质量），其全部 1.7 GeV/c² 质量均源自非阿贝尔色场的动力学自禁闭动能与量子微商反常。

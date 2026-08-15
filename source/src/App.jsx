@@ -63,9 +63,41 @@ function FieldPreview({ type = 'stress', compact = false }) {
   return <div className={`field-preview ${compact ? 'compact' : ''}`}><Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{ z, type: 'heatmap', colorscale: scale, showscale: !compact, colorbar: { thickness: 8, outlinewidth: 0, tickfont: { size: 8 } } }]} layout={{ ...baseLayout, margin: compact ? { l: 0, r: 0, t: 0, b: 0 } : { l: 10, r: 35, t: 10, b: 10 }, xaxis: { visible: false }, yaxis: { visible: false }, height: compact ? 180 : 340 }} config={{ ...plotConfig, displayModeBar: false }} style={{ width: '100%' }} /></Suspense></div>
 }
 
+function AtomicOriginSection() {
+  const steps = [
+    { n: '01', key: 'FLOW FIELD', title: '流场', text: '设存在一个连续的矢量流场 v(x,t)，作为构成物质的最底层运动状态。真空并非空无一物，而是这个场的静息态；粒子与辐射，都是这个场不同的激发形态。', eq: 'v(x, t)' },
+    { n: '02', key: 'CHARGE', title: '电荷 · 源与汇', text: '场的散度对应电荷。流线在某处发散（∇·v > 0）表现为正电荷，汇聚（∇·v < 0）表现为负电荷。穿过闭合曲面的净通量度量其中包裹的净电荷。', eq: '∇·v = ρ' },
+    { n: '03', key: 'MASS', title: '质量 · 约束的环流', text: '场的环流对应质量。被束缚在局部的涡旋具有惯性，改变它的运动状态须同时改变场的结构，这份“代价”就是惯性质量——质量是锁定在局部涡旋中的场能。', eq: 'E = mc²' },
+    { n: '04', key: 'NUCLEUS', title: '原子核 · 链接的涡旋', text: '原子核是流场的稳定束缚态：若干涡旋相互链接形成的“结”。质子与中子对应不同的涡旋构型，使它们结合的强相互作用对应维持链接的场张力。', eq: 'ω = ∇×v' },
+    { n: '05', key: 'RADIATION', title: '辐射 · 场中的行波', text: '当束缚态重组、衰变或湮灭时，场结构发生重排，多余的能量以波的形式沿场传播——这就是电磁辐射与粒子辐射，辐射携带的是场结构变化的信息。', eq: '∂²v/∂t² = c²∇²v' },
+  ]
+  return (
+    <section className="atomic-origin">
+      <div className="section-shell">
+        <div className="atomic-origin-head">
+          <Eyebrow>UNIFIED FLOW FIELD</Eyebrow>
+          <h2>探索原子核的来源</h2>
+          <p>辐射、电荷、质量与原子核，能否统一为一种连续流场的几何与拓扑？下面是一种概念性的统一描述——把物质的基本属性重新归结为流场的散度、旋度与束缚态。</p>
+        </div>
+        <div className="flow-field-steps">
+          {steps.map(s => (
+            <article key={s.n}>
+              <span>{s.n}</span>
+              <small>{s.key}</small>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+              <code>{s.eq}</code>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Home() {
   useDocumentTitle('Physical Digital Twin')
-  return <section className="cosmic-home-hero"><Suspense fallback={<div className="cosmic-fallback"><div className="spinner"/><span>生成银河系固定旋臂…</span></div>}><CosmicExplorer/></Suspense></section>
+  return <><section className="cosmic-home-hero"><Suspense fallback={<div className="cosmic-fallback"><div className="spinner"/><span>生成银河系固定旋臂…</span></div>}><CosmicExplorer/></Suspense></section><AtomicOriginSection /></>
 }
 
 function Capabilities() {

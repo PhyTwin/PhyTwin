@@ -356,6 +356,70 @@ function GalaxyAnchorLayer({ expanded = false, onSelect, anchorRefs, armRefs }) 
   )
 }
 
+// 动态非重叠矩形排斥与引线自适应避让算法（确保所有星体与旋臂图层四边互不重叠）
+function resolveLabelCollisions(items, containerWidth, containerHeight) {
+  const PADDING = 14 // 边缘安全间隔（像素）
+  const ITERATIONS = 12 // 迭代松弛次数
+
+  // 1. 初始化每个卡片的目标中心位置与尺寸
+  const boxes = items.map(item => ({
+    ...item,
+    cx: item.ox + item.initDx,
+    cy: item.oy + item.initDy,
+    w: item.w,
+    h: item.h
+  }))
+
+  // 2. 迭代排斥消除重叠
+  for (let iter = 0; iter < ITERATIONS; iter++) {
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = i + 1; j < boxes.length; j++) {
+        const b1 = boxes[i]
+        const b2 = boxes[j]
+
+        const dx = b1.cx - b2.cx
+        const dy = b1.cy - b2.cy
+        const minDistX = (b1.w + b2.w) / 2 + PADDING
+        const minDistY = (b1.h + b2.h) / 2 + PADDING
+
+        const absDx = Math.abs(dx) || 0.001
+        const absDy = Math.abs(dy) || 0.001
+
+        if (absDx < minDistX && absDy < minDistY) {
+          const overlapX = minDistX - absDx
+          const overlapY = minDistY - absDy
+
+          // 沿重叠最小维度分离，确保四边完全分开
+          if (overlapX < overlapY) {
+            const sign = dx >= 0 ? 1 : -1
+            const push = overlapX * 0.55
+            b1.cx += sign * push
+            b2.cx -= sign * push
+          } else {
+            const sign = dy >= 0 ? 1 : -1
+            const push = overlapY * 0.55
+            b1.cy += sign * push
+            b2.cy -= sign * push
+          }
+        }
+      }
+    }
+
+    // 视口边界钳制，确保不会移出屏幕
+    for (let i = 0; i < boxes.length; i++) {
+      const b = boxes[i]
+      const minX = b.w / 2 + 20
+      const maxX = Math.max(minX, containerWidth - b.w / 2 - 20)
+      const minY = b.h / 2 + 75
+      const maxY = Math.max(minY, containerHeight - b.h / 2 - 60)
+      b.cx = Math.max(minX, Math.min(maxX, b.cx))
+      b.cy = Math.max(minY, Math.min(maxY, b.cy))
+    }
+  }
+
+  return boxes
+}
+
 export default function CosmicExplorer() {
   const hostRef = useRef(null)
   const anchorRefs = useRef({})
@@ -513,26 +577,86 @@ export default function CosmicExplorer() {
         m.scale.setScalar(pulse)
       })
 
-      // 投影锚点位置
+      // 计算并动态排斥所有星体与旋臂图层，确保四边互不重叠
+      const containerW = host.clientWidth || 1200
+      const containerH = host.clientHeight || 800
+
+      // 准备参与碰撞排斥计算的所有可见图层项目
+      const collisionItems = []
+
+      // 1. 恒星/天体锚点
       Object.entries(OBJECTS).forEach(([id, o]) => {
         const element = anchorRefs.current[id]
         if (!element) return
         const point = new THREE.Vector3(o.x, o.y, o.z || 0).applyMatrix4(galacticFrame.matrixWorld)
         point.project(camera)
-        element.style.left = `${(point.x * 0.5 + 0.5) * 100}%`
-        element.style.top = `${(-point.y * 0.5 + 0.5) * 100}%`
-        element.style.opacity = point.z > -1 && point.z < 1 ? '1' : '0'
+        const ox = (point.x * 0.5 + 0.5) * containerW
+        const oy = (-point.y * 0.5 + 0.5) * containerH
+        const isVisible = point.z > -1 && point.z < 1
+
+        collisionItems.push({
+          type: 'stellar',
+          id,
+          element,
+          ox,
+          oy,
+          initDx: o.labelOffset[0],
+          initDy: o.labelOffset[1],
+          w: 184,
+          h: 46,
+          isVisible
+        })
       })
 
-      // 投影旋臂标签
+      // 2. 四大旋臂标注
       SPIRAL_ARMS.forEach(arm => {
         const element = armRefs.current[arm.id]
         if (!element) return
         const point = new THREE.Vector3(arm.x, arm.y, 0).applyMatrix4(galacticFrame.matrixWorld)
         point.project(camera)
-        element.style.left = `${(point.x * 0.5 + 0.5) * 100}%`
-        element.style.top = `${(-point.y * 0.5 + 0.5) * 100}%`
-        element.style.opacity = !active || active === 'galaxy' ? '1' : '0.2'
+        const ox = (point.x * 0.5 + 0.5) * containerW
+        const oy = (-point.y * 0.5 + 0.5) * containerH
+        const isVisible = point.z > -1 && point.z < 1 && (!active || active === 'galaxy')
+
+        collisionItems.push({
+          type: 'arm',
+          id: arm.id,
+          element,
+          ox,
+          oy,
+          initDx: 0,
+          initDy: 0,
+          w: 140,
+          h: 36,
+          isVisible
+        })
+      })
+
+      // 运行排斥计算
+      const resolvedBoxes = resolveLabelCollisions(collisionItems, containerW, containerH)
+
+      // 应用最终计算出的无重叠坐标与引线
+      resolvedBoxes.forEach(box => {
+        const el = box.element
+        if (!el) return
+        if (box.type === 'stellar') {
+          el.style.left = `${box.ox}px`
+          el.style.top = `${box.oy}px`
+          const dx = box.cx - box.ox
+          const dy = box.cy - box.oy
+          const L = Math.hypot(dx, dy)
+          const angle = (Math.atan2(dy, dx) * 180) / Math.PI
+
+          el.style.setProperty('--label-x', `${dx}px`)
+          el.style.setProperty('--label-y', `${dy}px`)
+          el.style.setProperty('--leader-length', `${L}px`)
+          el.style.setProperty('--leader-angle', `${angle}deg`)
+          el.style.opacity = box.isVisible ? '1' : '0'
+        } else if (box.type === 'arm') {
+          el.style.left = `${box.cx}px`
+          el.style.top = `${box.cy}px`
+          el.style.opacity = box.isVisible ? '1' : '0.2'
+        }
       })
 
       renderer.render(scene, camera)

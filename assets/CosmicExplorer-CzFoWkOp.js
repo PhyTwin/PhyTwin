@@ -1,7 +1,7 @@
 
-import * as React from './jsx-runtime-Cltr0gcK.js';
-const ReactCore = React.n();
-const { createElement, useEffect, useRef, useState, useMemo, useCallback, lazy, Suspense } = ReactCore;
+import * as ReactRuntime from './jsx-runtime-Cltr0gcK.js';
+const React = ReactRuntime.n();
+const { createElement, useEffect, useRef, useState, useMemo, useCallback, lazy, Suspense, Fragment } = React;
 
 function createIcon(svgContent) {
   return function IconComponent(props) {

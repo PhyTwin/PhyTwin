@@ -8,6 +8,7 @@ const colors = { cobalt: '#3157d5', cyan: '#16a6a1', ember: '#ef6a4c', moss: '#6
 const Plot = lazy(() => import('./components/Plot'))
 const RealtimeLab = lazy(() => import('./pages/RealtimeLab'))
 const CosmicExplorer = lazy(() => import('./components/CosmicExplorer'))
+const GlueballSimulation = lazy(() => import('./components/GlueballSimulation'))
 const NuclearFieldTheory = lazy(() => import('./components/NuclearFieldTheory'))
 const plotConfig = { responsive: true, displaylogo: false, toImageButtonOptions: { format: 'png', filename: 'PhyTwin-result', scale: 3 } }
 const baseLayout = {
@@ -72,6 +73,9 @@ function Home() {
         <CosmicExplorer/>
       </Suspense>
     </section>
+    <Suspense fallback={<div className="plot-skeleton"/>}>
+      <GlueballSimulation />
+    </Suspense>
     <Suspense fallback={<div className="plot-skeleton"/>}>
       <NuclearFieldTheory />
     </Suspense>

@@ -6,13 +6,13 @@ import * as THREE from 'three'
 // 银河系刚体缓慢自转速率
 const GALAXY_ROTATION_RATE = Math.PI * 2 / (12 * 60 * 60)
 
-// 真实天文天体数据
+// 真实天文天体数据（无猎户臂/ORION SPUR）
 const OBJECTS = {
   solar: {
     index: '01',
     kind: 'LOCAL STELLAR SYSTEM',
     name: '太阳系 (Solar System)',
-    latin: 'Sol · Orion Spur / Local Arm',
+    latin: 'Sol · G2V Main-sequence Star',
     x: -0.34,
     y: -2.04,
     z: 0,
@@ -24,7 +24,7 @@ const OBJECTS = {
     value: '≈ 26,700 ly',
     spectral: 'G2V 黄矮星 (Yellow Dwarf)',
     temp: '5,778 K',
-    description: '太阳系位于银河系猎户臂（本地支臂）内侧，距离银心约 26,700 光年（8.2 千秒差距），以约 220 km/s 的轨道速度绕银心公转，周期约 2.3 亿年。核心天体太阳为 G2V 型黄矮星，拥有八大行星及柯伊伯带。'
+    description: '太阳系位于英仙臂与人马臂之间，距离银心约 26,700 光年（8.2 千秒差距），以约 220 km/s 的轨道速度绕银心公转，周期约 2.3 亿年。核心天体太阳为 G2V 型黄矮星，拥有八大行星及柯伊伯带。'
   },
   vega: {
     index: '02',
@@ -42,7 +42,7 @@ const OBJECTS = {
     value: '≈ 25.04 ly',
     spectral: 'A0Va 高温蓝白主序星',
     temp: '9,602 K',
-    description: '织女星（Vega）是天琴座最亮恒星，全天第五亮星。属于 A0V 型高温蓝白色主序星，质量约 2.13 M☉，光度为太阳的 40 倍。与太阳同处于猎户臂本地星际云中，距离极近（25 光年）。自转极快（赤道速度 ~236 km/s），呈显著扁球体。'
+    description: '织女星（Vega）是天琴座最亮恒星，全天第五亮星。属于 A0V 型高温蓝白色主序星，质量约 2.13 M☉，光度为太阳的 40 倍。距离太阳极近（25 光年），自转极快（赤道速度 ~236 km/s），呈显著扁球体。'
   },
   thuban: {
     index: '03',
@@ -60,7 +60,7 @@ const OBJECTS = {
     value: '≈ 303 ly',
     spectral: 'A0III 白巨星 / 分光双星',
     temp: '9,800 K',
-    description: '天龙座 α（Thuban，右枢）位于猎户臂北侧纵深区域，距太阳约 303 光年，距织女星约 280 光年。为 A0III 型巨星组成的分光食双星系统。约公元前 3942 年至前 1793 年间曾是地球北极星，古埃及胡夫金字塔北向通道即精确对准此星。在古文明与现代地外传说中具有重要象征意义。'
+    description: '天龙座 α（Thuban，右枢）距太阳约 303 光年，距织女星约 280 光年。为 A0III 型巨星组成的分光食双星系统。约公元前 3942 年至前 1793 年间曾是地球北极星，古埃及胡夫金字塔北向通道即精确对准此星。在古文明与现代地外传说中具有重要象征意义。'
   },
   sirius: {
     index: '04',
@@ -110,16 +110,15 @@ const GALAXY_INFO = {
   y: 0,
   metric: 'STELLAR DISK DIAMETER',
   value: '≈ 100,000–120,000 ly',
-  description: '银河系是一个中等质量的棒旋星系（SBbc 型），由约 1000~4000 亿颗恒星及致密星际介质构成。中央核心包含约 415 万 M☉ 的超大质量黑洞人马座 A* (Sgr A*)。拥有英仙臂、人马-船底臂、盾牌-南十字臂和矩尺臂四条主要旋臂。太阳系位于英仙臂与人马臂之间的猎户臂上，距银心约 26,700 光年。'
+  description: '银河系是一个中等质量的棒旋星系（SBbc 型），由约 1000~4000 亿颗恒星及致密星际介质构成。中央核心包含约 415 万 M☉ 的超大质量黑洞人马座 A* (Sgr A*)。主要旋臂包括英仙臂、人马-船底臂、盾牌-南十字臂和矩尺臂，太阳系距银心约 26,700 光年。'
 }
 
-// 四大主旋臂与本地臂标注位置
+// 仅四大主旋臂标注（无猎户臂）
 const SPIRAL_ARMS = [
   { id: 'perseus', name: '英仙臂 (Perseus Arm)', latin: 'Major Outer Arm', x: -1.45, y: -2.48, color: '#86c8ff' },
   { id: 'sagittarius', name: '人马-船底臂 (Sagittarius Arm)', latin: 'Major Inner Arm', x: 1.95, y: -1.35, color: '#6db8ff' },
   { id: 'scutum', name: '盾牌-南十字臂 (Scutum-Centaurus)', latin: 'Major Molecular Arm', x: 1.55, y: 1.75, color: '#8ec5ff' },
-  { id: 'norma', name: '矩尺-天鹅臂 (Norma-Cygnus Arm)', latin: 'Innermost / Outer Arm', x: -1.95, y: 1.25, color: '#7ab3ff' },
-  { id: 'orion', name: '猎户臂 / 本地臂 (Orion Spur)', latin: 'Solar Neighborhood', x: 0.12, y: -1.68, color: '#fff0a6', isLocal: true }
+  { id: 'norma', name: '矩尺-天鹅臂 (Norma-Cygnus Arm)', latin: 'Innermost / Outer Arm', x: -1.95, y: 1.25, color: '#7ab3ff' }
 ]
 
 // 银河系周边与本星系群主要真实星系
@@ -145,7 +144,7 @@ function makeGalaxy() {
   const blue = new THREE.Color('#4c79bd')
   const warm = new THREE.Color('#ffd29a')
 
-  // 旋臂极坐标方程：缩短 sweep 系数到 6.8（避免旋臂过长）
+  // 旋臂极坐标方程：缩短 sweep 系数到 6.8
   const armPoint = (arm, t, radialNoise = 0, angularNoise = 0) => {
     const sweep = 0.22 + t * 6.8
     const theta = sweep + (arm * Math.PI) / 2 + angularNoise
@@ -179,22 +178,11 @@ function makeGalaxy() {
   stars.setAttribute('color', new THREE.BufferAttribute(colors, 3))
   group.add(new THREE.Points(stars, new THREE.PointsMaterial({ size: 0.026, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true })))
 
-  // 绘制四条主旋臂骨架线（适度缩短）
+  // 绘制四条主旋臂骨架线
   for (let arm = 0; arm < 4; arm += 1) {
     const curve = Array.from({ length: 180 }, (_, i) => armPoint(arm, i / 179))
     group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve), new THREE.LineBasicMaterial({ color: arm % 2 ? 0x6d9ed4 : 0x86c8ff, transparent: true, opacity: arm % 2 ? 0.16 : 0.22, blending: THREE.AdditiveBlending })))
   }
-
-  // 猎户臂（本地臂）精确连接太阳系、织女星与天龙座α区域
-  const localCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.95, -2.52, 0.018),
-    new THREE.Vector3(-0.34, -2.04, 0.018), // 太阳系
-    new THREE.Vector3(-0.18, -1.90, 0.018), // 织女星周边
-    new THREE.Vector3(0.12, -1.55, 0.018),  // 天龙座α延伸段
-    new THREE.Vector3(0.44, -1.20, 0.018)
-  ])
-  const localArm = localCurve.getPoints(100)
-  group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(localArm), new THREE.LineBasicMaterial({ color: 0xffea9f, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending })))
 
   // 银河核心棒状结构
   const bar = new THREE.Mesh(new THREE.SphereGeometry(0.52, 36, 20), new THREE.MeshBasicMaterial({ color: 0xffd7a3, transparent: true, opacity: 0.52, blending: THREE.AdditiveBlending }))
@@ -202,7 +190,7 @@ function makeGalaxy() {
   bar.rotation.z = 0.38
   group.add(bar)
 
-  // 标尺同心参考环 (20k, 40k, 60k ly)
+  // 标尺同心参考环
   ;[1.18, 2.36, 3.54].forEach(r => {
     const ring = orbitLine(r)
     ring.material.color.set(0x597390)
@@ -304,7 +292,7 @@ function makeGlobularCluster() {
   return group
 }
 
-function GalaxyAnchorLayer({ expanded = false, onSelect, anchorRefs, rulerRef, armRefs }) {
+function GalaxyAnchorLayer({ expanded = false, onSelect, anchorRefs, armRefs }) {
   return (
     <div className={expanded ? 'galaxy-marker-layer expanded' : 'galaxy-marker-layer'}>
       {/* 银心标注 */}
@@ -316,19 +304,14 @@ function GalaxyAnchorLayer({ expanded = false, onSelect, anchorRefs, rulerRef, a
         </span>
       </div>
 
-      {/* 银心-太阳系距离标尺 */}
-      <div className="solar-distance-ruler" ref={rulerRef}>
-        <span>银心 ↔ 太阳系 · 26,700 ly</span>
-      </div>
-
-      {/* 四大旋臂与本地臂标注 */}
+      {/* 四大主旋臂标注（无猎户臂） */}
       {SPIRAL_ARMS.map(arm => (
         <div
           key={arm.id}
           ref={node => {
             if (armRefs && armRefs.current) armRefs.current[arm.id] = node
           }}
-          className={`spiral-arm-tag ${arm.isLocal ? 'local-arm' : ''}`}
+          className="spiral-arm-tag"
           style={{ '--arm-color': arm.color }}
         >
           <span>{arm.name}</span>
@@ -377,7 +360,6 @@ export default function CosmicExplorer() {
   const hostRef = useRef(null)
   const anchorRefs = useRef({})
   const armRefs = useRef({})
-  const rulerRef = useRef(null)
   const [selected, setSelected] = useState(null)
   const selectedRef = useRef(null)
   const [ready, setReady] = useState(false)
@@ -553,24 +535,6 @@ export default function CosmicExplorer() {
         element.style.opacity = !active || active === 'galaxy' ? '1' : '0.2'
       })
 
-      // 银心至太阳系标尺
-      const ruler = rulerRef.current
-      if (ruler) {
-        const center = new THREE.Vector3().applyMatrix4(galacticFrame.matrixWorld)
-        const sun = new THREE.Vector3(OBJECTS.solar.x, OBJECTS.solar.y, OBJECTS.solar.z).applyMatrix4(galacticFrame.matrixWorld)
-        center.project(camera)
-        sun.project(camera)
-        const rect = host.getBoundingClientRect()
-        const startX = (center.x * 0.5 + 0.5) * rect.width
-        const startY = (-center.y * 0.5 + 0.5) * rect.height
-        const endX = (sun.x * 0.5 + 0.5) * rect.width
-        const endY = (-sun.y * 0.5 + 0.5) * rect.height
-        ruler.style.left = `${startX}px`
-        ruler.style.top = `${startY}px`
-        ruler.style.width = `${Math.hypot(endX - startX, endY - startY)}px`
-        ruler.style.transform = `rotate(${(Math.atan2(endY - startY, endX - startX) * 180) / Math.PI}deg)`
-      }
-
       renderer.render(scene, camera)
     }
     animate()
@@ -655,7 +619,7 @@ export default function CosmicExplorer() {
               模拟宇宙级物理数字孪生。
             </h1>
             <p>
-              从连续场到电荷质量涌现，从太阳系到银河系旋臂——以严谨的天文与流体力学坐标，把宇宙从控制方程构建为可交互的数字孪生。
+              从连续场到电荷质量涌现，从太阳系到银河系四大主旋臂——以严谨的天文与流体力学坐标，把宇宙从控制方程构建为可交互的数字孪生。
             </p>
             <div>
               <button onClick={() => setSelected('galaxy')}>
@@ -666,7 +630,7 @@ export default function CosmicExplorer() {
               </Link>
             </div>
           </div>
-          <GalaxyAnchorLayer onSelect={openObject} anchorRefs={anchorRefs} armRefs={armRefs} rulerRef={rulerRef} />
+          <GalaxyAnchorLayer onSelect={openObject} anchorRefs={anchorRefs} armRefs={armRefs} />
         </>
       )}
 
@@ -678,7 +642,7 @@ export default function CosmicExplorer() {
             {selected === 'galaxy' ? '返回首页' : '返回银河总览'}
           </button>
           {selected === 'galaxy' && (
-            <GalaxyAnchorLayer expanded onSelect={openObject} anchorRefs={anchorRefs} armRefs={armRefs} rulerRef={rulerRef} />
+            <GalaxyAnchorLayer expanded onSelect={openObject} anchorRefs={anchorRefs} armRefs={armRefs} />
           )}
           <div className="cosmic-detail">
             <span>
@@ -705,7 +669,7 @@ export default function CosmicExplorer() {
             <b>{selected === 'galaxy' ? 'FOUR-ARM SPIRAL MODEL' : selected === 'solar' ? 'ORBITAL SIMULATION' : 'STELLAR ASTROMETRY'}</b>
             <span>
               {selected === 'galaxy'
-                ? '银河系模型包含英仙臂、人马臂、盾牌-南十字臂、矩尺臂与猎户臂；太阳系标定在距银心 26,700 光年处。'
+                ? '银河系模型包含英仙臂、人马-船底臂、盾牌-南十字臂与矩尺臂四大主旋臂；太阳系标定在距银心 26,700 光年处。'
                 : selected === 'solar'
                 ? '太阳系包含太阳与八大行星轨道运行；尺寸与周期经过比例缩放以保证可视化呈现。'
                 : '天体位置基于天文测距与光谱数据标定：太阳（黄白）、织女星（蓝白）、天龙座α（右枢，橙红标记）、天狼星（白蓝）。'}
@@ -723,8 +687,8 @@ export default function CosmicExplorer() {
 
       {/* 滚动提示 */}
       {!selected && (
-        <a href="#nuclear-origin" className="cosmic-scroll">
-          <span>向下探索原子核与连续介质流场起源</span>
+        <a href="#glueball-origin" className="cosmic-scroll">
+          <span>向下探索强相互作用色荷与胶球自束缚仿真</span>
           <ChevronDown size={14} />
         </a>
       )}

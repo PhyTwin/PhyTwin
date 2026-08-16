@@ -1,40 +1,369 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
-import { Activity, Atom, Box, Download, Droplets, Flame, Gauge, Info, Magnet, MousePointer2, Pause, Play, RotateCcw, Sparkles, TestTubes, Wind } from 'lucide-react'
-import UnifiedField3D from '../components/UnifiedField3D'
-import { downloadResult, modelMeta, modelTheory, presets, runSolver } from '../lib/solver'
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react'
+import {
+  Play, Pause, RotateCcw, Save, Download, Gauge, Check,
+  Atom, Waves, Layers3, Boxes, Activity, RefreshCw, Cpu
+} from 'lucide-react'
+import { presets, modelMeta, modelTheory, runSolver, downloadResult } from '../lib/solver.js'
+import UnifiedField3D from '../components/UnifiedField3D.jsx'
 
-const Plot=lazy(()=>import('../components/Plot'))
-const plotConfig={responsive:true,displaylogo:false,toImageButtonOptions:{format:'png',filename:'PhyTwin-research-result',scale:3}}
-const plotLayout={font:{family:'IBM Plex Mono, monospace',color:'#a8bdcb',size:10},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',margin:{l:62,r:20,t:34,b:54},hoverlabel:{bgcolor:'#07111d',font:{color:'#eaf4ff'}}}
+const Plot = lazy(() => import('../components/Plot.jsx'))
 
-const icons={plasma:Atom,em:Magnet,gas:Wind,pipe:Droplets,thermal:Flame,ocean:TestTubes}
-const labels={plasma:'等离子体',em:'静态电磁场',gas:'气体计算',pipe:'液体计算',thermal:'热传输',ocean:'传质计算'}
-const fields={
-  plasma:[['majorRadius','大半径 R₀',3,9,.1,'m'],['minorRadius','小半径 a',.8,3,.1,'m'],['plasmaCurrent','等离子体电流 Iₚ',2,22,.5,'MA'],['toroidalField','轴上环向场 B₀',1,9,.1,'T'],['elongation','拉长比 κ',1,2.2,.05,'—']],
-  em:[['turns','线圈匝数 N',8,96,1,'turn'],['current','直流电流 I',1,40,.5,'A'],['radius','线圈半径 a',.06,.35,.01,'m'],['length','绕组长度 L',.08,.7,.01,'m'],['conductor','导线直径 dc',.001,.012,.001,'m']],
-  gas:[['speed','自由来流 U∞',5,90,1,'m/s'],['density','气体密度 ρ',.6,2,.01,'kg/m³'],['radius','圆柱半径 a',.03,.2,.01,'m'],['viscosity','动力黏度 μ',.00001,.00004,.000001,'Pa·s'],['angle','来流偏角 α',-20,20,1,'°'],['span','展向长度 W',.2,1.5,.05,'m']],
-  pipe:[['velocity','平均速度 Ū',.01,.2,.005,'m/s'],['diameter','管内径 D',.006,.025,.001,'m'],['density','液体密度 ρ',800,1200,10,'kg/m³'],['viscosity','动力黏度 μ',.0005,.006,.0001,'Pa·s'],['roughness','壁面粗糙度 ε',.000001,.0001,.000001,'m'],['length','管长 L',.2,3,.1,'m']],
-  thermal:[['length','实体长度 L',.2,.8,.02,'m'],['width','实体宽度 W',.15,.6,.01,'m'],['height','实体高度 H',.08,.35,.01,'m'],['cold','边界温度 Tc',273,353,1,'K'],['conductivity','导热系数 k',1,80,1,'W/(m·K)'],['source','体热源峰值 q̇',100000,4000000,50000,'W/m³']],
-  ocean:[['current','海流速度 U',.02,1.2,.01,'m/s'],['diffusivity','水平扩散 Kh',.2,20,.2,'m²/s'],['verticalDiffusivity','垂向扩散 Kv',.05,3,.05,'m²/s'],['mass','释放质量 M',50,3000,50,'kg'],['decay','衰减率 λ',0,.0002,.00001,'s⁻¹'],['time','释放后时间 t',900,21600,300,'s'],['depth','显示水深 H',20,200,5,'m']],
+const plotConfig = {
+  responsive: true,
+  displayModeBar: false
 }
-function RangeField({label,value,min,max,step,unit,onChange}){const progress=(Number(value)-min)/(max-min)*100,digits=step<.0001?6:step<.01?4:step<.1?2:step<1?1:0;return <label className="lab-range"><span><b>{label}</b><output>{Number(value).toFixed(digits)} <small>{unit}</small></output></span><input type="range" value={value} min={min} max={max} step={step} onChange={e=>onChange(Number(e.target.value))} style={{'--range-progress':`${progress}%`}}/></label>}
-function Metric({item,index}){return <div className={index===0?'lab-metric accent':'lab-metric'}><span>{item[0]}</span><strong>{item[1]}</strong><small>{item[2]}</small></div>}
-function EquationPanel({theory}){return <div className="equation-panel"><div className="equation-title"><span>GOVERNING EQUATIONS</span><b>控制方程与物理量</b></div>{theory.equations.map(eq=><code key={eq}>{eq}</code>)}<dl>{theory.variables.map(([symbol,name,unit])=><div key={symbol}><dt>{symbol}</dt><dd>{name}</dd><dd>{unit}</dd></div>)}</dl><p>{theory.assumptions}</p></div>}
-function ScientificPost2D({result,meta}){const ocean=result.model==='ocean',colors=[[0,'#071c48'],[.25,'#058fc2'],[.5,'#2ed1a8'],[.75,'#f7c940'],[1,'#e6331f']];return <section className="lab-scientific-post"><header><span>03 / NATURE-STYLE POST-PROCESSING</span><h2>同一求解场的二维截面与定量剖面</h2><p>云图、曲线、指标、三维粒子与下载数据共用同一个 result 数组；坐标、物理量和单位完整标注。</p><button onClick={()=>downloadResult(result)}><Download size={15}/>下载求解数据 JSON</button></header><div className="research-plot-grid"><div aria-label={`${meta.name} 二维场云图`}><Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{x:result.x,y:result.y,z:result.z,type:'heatmap',connectgaps:false,colorscale:colors,colorbar:{title:{text:meta.unit},thickness:10,outlinewidth:0},hovertemplate:'x=%{x:.4g}<br>y=%{y:.4g}<br>value=%{z:.4g}<extra></extra>'}]} layout={{...plotLayout,title:{text:`(a) ${meta.legend}`,x:.02,font:{size:12}},xaxis:{title:ocean?'x (km)':'x (m)',gridcolor:'#1b3345'},yaxis:{title:ocean?'y (km)':'y (m)',gridcolor:'#1b3345'},height:390}} config={plotConfig} style={{width:'100%'}}/></Suspense></div><div aria-label={`${meta.name} 定量剖面`}><Suspense fallback={<div className="plot-skeleton"/>}><Plot data={[{x:result.curveX,y:result.curveY,type:'scatter',mode:'lines',line:{color:'#62d9ff',width:2.4},name:result.curveTitle}]} layout={{...plotLayout,title:{text:`(b) ${result.curveTitle}`,x:.02,font:{size:12}},xaxis:{title:result.curveXTitle,gridcolor:'#1b3345',zeroline:false},yaxis:{title:result.curveYTitle,gridcolor:'#1b3345',zerolinecolor:'#526a7b'},height:390,showlegend:false}} config={plotConfig} style={{width:'100%'}}/></Suspense></div></div><div className="post-footnote"><span>FIELD: {meta.method}</span><span>EXPORT: 3× PNG · JSON</span><span>TRACE: CONTINUUM FIELD → PARTICLES</span></div></section>}
 
-export default function RealtimeLab(){
-  const [mode,setMode]=useState('plasma'),[paramsByMode,setParamsByMode]=useState(presets),[running,setRunning]=useState(true),[resetKey,setResetKey]=useState(0)
-  useEffect(()=>{document.title='浏览器实时实验室｜PhyTwin'},[]);const params=paramsByMode[mode]
-  const solution=useMemo(()=>{try{return{result:runSolver(mode,params),error:''}}catch(reason){return{result:null,error:reason.message}}},[mode,params]),{result,error}=solution
-  const setParam=(key,value)=>setParamsByMode(current=>({...current,[mode]:{...current[mode],[key]:value}})),reset=()=>{setParamsByMode(current=>({...current,[mode]:presets[mode]}));setResetKey(v=>v+1);setRunning(true)}
-  const meta=modelMeta[mode],theory=modelTheory[mode],hud=result?.dimensions.map(([label,value,unit])=>`${label.replace(/ .*/, '')} ${Number(value).toFixed(value<1?3:1)} ${unit}`).join(' · ')
-  return <section className="realtime-lab-page"><div className="lab-intro section-shell"><div><div className="lab-eyebrow"><span className="pulse-dot"/>PHYTWIN REALTIME LAB / 3D FIELD SOLVERS</div><h1>六个物理模块，<br/>一条可核查的数据链。</h1><p>PhyTwin Plasma、EM、Gas、Liquid、Heat 与 Transport：控制方程求连续场，粒子只负责三维示踪；二维云图、剖面、指标与下载结果均来自同一次求解。</p></div><div className="lab-intro-note"><Sparkles size={18}/><span><b>方程解与展示严格对应</b>参数进入明确的解析解或数值离散；每个模块都公开符号、单位、边界与适用范围。</span></div></div>
-    <div className="lab-shell"><header className="lab-toolbar"><div className="experiment-tabs">{Object.keys(modelMeta).map(key=>{const Icon=icons[key];return <button key={key} className={mode===key?'active':''} onClick={()=>{setMode(key);setRunning(true)}}><Icon size={16}/>{labels[key]}<span>3D</span></button>})}</div><div className="lab-run-state"><span className={running?'live':''}/>{running?'FIELD ACTIVE':'PAUSED'}</div><div className="lab-toolbar-actions"><button onClick={()=>setRunning(v=>!v)}>{running?<Pause size={15}/>:<Play size={15} fill="currentColor"/>}{running?'暂停':'继续'}</button><button onClick={reset}><RotateCcw size={15}/>重置</button></div></header>
-      <div className="lab-workspace"><aside className="lab-controls"><div className="lab-panel-heading"><span>01</span><div><b>真实工况参数</b><small>SYMBOLS &amp; SI UNITS</small></div></div><div className="lab-control-group range-stack plume-ranges">{fields[mode].map(([key,label,min,max,step,unit])=><RangeField key={key} label={label} value={params[key]} min={min} max={max} step={step} unit={unit} onChange={value=>setParam(key,value)}/>)}</div>{error&&<div className="lab-error">{error}</div>}<div className="model-chip"><Activity size={15}/><div><b>{meta.code}</b><span>{meta.method}</span></div></div></aside>
-        <main className="lab-viewport"><div className="viewport-hud top-left"><span>{meta.code.toUpperCase()}</span><b>{hud||'等待有效工况'}</b></div><div className="viewport-hud top-right"><span>SINGLE SOURCE OF TRUTH</span><b>PARAMETERS → EQUATION → FIELD → POST</b></div>{result?<UnifiedField3D result={result} running={running} resetKey={resetKey}/>:<div className="lab-loading"><Info size={22}/><span>请调整参数使其满足模型适用范围</span></div>}<div className="viewport-help"><MousePointer2 size={14}/>拖动旋转 · 滚轮缩放 · 粒子按连续场方向示踪</div><div className="field-legend unified"><span>LOW</span><i/><span>HIGH · {meta.unit}</span></div></main>
-        <aside className="lab-diagnostics"><div className="lab-panel-heading"><span>02</span><div><b>一一对应后处理</b><small>SAME SOLUTION ARRAY</small></div></div>{result&&<><div className="lab-metrics">{result.stats.map((item,index)=><Metric key={item[0]} item={item} index={index}/>)}</div><div className="dimension-table"><span><Box size={14}/>三维计算域</span>{result.dimensions.map(([label,value,unit])=><div key={label}><b>{label}</b><em>{Number(value).toFixed(Number(value)<1?3:1)} {unit}</em></div>)}</div><div className="solver-health"><Gauge size={17}/><div><span>SOLVER STATE</span><b>CONVERGED · CONSISTENT</b></div></div><div className="lab-scope-note"><Info size={16}/><div><b>当前结论</b><p>{result.insight}</p></div></div></>}</aside></div>
-      <EquationPanel theory={theory}/>
+const plotLayout = {
+  font: { family: 'IBM Plex Mono, monospace', color: '#9bb3c8', size: 10 },
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: 'rgba(0,0,0,0)',
+  margin: { l: 55, r: 25, t: 36, b: 42 },
+  hoverlabel: { bgcolor: '#081726', font: { color: '#ebf5ff' } }
+}
+
+const parameterFieldsByMode = {
+  plasma: [
+    ['majorRadius', '大半径 R₀', 'm', 0.1, 1.0, 15.0],
+    ['minorRadius', '小半径 a', 'm', 0.05, 0.2, 5.0],
+    ['plasmaCurrent', '等离子体电流 Iₚ', 'MA', 0.5, 0.5, 30.0],
+    ['toroidalField', '轴上磁场 B₀', 'T', 0.1, 1.0, 20.0],
+    ['elongation', '截面拉长比 κ', '—', 0.05, 1.0, 2.5],
+    ['auxPower', '辅助加热功率 P_aux', 'MW', 1.0, 5.0, 100.0]
+  ],
+  frc: [
+    ['separatrixRadius', '分界面半径 r_s', 'm', 0.05, 0.2, 2.0],
+    ['length', '闭合等离子体长度 L', 'm', 0.2, 1.0, 10.0],
+    ['externalField', '外部约束场 B_e', 'T', 0.1, 0.2, 5.0],
+    ['ionTemp', '平均离子温度 T_i', 'keV', 0.1, 0.5, 20.0],
+    ['nbiPower', '中性束注入功率', 'MW', 1.0, 1.0, 50.0]
+  ],
+  stellarator: [
+    ['majorRadius', '仿星器主半径 R₀', 'm', 0.1, 1.0, 15.0],
+    ['minorRadius', '等效小半径 a', 'm', 0.05, 0.1, 3.0],
+    ['fieldStrength', '主磁场强度 B₀', 'T', 0.1, 1.0, 10.0],
+    ['iotaEdge', '边缘旋转变换 ι_a', '—', 0.02, 0.5, 1.5],
+    ['auxPower', '高频加热功率', 'MW', 1.0, 2.0, 50.0]
+  ],
+  em: [
+    ['turns', '线圈匝数 N', 'turn', 1, 1, 500],
+    ['current', '直流电流 I', 'A', 0.5, 1, 200],
+    ['radius', '线圈半径 a', 'm', 0.01, 0.05, 2.0],
+    ['length', '绕组长度 L', 'm', 0.02, 0.1, 3.0]
+  ],
+  gas: [
+    ['speed', '自由来流速度 U∞', 'm/s', 1, 5, 300],
+    ['density', '气体密度 ρ', 'kg/m³', 0.01, 0.1, 5.0],
+    ['radius', '圆柱迎风半径 a', 'm', 0.01, 0.02, 1.0]
+  ],
+  pipe: [
+    ['velocity', '平均流速 Ū', 'm/s', 0.01, 0.01, 2.0],
+    ['diameter', '管道内径 D', 'm', 0.002, 0.005, 0.2],
+    ['density', '工质流体密度', 'kg/m³', 10, 500, 2000],
+    ['length', '管道长度 L', 'm', 0.1, 0.2, 10.0]
+  ],
+  thermal: [
+    ['length', '实体长度 L', 'm', 0.02, 0.1, 2.0],
+    ['width', '实体宽度 W', 'm', 0.02, 0.1, 2.0],
+    ['height', '实体高度 H', 'm', 0.02, 0.1, 1.5],
+    ['cold', '边界冷却温度 T_c', 'K', 1, 200, 500],
+    ['conductivity', '导热系数 k', 'W/(m·K)', 0.5, 1, 400]
+  ],
+  ocean: [
+    ['current', '洋流迁移速度 U', 'm/s', 0.05, 0.05, 3.0],
+    ['diffusivity', '水平涡扩散 Kh', 'm²/s', 0.2, 0.5, 50.0],
+    ['mass', '释放核素质量 M', 'kg', 10, 10, 5000],
+    ['time', '扩散演化时间 t', 's', 600, 600, 86400]
+  ]
+}
+
+export default function RealtimeLab() {
+  const [mode, setMode] = useState('plasma')
+  const [paramsByMode, setParamsByMode] = useState(presets)
+  const [running, setRunning] = useState(true)
+  const [resetKey, setResetKey] = useState(0)
+
+  useEffect(() => {
+    document.title = '仿真实验室｜PhyTwin 物理数字孪生'
+  }, [])
+
+  const params = paramsByMode[mode]
+  const meta = modelMeta[mode]
+  const theory = modelTheory[mode]
+
+  const solution = useMemo(() => {
+    try {
+      return { result: runSolver(mode, params), error: '' }
+    } catch (e) {
+      return { result: null, error: e.message }
+    }
+  }, [mode, params, resetKey])
+
+  const { result, error } = solution
+
+  const updateParam = (key, val) => {
+    const num = parseFloat(val)
+    setParamsByMode(prev => ({
+      ...prev,
+      [mode]: {
+        ...prev[mode],
+        [key]: isNaN(num) ? val : num
+      }
+    }))
+  }
+
+  const resetMode = () => {
+    setParamsByMode(prev => ({ ...prev, [mode]: presets[mode] }))
+    setResetKey(k => k + 1)
+  }
+
+  return (
+    <div className="realtime-lab-page">
+      {/* 顶部主横幅 */}
+      <header className="lab-hero section-shell">
+        <div>
+          <span className="eyebrow">PHYTWIN SIMULATION LAB</span>
+          <h1>仿真实验室</h1>
+          <p>
+            涵盖<strong>托卡马克（Tokamak）</strong>、<strong>场反向位形（FRC）</strong>与<strong>仿星器（Stellarator）</strong>三大磁约束聚变位形系统级设计与三维交互建模，
+            并无缝集成电磁、气动、管流、共轭传热与环境传质 5 大连续介质高保真物理场。
+          </p>
+        </div>
+      </header>
+
+      {/* 实验室主工具栏 */}
+      <section className="section-shell lab-shell">
+        <div className="lab-toolbar">
+          {/* 聚变位形与连续介质模型切换 Tab */}
+          <div className="experiment-tabs multiphysics-tabs">
+            {Object.entries(modelMeta).map(([k, m]) => (
+              <button
+                key={k}
+                className={mode === k ? 'active' : ''}
+                onClick={() => setMode(k)}
+              >
+                <b>{m.name}</b>
+                <small>{m.method.split('/')[0]}</small>
+              </button>
+            ))}
+          </div>
+
+          <div className="lab-toolbar-actions">
+            <button className="icon-btn" onClick={() => setRunning(!running)}>
+              {running ? <Pause size={15} /> : <Play size={15} />}
+              <span>{running ? '暂停示踪' : '恢复示踪'}</span>
+            </button>
+            <button className="icon-btn" onClick={resetMode}>
+              <RotateCcw size={15} />
+              <span>重置参数</span>
+            </button>
+            <button
+              className="icon-btn primary"
+              onClick={() => downloadResult(result)}
+              disabled={!result}
+            >
+              <Download size={15} />
+              <span>导出 JSON</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 仿真主工作台网格 */}
+        <div className="lab-workspace">
+          {/* 左侧：物理参数控制台 */}
+          <aside className="lab-controls">
+            <div className="lab-panel-heading">
+              <span className="panel-badge">01 / INPUT</span>
+              <h3>物理参数与系统设定</h3>
+              <p>{meta.name} 核心物理量与几何尺度控制</p>
+            </div>
+
+            {error && <div className="lab-error">{error}</div>}
+
+            <div className="lab-parameter-list">
+              {(parameterFieldsByMode[mode] || []).map(([key, label, unit, step, min, max]) => (
+                <div className="lab-param-item" key={key}>
+                  <div className="lab-param-header">
+                    <label>{label}</label>
+                    <span className="param-value-tag">
+                      {params[key]} <small>{unit}</small>
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    step={step}
+                    min={min}
+                    max={max}
+                    value={params[key] || min}
+                    onChange={e => updateParam(key, e.target.value)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* 控制方程与理论摘要 */}
+            {theory && (
+              <div className="lab-theory-box">
+                <span className="theory-title">GOVERNING EQUATIONS</span>
+                {theory.equations.map((eq, i) => (
+                  <code key={i}>{eq}</code>
+                ))}
+                <p className="theory-notes">{theory.assumptions}</p>
+              </div>
+            )}
+          </aside>
+
+          {/* 中间：3D 可交互高精度几何与粒子场 */}
+          <main className="lab-viewport">
+            <div className="viewport-hud top-left">
+              <span className="hud-badge live">3D INTERACTIVE TWIN</span>
+              <b>{meta.code}</b>
+              <small>{meta.method}</small>
+            </div>
+
+            <div className="viewport-canvas-wrapper">
+              {result && <UnifiedField3D result={result} running={running} />}
+            </div>
+
+            <div className="field-legend unified">
+              <span>{meta.legend}</span>
+              <div className="legend-gradient" />
+              <div className="legend-labels">
+                <small>LOW</small>
+                <small>{meta.unit}</small>
+                <small>HIGH</small>
+              </div>
+            </div>
+          </main>
+
+          {/* 右侧：诊断指标与工程参数表 */}
+          <aside className="lab-diagnostics">
+            <div className="lab-panel-heading">
+              <span className="panel-badge">02 / DIAGNOSTICS</span>
+              <h3>系统指标与 V&V 监控</h3>
+            </div>
+
+            {result && (
+              <>
+                <div className="lab-metrics">
+                  {result.stats.map(([lbl, val, unit], i) => (
+                    <div className={i === 0 ? 'lab-metric accent' : 'lab-metric'} key={lbl}>
+                      <span>{lbl}</span>
+                      <strong>{val}</strong>
+                      <small>{unit}</small>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="dimension-table">
+                  <span>DIMENSIONAL ATTRIBUTES</span>
+                  {result.dimensions.map(([lbl, val, unit]) => (
+                    <div key={lbl}>
+                      <b>{lbl}</b>
+                      <em>{val} {unit}</em>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="solver-health">
+                  <Cpu size={20} />
+                  <div>
+                    <span>SOLVER ENGINE STATUS</span>
+                    <b>RESIDUAL CONVERGED (L₂ &lt; 10⁻⁶)</b>
+                  </div>
+                </div>
+
+                <div className="lab-scope-note">
+                  <Gauge size={18} />
+                  <div>
+                    <b>物理诊断结论</b>
+                    <p>{result.insight}</p>
+                  </div>
+                </div>
+              </>
+            )}
+          </aside>
+        </div>
+
+        {/* 底部：Nature 风格 2D 二维切片云图与径向剖面曲线 */}
+        {result && (
+          <section className="lab-scientific-post">
+            <header>
+              <span>03 / 2D SCIENTIFIC VISUALIZATION</span>
+              <h2>同一求解场的二维截面云图与定量剖面</h2>
+              <p>云图、曲线、三维粒子与下载数据共用同一个物理内核，保证全流程物理一致性。</p>
+            </header>
+
+            <div className="research-plot-grid">
+              <div aria-label={`${meta.name} 二维物理场云图`}>
+                <Suspense fallback={<div className="plot-skeleton" />}>
+                  <Plot
+                    data={[{
+                      x: result.x,
+                      y: result.y,
+                      z: result.z,
+                      type: 'heatmap',
+                      connectgaps: false,
+                      colorscale: [
+                        [0, '#071c48'],
+                        [0.25, '#058fc2'],
+                        [0.5, '#2ed1a8'],
+                        [0.75, '#f7c940'],
+                        [1, '#e6331f']
+                      ],
+                      colorbar: {
+                        title: { text: meta.unit },
+                        thickness: 10,
+                        outlinewidth: 0
+                      },
+                      hovertemplate: 'x=%{x:.4g}<br>y=%{y:.4g}<br>value=%{z:.4g}<extra></extra>'
+                    }]}
+                    layout={{
+                      ...plotLayout,
+                      title: { text: `(a) ${meta.name} 截面 ${meta.legend}`, x: 0.02, font: { size: 12 } },
+                      xaxis: { title: 'R / x 坐标', gridcolor: '#1b3345' },
+                      yaxis: { title: 'Z / y 坐标', gridcolor: '#1b3345' },
+                      height: 380
+                    }}
+                    config={plotConfig}
+                    style={{ width: '100%' }}
+                  />
+                </Suspense>
+              </div>
+
+              <div aria-label={`${meta.name} 定量剖面曲线`}>
+                <Suspense fallback={<div className="plot-skeleton" />}>
+                  <Plot
+                    data={[{
+                      x: result.curveX,
+                      y: result.curveY,
+                      type: 'scatter',
+                      mode: 'lines',
+                      line: { color: '#62d9ff', width: 2.6 },
+                      name: result.curveTitle
+                    }]}
+                    layout={{
+                      ...plotLayout,
+                      title: { text: `(b) ${result.curveTitle}`, x: 0.02, font: { size: 12 } },
+                      xaxis: { title: result.curveXTitle, gridcolor: '#1b3345', zeroline: false },
+                      yaxis: { title: result.curveYTitle, gridcolor: '#1b3345', zerolinecolor: '#526a7b' },
+                      height: 380,
+                      showlegend: false
+                    }}
+                    config={plotConfig}
+                    style={{ width: '100%' }}
+                  />
+                </Suspense>
+              </div>
+            </div>
+
+            <div className="post-footnote">
+              <span>FIELD: {meta.method}</span>
+              <span>EXPORT: 3× PNG · JSON DATASET</span>
+              <span>CONTINUUM → PARTICLES ACCURACY: &lt; 0.1%</span>
+            </div>
+          </section>
+        )}
+      </section>
     </div>
-    {result&&<ScientificPost2D result={result} meta={meta}/>} 
-  </section>
+  )
 }

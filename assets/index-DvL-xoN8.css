@@ -477,7 +477,45 @@ main, footer { background:#06101c; }
   .glueball-theory-deck { grid-template-columns:1fr; }
 }
 
+.device-list { display:grid; gap:28px; margin-top:40px; margin-bottom:80px; }
+.device-card { background:#081522; border:1px solid #213648; border-radius:14px; padding:32px; display:flex; flex-direction:column; gap:20px; transition:.22s; box-shadow:0 12px 36px rgba(0,0,0,0.25); }
+.device-card:hover { border-color:#386585; background:#0b1c2e; transform:translateY(-2px); }
+.device-header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; border-bottom:1px solid #1c3144; padding-bottom:18px; }
+.device-title-wrap { display:flex; flex-direction:column; gap:6px; }
+.device-badge { font:600 9px/1 "IBM Plex Mono",monospace; letter-spacing:.1em; color:#5cd5ff; text-transform:uppercase; }
+.device-header h2 { font-size:24px; color:#eaf4ff; margin:0; letter-spacing:-.02em; }
+.device-latin { font:400 12px "IBM Plex Mono",monospace; color:#7893a9; }
+.device-status-tag { display:flex; align-items:center; gap:8px; font:500 10px "IBM Plex Mono",monospace; color:#62dda0; background:rgba(98,221,160,0.08); border:1px solid rgba(98,221,160,0.25); padding:6px 12px; border-radius:20px; }
+.status-dot { width:6px; height:6px; border-radius:50%; background:#62dda0; box-shadow:0 0 8px #62dda0; }
+.device-highlight { font-size:14px; line-height:1.7; color:#9cb1c2; margin:0; }
+.device-specs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; background:#050f1a; border:1px solid #1a2f42; padding:18px; border-radius:10px; }
+.spec-item { display:flex; flex-direction:column; gap:4px; }
+.spec-item span { font:500 8px "IBM Plex Mono",monospace; color:#678298; letter-spacing:.05em; }
+.spec-item strong { font:600 14px "IBM Plex Mono",monospace; color:#78e0ff; }
+.device-footer { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; font-size:12px; border-top:1px solid #1c3144; padding-top:16px; color:#859dae; }
+.device-meta { display:flex; flex-direction:column; gap:6px; }
+.device-sim-scope { flex:1; min-width:280px; }
+.device-sim-scope b { color:#d4e5f2; display:block; margin-bottom:4px; font-size:11px; font-family:"IBM Plex Mono",monospace; }
+.device-sim-scope p { margin:0; line-height:1.6; color:#7c95a8; }
+
+.category-filter-bar { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.category-filter-bar button { padding:6px 14px; border-radius:6px; border:1px solid #233a4e; background:#0a1a29; color:#859eaf; font:500 9px "IBM Plex Mono",monospace; cursor:pointer; transition:.18s; }
+.category-filter-bar button.active, .category-filter-bar button:hover { background:#143750; border-color:#5cd5ff; color:#7ce0ff; }
+
+.hud-layer-controls { position:absolute; top:16px; right:16px; background:rgba(6,16,28,0.85); border:1px solid #203c52; padding:10px 14px; border-radius:10px; backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:8px; z-index:4; }
+.hud-layer-controls span { font:600 8px "IBM Plex Mono",monospace; color:#5c7c94; letter-spacing:.1em; }
+.hud-layer-buttons { display:flex; flex-wrap:wrap; gap:6px; }
+.hud-layer-buttons button { padding:4px 9px; border-radius:5px; border:1px solid #243e54; background:#0c1e2f; color:#8099ad; font:500 8px "IBM Plex Mono",monospace; cursor:pointer; transition:.15s; }
+.hud-layer-buttons button.active { border-color:#38a8dd; background:#12374e; color:#7ee2ff; }
+.hud-camera-hint { position:absolute; bottom:14px; right:16px; font:400 8px "IBM Plex Mono",monospace; color:#557288; pointer-events:none; background:rgba(6,16,28,0.7); padding:4px 10px; border-radius:6px; z-index:4; }
+
+.capability-metric-card { align-self:center; justify-self:center; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; border:1px solid #243f54; border-radius:12px; background:linear-gradient(145deg,#091a2a,#061320); min-width:180px; text-align:center; }
+.capability-metric-card span { font:600 8px "IBM Plex Mono",monospace; color:#608096; letter-spacing:.08em; margin-bottom:8px; }
+.capability-metric-card strong { font:700 32px "IBM Plex Mono",monospace; color:#70e1ff; line-height:1; }
+.capability-metric-card small { font:500 9px "IBM Plex Mono",monospace; color:#85a2b5; margin-top:6px; }
+
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+
 
 
 

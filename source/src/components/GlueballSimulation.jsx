@@ -1,290 +1,224 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Activity, ArrowRight, Atom, Boxes, Cpu, Flame, Layers, Maximize2, Orbit, Play, Pause, Radio, RefreshCw, Rotate3D, ShieldAlert, Sparkles, Waves, Zap } from 'lucide-react'
-import * as THREE from 'three'
+import {
+  Sparkles,
+  Layers,
+  Zap,
+  Cpu,
+  Atom,
+  Activity,
+  ArrowRight,
+  ShieldAlert,
+  GitBranch,
+  CircleDot,
+  CheckCircle2
+} from 'lucide-react'
 
-const MODES = [
+// 强相互作用与胶球演化 4 大阶段示意数据
+const EVOLUTION_STAGES = [
   {
-    id: 'scalar',
-    name: '标量基态胶球 0⁺⁺',
-    latin: 'Scalar Glueball · Ground State',
-    mass: '≈ 1.5–1.7 GeV/c²',
-    spin: 'Jᴾᶜ = 0⁺⁺',
-    desc: '纯杨-米尔斯规范场在红外强耦合区自禁闭形成的基态闭合色通量环。两个非阿贝尔胶子色场通过自吸引形成球对称致密驻波。',
-    color1: 0xff3b30,
-    color2: 0x34c759,
-    color3: 0x007aff,
-    knotP: 2,
-    knotQ: 3,
-    scale: 1.1,
-    tension: '1.02 GeV/fm'
+    step: '01',
+    id: 'asymptotic',
+    title: '高能渐近自由',
+    subtitle: 'Asymptotic Freedom (Q² ≫ Λ²_QCD)',
+    energy: 'T > 200 MeV · r < 0.1 fm',
+    state: '非束缚自由胶子气',
+    equation: 'α_s(Q^2) = \\frac{12\\pi}{(33 - 2n_f) \\ln(Q^2/\\Lambda^2)} \\to 0',
+    desc: '在高能短距离尺度下，QCD 负 β 函数使强耦合常数趋近于零。胶子携带 8 种 SU(3) 色荷自由运动，色电场向外平滑发散，尚无法形成稳定聚集态。',
+    visualType: 'free-gluons',
+    color: '#3a86ff',
+    metrics: [
+      ['耦合常数 α_s', '< 0.18 (极弱)'],
+      ['相互作用势', '库仑型 -α_s / r'],
+      ['微观状态', '夸克-胶子等离子体 (QGP)']
+    ]
   },
   {
-    id: 'tensor',
-    name: '张量激发态 2⁺⁺',
-    latin: 'Tensor Glueball · Excited State',
-    mass: '≈ 2.2–2.4 GeV/c²',
-    spin: 'Jᴾᶜ = 2⁺⁺',
-    desc: '具有轨道角动量的激发态胶球，色通量管呈椭圆四极形自振荡，是北京正负电子对撞机（BESIII）与 LHCb 重点搜寻的高阶奇特态。',
-    color1: 0xff9500,
-    color2: 0xaf52de,
-    color3: 0x5856d6,
-    knotP: 3,
-    knotQ: 4,
-    scale: 1.35,
-    tension: '1.25 GeV/fm'
+    step: '02',
+    id: 'fluxtube',
+    title: '色通量管收缩',
+    subtitle: 'Color Flux Tube Formation',
+    energy: 'r ≈ 0.3–0.8 fm',
+    state: '一维致密色电弦',
+    equation: 'V_{QCD}(r) = -\\frac{4}{3}\\frac{\\alpha_s}{r} + \\sigma r \\quad (\\sigma \\approx 1.0\\text{ GeV/fm})',
+    desc: '随着距离增大，真空非阿贝尔反屏蔽效应占据主导。QCD 真空对色电场的排斥产生双重超导效应，将发散的色电力线强行压缩成截面仅 0.2 fm² 的准一维致密“色通量管”。',
+    visualType: 'flux-tube',
+    color: '#06d6a0',
+    metrics: [
+      ['通量弦张力 σ', '≈ 1.02 GeV/fm (16 吨力)'],
+      ['禁闭机制', '对偶 Meissner 效应'],
+      ['能量密度', '线性随距离增加 (σ·r)']
+    ]
   },
   {
-    id: 'pseudoscalar',
-    name: '赝标量拓扑结 0⁻⁺',
-    latin: 'Pseudoscalar · Oddball / Trefoil',
-    mass: '≈ 2.5–2.6 GeV/c²',
-    spin: 'Jᴾᶜ = 0⁻⁺',
-    desc: '带有非平凡第二陈数（Chern Number）拓扑荷的色通量纽结，具有空间手征奇偶性反演特征，与轴子（Axion）反常耦合机制密切相关。',
-    color1: 0xff2d55,
-    color2: 0x5ac8fa,
-    color3: 0xffcc00,
-    knotP: 2,
-    knotQ: 5,
-    scale: 1.2,
-    tension: '1.40 GeV/fm'
+    step: '03',
+    id: 'knotting',
+    title: '非线性拓扑纽结',
+    subtitle: 'Topological Knotting & Self-Attraction',
+    energy: 'r ≈ 1.0 fm',
+    state: 'SU(3) 闭合环面纽结孤子',
+    equation: 'G_{\\mu\\nu}^a = \\partial_\\mu A_\\nu^a - \\partial_\\nu A_\\mu^a + g f^{abc} A_\\mu^b A_\\nu^c',
+    desc: '不同于无带电的光子，胶子自身携带非阿贝尔色荷，具有三胶子与四胶子自相互作用项。色通量管受到自身强大自引力与拓扑扭曲驱动，首尾自闭合并缠绕为稳定的三维孤子纽结。',
+    visualType: 'knot-torus',
+    color: '#ffd166',
+    metrics: [
+      ['纽结拓扑荷 Q', '第二陈数 c₂ = 1'],
+      ['自相互作用项', 'g f^{abc} A_μ^b A_ν^c (非线性)'],
+      ['几何构型', '环面纽结 (Torus Knot)']
+    ]
   },
   {
-    id: 'qgp',
-    name: '高温解禁闭等离子体 (QGP)',
-    latin: 'Quark-Gluon Plasma Deconfinement',
-    mass: '渐近自由连续谱',
-    spin: 'Free Gluons',
-    desc: '在极高能密度（T > 170 MeV）下，色通量管断裂融化，色荷进入渐近自由态，胶子在介质中形成自由弱耦合弱阻尼流体。',
-    color1: 0xff3b30,
-    color2: 0xff9500,
-    color3: 0x00c7be,
-    knotP: 1,
-    knotQ: 1,
-    scale: 1.9,
-    tension: '0.08 GeV/fm'
+    step: '04',
+    id: 'glueball',
+    title: '纯场质量凝聚（胶球）',
+    subtitle: 'Glueball Mass Condensation',
+    energy: '基态静止质能 M ≈ 1.5–1.7 GeV/c²',
+    state: '标量基态粒子 0⁺⁺',
+    equation: 'M_{glueball} = \\langle 0 | \\Theta_\\mu^\\mu | 0 \\rangle = \\frac{\\beta(g)}{2g} \\langle G_{\\mu\\nu}^a G^{a\\mu\\nu} \\rangle',
+    desc: '通过量子微商反常（Trace Anomaly），完全没有夸克参与的纯色场自束缚体系在真空中凝聚出宏观静止质量，形成标准模型预测的纯胶子粒子——标量胶球（0⁺⁺）与张量胶球（2⁺⁺）。',
+    visualType: 'condensed-ball',
+    color: '#ef476f',
+    metrics: [
+      ['基态质量 (0⁺⁺)', '≈ 1.71 GeV/c² (Lattice QCD)'],
+      ['自旋与宇称 Jᴾᶜ', '0⁺⁺ (标量) / 2⁺⁺ (张量)'],
+      ['实验寻找依托', 'BESIII (北京) / LHCb (CERN)']
+    ]
   }
 ]
 
-function GlueballCanvas({ mode, alphaS, autoRotate, speed }) {
-  const containerRef = useRef(null)
+// 静态矢量示意演化图渲染器（纯 SVG / CSS，绝对零闪烁、零 GPU 资源占用）
+function StaticEvolutionGraphic({ activeStage }) {
+  return (
+    <div className="glueball-static-diagram-wrap">
+      <svg
+        viewBox="0 0 760 380"
+        className="glueball-svg-canvas"
+        aria-label="强相互作用胶球演变历程示意图"
+      >
+        <defs>
+          <radialGradient id="bgGlow" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stopColor="#132b45" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#040b14" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="fluxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ff3b30" />
+            <stop offset="50%" stopColor="#34c759" />
+            <stop offset="100%" stopColor="#007aff" />
+          </linearGradient>
+          <filter id="glowFilter" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
 
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
+        {/* 背景轻微能量网格 */}
+        <rect x="0" y="0" width="760" height="380" fill="url(#bgGlow)" />
+        <g stroke="#1b334a" strokeWidth="0.75" strokeDasharray="3 3" opacity="0.4">
+          <line x1="40" y1="95" x2="720" y2="95" />
+          <line x1="40" y1="190" x2="720" y2="190" />
+          <line x1="40" y1="285" x2="720" y2="285" />
+          <line x1="190" y1="30" x2="190" y2="350" />
+          <line x1="380" y1="30" x2="380" y2="350" />
+          <line x1="570" y1="30" x2="570" y2="350" />
+        </g>
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
-    renderer.setClearColor(0x01030a, 1)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
-    container.appendChild(renderer.domElement)
+        {/* 阶段 1：高能自由弱耦合胶子点阵 */}
+        <g transform="translate(100, 190)">
+          <circle cx="0" cy="0" r="65" fill="#0c1d30" stroke="#254a6e" strokeWidth="1.5" />
+          <text x="0" y="-76" textAnchor="middle" fill="#62d9ff" fontSize="11" fontWeight="600" fontFamily="IBM Plex Mono">STAGE 01</text>
+          <text x="0" y="82" textAnchor="middle" fill="#8baac7" fontSize="11" fontWeight="500">高能渐近自由</text>
+          
+          {/* 自由发散色场粒子 */}
+          <circle cx="-25" cy="-20" r="6" fill="#ff4d4f" />
+          <circle cx="30" cy="-15" r="6" fill="#52c41a" />
+          <circle cx="-10" cy="28" r="6" fill="#1890ff" />
+          <circle cx="20" cy="22" r="5" fill="#faad14" />
+          {/* 发散虚线箭头 */}
+          <path d="M-25,-20 L-45,-40" stroke="#ff4d4f" strokeWidth="1.5" strokeDasharray="2 2" markerEnd="url(#arrow)" />
+          <path d="M30,-15 L50,-30" stroke="#52c41a" strokeWidth="1.5" strokeDasharray="2 2" />
+          <path d="M-10,28 L-25,48" stroke="#1890ff" strokeWidth="1.5" strokeDasharray="2 2" />
+          <path d="M20,22 L42,38" stroke="#faad14" strokeWidth="1.5" strokeDasharray="2 2" />
+        </g>
 
-    const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x01030a, 0.025)
+        {/* 演化箭头 1 -> 2 */}
+        <path d="M175,190 L215,190" stroke="#3d6285" strokeWidth="2" strokeDasharray="4 2" />
 
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 50)
-    camera.position.set(0, 0, 5.2)
+        {/* 阶段 2：色电力线受真空排斥压缩为通量管 */}
+        <g transform="translate(285, 190)">
+          <circle cx="0" cy="0" r="65" fill="#0c1d30" stroke="#254a6e" strokeWidth="1.5" />
+          <text x="0" y="-76" textAnchor="middle" fill="#06d6a0" fontSize="11" fontWeight="600" fontFamily="IBM Plex Mono">STAGE 02</text>
+          <text x="0" y="82" textAnchor="middle" fill="#8baac7" fontSize="11" fontWeight="500">色通量管凝聚</text>
 
-    // 灯光
-    scene.add(new THREE.AmbientLight(0x7695d6, 1.6))
-    const pLight1 = new THREE.PointLight(0xff453a, 4, 10)
-    pLight1.position.set(2, 3, 2)
-    scene.add(pLight1)
-    const pLight2 = new THREE.PointLight(0x0a84ff, 4, 10)
-    pLight2.position.set(-2, -3, 2)
-    scene.add(pLight2)
+          {/* 准一维色通量管 */}
+          <path
+            d="M-45,0 C-20,-18 20,-18 45,0 C20,18 -20,18 -45,0 Z"
+            fill="none"
+            stroke="#06d6a0"
+            strokeWidth="3.5"
+            filter="url(#glowFilter)"
+          />
+          <path
+            d="M-45,0 L45,0"
+            stroke="#ff5e7e"
+            strokeWidth="2"
+            strokeDasharray="3 2"
+          />
+          <circle cx="-45" cy="0" r="7" fill="#ff4d4f" />
+          <circle cx="45" cy="0" r="7" fill="#1890ff" />
+          <text x="0" y="4" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="700">σ≈1GeV/fm</text>
+        </g>
 
-    const rootGroup = new THREE.Group()
-    scene.add(rootGroup)
+        {/* 演化箭头 2 -> 3 */}
+        <path d="M360,190 L400,190" stroke="#3d6285" strokeWidth="2" strokeDasharray="4 2" />
 
-    // 核心发光自禁闭致密球
-    const coreGeo = new THREE.SphereGeometry(0.55, 32, 24)
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x62a8ff,
-      transparent: true,
-      opacity: 0.28,
-      blending: THREE.AdditiveBlending
-    })
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat)
-    rootGroup.add(coreMesh)
+        {/* 阶段 3：非阿贝尔自引力纽结自缠绕 */}
+        <g transform="translate(470, 190)">
+          <circle cx="0" cy="0" r="65" fill="#0c1d30" stroke="#254a6e" strokeWidth="1.5" />
+          <text x="0" y="-76" textAnchor="middle" fill="#ffd166" fontSize="11" fontWeight="600" fontFamily="IBM Plex Mono">STAGE 03</text>
+          <text x="0" y="82" textAnchor="middle" fill="#8baac7" fontSize="11" fontWeight="500">拓扑孤子纽结</text>
 
-    // 外层脉动能量晕
-    const haloGeo = new THREE.SphereGeometry(0.95, 24, 16)
-    const haloMat = new THREE.MeshBasicMaterial({
-      color: 0xff6644,
-      transparent: true,
-      opacity: 0.12,
-      blending: THREE.AdditiveBlending
-    })
-    const haloMesh = new THREE.Mesh(haloGeo, haloMat)
-    rootGroup.add(haloMesh)
+          {/* 三叶纽结 (Trefoil Knot) 矢量轨迹 */}
+          <path
+            d="M-28,-22 C-5,-42 35,-35 28,-10 C20,18 -35,5 -30,25 C-25,42 18,38 32,15 C42,-12 10,-30 -10,-28"
+            fill="none"
+            stroke="#ffd166"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            filter="url(#glowFilter)"
+          />
+          <circle cx="0" cy="0" r="14" fill="#3a86ff" opacity="0.3" />
+        </g>
 
-    // 3 条缠绕的非阿贝尔 SU(3) 色通量管（红、绿、蓝主色荷）
-    const tubeColors = [mode.color1, mode.color2, mode.color3]
-    const tubeMeshes = []
-    const particleCount = 1200
-    const particleGeo = new THREE.BufferGeometry()
-    const particlePos = new Float32Array(particleCount * 3)
-    const particleColors = new Float32Array(particleCount * 3)
+        {/* 演化箭头 3 -> 4 */}
+        <path d="M545,190 L585,190" stroke="#3d6285" strokeWidth="2" strokeDasharray="4 2" />
 
-    // 生成环面纽结曲线
-    const p = mode.knotP
-    const q = mode.knotQ
-    const rBase = mode.id === 'qgp' ? 1.6 : 0.88 * mode.scale
+        {/* 阶段 4：纯胶子场宏观静止质量凝聚 (胶球 0++) */}
+        <g transform="translate(655, 190)">
+          <circle cx="0" cy="0" r="68" fill="#150818" stroke="#ef476f" strokeWidth="2.5" filter="url(#glowFilter)" />
+          <text x="0" y="-76" textAnchor="middle" fill="#ef476f" fontSize="11" fontWeight="700" fontFamily="IBM Plex Mono">STAGE 04 (FINAL)</text>
+          <text x="0" y="82" textAnchor="middle" fill="#ff758f" fontSize="11" fontWeight="600">标量基态胶球 0⁺⁺</text>
 
-    for (let k = 0; k < 3; k++) {
-      const phaseOffset = (k * Math.PI * 2) / 3
-      const points = []
-      const segs = 180
-      for (let i = 0; i <= segs; i++) {
-        const u = (i / segs) * Math.PI * 2 * p + phaseOffset
-        const rKnot = rBase * (0.8 + 0.3 * Math.cos(q * u / p))
-        const x = rKnot * Math.cos(u)
-        const y = rKnot * Math.sin(u)
-        const z = (rBase * 0.45) * Math.sin(q * u / p)
-        points.push(new THREE.Vector3(x, y, z))
-      }
-      const curve = new THREE.CatmullRomCurve3(points, true)
-      const tubeGeo = new THREE.TubeGeometry(curve, 140, mode.id === 'qgp' ? 0.025 : 0.065, 12, true)
-      const tubeMat = new THREE.MeshStandardMaterial({
-        color: tubeColors[k],
-        emissive: tubeColors[k],
-        emissiveIntensity: 0.7,
-        roughness: 0.3,
-        metalness: 0.8,
-        transparent: true,
-        opacity: mode.id === 'qgp' ? 0.5 : 0.88
-      })
-      const mesh = new THREE.Mesh(tubeGeo, tubeMat)
-      mesh.userData = { curve, phaseOffset }
-      rootGroup.add(mesh)
-      tubeMeshes.push(mesh)
-    }
+          {/* 核心质量致密球 */}
+          <circle cx="0" cy="0" r="32" fill="#ef476f" fillOpacity="0.25" />
+          <circle cx="0" cy="0" r="22" fill="#ff5e7e" fillOpacity="0.5" />
+          <circle cx="0" cy="0" r="12" fill="#ffffff" filter="url(#glowFilter)" />
+          
+          {/* 三重色相环绕 */}
+          <ellipse cx="0" cy="0" rx="44" ry="18" fill="none" stroke="#ff3b30" strokeWidth="2.5" transform="rotate(-30)" />
+          <ellipse cx="0" cy="0" rx="44" ry="18" fill="none" stroke="#34c759" strokeWidth="2.5" transform="rotate(30)" />
+          <ellipse cx="0" cy="0" rx="44" ry="18" fill="none" stroke="#007aff" strokeWidth="2.5" transform="rotate(90)" />
 
-    // 周围色荷胶子粒子云
-    for (let i = 0; i < particleCount; i++) {
-      const u = Math.random() * Math.PI * 2
-      const rad = 0.4 + Math.pow(Math.random(), 1.5) * (mode.id === 'qgp' ? 2.2 : 1.4)
-      particlePos[i * 3] = Math.cos(u) * rad
-      particlePos[i * 3 + 1] = Math.sin(u) * rad * (0.6 + Math.random() * 0.4)
-      particlePos[i * 3 + 2] = (Math.random() - 0.5) * 1.2
-
-      const col = new THREE.Color(tubeColors[i % 3])
-      particleColors[i * 3] = col.r
-      particleColors[i * 3 + 1] = col.g
-      particleColors[i * 3 + 2] = col.b
-    }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3))
-    particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3))
-
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.038,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-    const particleSystem = new THREE.Points(particleGeo, particleMat)
-    rootGroup.add(particleSystem)
-
-    // 响应式大小
-    const resize = () => {
-      const w = container.offsetWidth
-      const h = container.offsetHeight
-      renderer.setSize(w, h, false)
-      camera.aspect = w / h
-      camera.updateProjectionMatrix()
-    }
-    const ro = new ResizeObserver(resize)
-    ro.observe(container)
-    resize()
-
-    // 交互拖拽
-    let isDown = false
-    let prevX = 0
-    let prevY = 0
-    let rotX = 0.3
-    let rotY = 0.2
-
-    const onPointerDown = e => {
-      isDown = true
-      prevX = e.clientX
-      prevY = e.clientY
-    }
-    const onPointerMove = e => {
-      if (!isDown) return
-      const dx = e.clientX - prevX
-      const dy = e.clientY - prevY
-      rotY += dx * 0.008
-      rotX += dy * 0.008
-      prevX = e.clientX
-      prevY = e.clientY
-    }
-    const onPointerUp = () => {
-      isDown = false
-    }
-
-    container.addEventListener('pointerdown', onPointerDown)
-    window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerup', onPointerUp)
-
-    let animId
-    let t = 0
-
-    const render = () => {
-      animId = requestAnimationFrame(render)
-      const dt = 0.016 * speed
-      t += dt
-
-      if (autoRotate && !isDown) {
-        rotY += 0.006 * speed
-        rotX = 0.25 + Math.sin(t * 0.5) * 0.15
-      }
-
-      rootGroup.rotation.x = rotX
-      rootGroup.rotation.y = rotY
-
-      // 核心脉动（呼吸模式）
-      const pulse = 1 + Math.sin(t * 3.5 * alphaS) * (0.08 * alphaS)
-      coreMesh.scale.setScalar(pulse * (mode.id === 'qgp' ? 0.4 : 1))
-      haloMesh.scale.setScalar((1 + Math.cos(t * 2.2) * 0.12) * (mode.id === 'qgp' ? 1.5 : 1))
-
-      // 通量管自旋波动
-      tubeMeshes.forEach((mesh, idx) => {
-        mesh.rotation.z = t * (0.4 + idx * 0.1) * (idx % 2 === 0 ? 1 : -1)
-      })
-
-      // 粒子自旋
-      particleSystem.rotation.z = -t * 0.35
-
-      renderer.render(scene, camera)
-    }
-    render()
-
-    return () => {
-      cancelAnimationFrame(animId)
-      ro.disconnect()
-      container.removeEventListener('pointerdown', onPointerDown)
-      window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerup', onPointerUp)
-      renderer.dispose()
-      if (renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement)
-      }
-    }
-  }, [mode, alphaS, autoRotate, speed])
-
-  return <div ref={containerRef} className="glueball-3d-canvas" />
+          <text x="0" y="3" textAnchor="middle" fill="#040b14" fontSize="8" fontWeight="800">1.7 GeV</text>
+        </g>
+      </svg>
+    </div>
+  )
 }
 
 export default function GlueballSimulation() {
-  const [activeModeId, setActiveModeId] = useState('scalar')
-  const [alphaS, setAlphaS] = useState(1.18) // 强相互作用耦合常数
-  const [autoRotate, setAutoRotate] = useState(true)
-  const [speed, setSpeed] = useState(1.0)
-  const [showFormula, setShowFormula] = useState(true)
+  const [selectedStageIdx, setSelectedStageIdx] = useState(3) // 默认选中胶球生成最终态
 
-  const activeMode = MODES.find(m => m.id === activeModeId) || MODES[0]
+  const activeStage = EVOLUTION_STAGES[selectedStageIdx]
 
   return (
     <section className="glueball-section" id="glueball-origin">
@@ -293,179 +227,109 @@ export default function GlueballSimulation() {
         <div className="glueball-header">
           <div className="eyebrow">
             <span />
-            QUANTUM CHROMODYNAMICS & NON-ABELIAN VORTEX CONFINEMENT
+            QUANTUM CHROMODYNAMICS & NON-ABELIAN FIELD SELF-BINDING
           </div>
           <h2>
-            强相互作用与胶球（Glueball）自束缚：
+            强相互作用与胶球（Glueball）自束缚演变示意
             <br />
-            <span>无夸克参与的纯规范场非线性质量凝聚</span>
+            <span>无夸克参与的纯非阿贝尔规范场非线性质量凝聚</span>
           </h2>
           <p>
-            在量子色动力学（QCD）与拓扑流场理论中，胶子不仅传递强相互作用，自身更携带非阿贝尔 $SU(3)$ 色荷。
-            在低能红外区，色通量管自相互吸引、缠绕并闭合为自禁闭孤子纽结——这就是物理学中完全由纯色场自束缚构成的神秘粒子：<strong>胶球（Glueball）</strong>。
+            量子色动力学（QCD）中，胶子不仅传递强相互作用，其自身携带非阿贝尔 $SU(3)$ 色荷。
+            在红外强耦合区，色通量线受真空对偶 Meissner 效应压缩为致密通量弦，并通过非线性自吸引缠绕为自禁闭孤子纽结——形成了完全由纯色场凝聚构成的神秘粒子：<strong>胶球（Glueball）</strong>。
           </p>
         </div>
 
-        {/* 交互工作台 */}
-        <div className="glueball-workbench">
-          {/* 左侧控制与物理态选择 */}
-          <div className="glueball-controls">
-            <div className="panel-title">
-              <Sparkles size={16} />
-              <b>胶子场拓扑态与能级选择</b>
+        {/* 演变历程静态示意总览图 */}
+        <div className="glueball-static-overview-card">
+          <div className="overview-header">
+            <div className="overview-title-tag">
+              <Activity size={16} />
+              <b>强相互作用色通量演化与胶球生成 4 阶段解析</b>
             </div>
-
-            <div className="mode-selector-list">
-              {MODES.map(m => {
-                const isActive = m.id === activeModeId
-                return (
-                  <button
-                    key={m.id}
-                    className={`mode-card-btn ${isActive ? 'active' : ''}`}
-                    onClick={() => setActiveModeId(m.id)}
-                  >
-                    <div className="mode-card-head">
-                      <b>{m.name}</b>
-                      <span className="mass-tag">{m.mass}</span>
-                    </div>
-                    <small>{m.latin} · {m.spin}</small>
-                    <p>{m.desc}</p>
-                    <div className="mode-metric-row">
-                      <span>弦张力: <strong>{m.tension}</strong></span>
-                      <span className="color-dots">
-                        <i style={{ background: `#${m.color1.toString(16).padStart(6, '0')}` }} />
-                        <i style={{ background: `#${m.color2.toString(16).padStart(6, '0')}` }} />
-                        <i style={{ background: `#${m.color3.toString(16).padStart(6, '0')}` }} />
-                      </span>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
-
-            {/* 参数实时微调 */}
-            <div className="glueball-sliders">
-              <div className="slider-group">
-                <div className="slider-label">
-                  <span>强耦合常数 $\alpha_s(Q^2)$</span>
-                  <b>{alphaS.toFixed(2)}</b>
-                </div>
-                <input
-                  type="range"
-                  min="0.3"
-                  max="2.0"
-                  step="0.05"
-                  value={alphaS}
-                  onChange={e => setAlphaS(parseFloat(e.target.value))}
-                />
-                <div className="slider-hints">
-                  <small>渐近自由 (高能)</small>
-                  <small>红外色禁闭 (低能)</small>
-                </div>
-              </div>
-
-              <div className="slider-group">
-                <div className="slider-label">
-                  <span>拓扑涡动与自旋流速</span>
-                  <b>{speed.toFixed(1)}x</b>
-                </div>
-                <input
-                  type="range"
-                  min="0.2"
-                  max="2.5"
-                  step="0.1"
-                  value={speed}
-                  onChange={e => setSpeed(parseFloat(e.target.value))}
-                />
-              </div>
-
-              <div className="button-actions-row">
-                <button
-                  className="icon-action-btn"
-                  onClick={() => setAutoRotate(!autoRotate)}
-                >
-                  <Rotate3D size={14} />
-                  <span>{autoRotate ? '暂停自转' : '开启自转'}</span>
-                </button>
-                <button
-                  className="icon-action-btn"
-                  onClick={() => {
-                    setAlphaS(1.18)
-                    setSpeed(1.0)
-                    setActiveModeId('scalar')
-                  }}
-                >
-                  <RefreshCw size={14} />
-                  <span>重置基准态</span>
-                </button>
-              </div>
-            </div>
+            <span className="static-tag">静态示意 · 物理一致</span>
           </div>
 
-          {/* 右侧 3D 胶球色通量交互视口 */}
-          <div className="glueball-viewport-panel">
-            <div className="viewport-hud-header">
-              <div>
-                <span className="live-pill"><span />QCD FLUX TUBE SIMULATOR</span>
-                <b>{activeMode.name}</b>
-              </div>
-              <div className="hud-metrics">
-                <span>自旋宇称: <strong>{activeMode.spin}</strong></span>
-                <span>预测质能: <strong>{activeMode.mass}</strong></span>
-              </div>
-            </div>
-
-            <GlueballCanvas
-              mode={activeMode}
-              alphaS={alphaS}
-              autoRotate={autoRotate}
-              speed={speed}
-            />
-
-            <div className="viewport-hud-footer">
-              <small>拖动鼠标倾斜旋转 · 观察非阿贝尔色通量管的三维空间拓扑闭合与自吸引收缩</small>
-            </div>
-          </div>
+          <StaticEvolutionGraphic activeStage={activeStage} />
         </div>
 
-        {/* 下方理论机制解析与物理方程式 */}
+        {/* 4 大阶段交互式卡片切换区 */}
+        <div className="evolution-stage-cards-grid">
+          {EVOLUTION_STAGES.map((st, idx) => {
+            const isSelected = idx === selectedStageIdx
+            return (
+              <div
+                key={st.id}
+                className={`stage-card ${isSelected ? 'active' : ''}`}
+                onClick={() => setSelectedStageIdx(idx)}
+                role="button"
+                tabIndex={0}
+              >
+                <div className="stage-card-top">
+                  <span className="step-num">{st.step}</span>
+                  <span className="stage-state-tag" style={{ color: st.color }}>
+                    {st.state}
+                  </span>
+                </div>
+                <h3>{st.title}</h3>
+                <small className="stage-subtitle">{st.subtitle}</small>
+                <p className="stage-desc">{st.desc}</p>
+
+                <div className="stage-equation-box">
+                  <code>{st.equation}</code>
+                </div>
+
+                <div className="stage-metrics-list">
+                  {st.metrics.map(([label, val]) => (
+                    <div className="metric-row" key={label}>
+                      <span>{label}</span>
+                      <strong>{val}</strong>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* 底部物理机制与前沿实验验证 */}
         <div className="glueball-theory-deck">
           <div className="theory-deck-card">
             <div className="deck-head">
               <Cpu size={16} />
-              <b>1. 非阿贝尔规范场自相互作用</b>
+              <b>1. 非阿贝尔杨-米尔斯自相互作用</b>
             </div>
             <code>
               {"G_{μν}^a = ∂_μ A_ν^a - ∂_ν A_μ^a + g f^{abc} A_μ^b A_ν^c"}
             </code>
             <p>
-              不同于光子（不带电荷、场方程线性），QCD 胶子场自身携带色荷（SU(3) 生成元），三胶子与四胶子自耦合项产生极强的非线性聚集效应。
+              光子不带电且场方程线性；而 QCD 胶子自身带色荷，三胶子与四胶子非线性耦合产生极强的自吸引聚集力。
             </p>
           </div>
 
           <div className="theory-deck-card">
             <div className="deck-head">
               <Zap size={16} />
-              <b>2. 色通量管收缩与线性禁闭势</b>
+              <b>2. 色通量管与线性禁闭弦</b>
             </div>
             <code>
-              {"V_{QCD}(r) = -(4/3)(α_s / r) + σ r  (σ ≈ 1 GeV/fm)"}
+              {"V_{QCD}(r) = -(4/3)(α_s / r) + σ r  (σ ≈ 1.02 GeV/fm)"}
             </code>
             <p>
-              当两个色源被拉开时，真空超导效应使色电场线被压缩成一维致密“通量管”（Flux Tube），能量随距离线性增加，促使闭合形成孤子纽结。
+              真空超导效应排斥色电场，迫使电力线压缩为横截面约 0.2 fm² 的致密通量管，张力高达 16 吨力。
             </p>
           </div>
 
           <div className="theory-deck-card">
             <div className="deck-head">
               <Atom size={16} />
-              <b>3. 质量凝聚（无夸克的纯场质量）</b>
+              <b>3. 纯规范场能量质量凝聚</b>
             </div>
             <code>
-              {"M_{glueball} = ⟨0 | Θ_μ^μ | 0⟩_{anomaly} = [β(g)/(2g)] ⟨G^2⟩ ≈ 1.7 GeV/c²"}
+              {"M_{glueball} = ⟨0 | Θ_μ^μ | 0⟩ = [β(g)/(2g)] ⟨G^2⟩ ≈ 1.7 GeV/c²"}
             </code>
             <p>
-              胶球没有任何构成夸克（即没有夸克静止质量），其全部 1.7 GeV/c² 质量均源自非阿贝尔色场的动力学自禁闭动能与量子微商反常。
+              胶球不含任何夸克静止质量，全部 1.7 GeV/c² 质能均源自纯胶子场动能与量子微商反常（Trace Anomaly）。
             </p>
           </div>
         </div>

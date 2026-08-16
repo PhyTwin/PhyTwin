@@ -514,8 +514,28 @@ main, footer { background:#06101c; }
 .capability-metric-card strong { font:700 32px "IBM Plex Mono",monospace; color:#70e1ff; line-height:1; }
 .capability-metric-card small { font:500 9px "IBM Plex Mono",monospace; color:#85a2b5; margin-top:6px; }
 
+.glueball-static-overview-card { background:#071422; border:1px solid #1f374c; border-radius:14px; padding:24px; margin-top:32px; box-shadow:0 12px 36px rgba(0,0,0,0.3); }
+.overview-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px; border-bottom:1px solid #162a3c; padding-bottom:14px; }
+.overview-title-tag { display:flex; align-items:center; gap:8px; color:#62d9ff; font-size:14px; font-weight:600; }
+.static-tag { font:600 9px "IBM Plex Mono",monospace; color:#06d6a0; background:rgba(6,214,160,0.1); border:1px solid rgba(6,214,160,0.25); padding:4px 10px; border-radius:14px; }
+.glueball-static-diagram-wrap { width:100%; overflow-x:auto; background:#040c16; border-radius:10px; padding:12px; border:1px solid #132435; }
+.glueball-svg-canvas { width:100%; height:auto; display:block; min-width:640px; }
+
+.evolution-stage-cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; margin-top:28px; }
+.stage-card { background:#081726; border:1px solid #1d3347; border-radius:12px; padding:22px; cursor:pointer; transition:.22s; display:flex; flex-direction:column; gap:12px; }
+.stage-card:hover { border-color:#3c678a; background:#0c1e30; transform:translateY(-2px); }
+.stage-card.active { border-color:#62d9ff; background:#0b2138; box-shadow:0 0 24px rgba(98,217,255,0.12); }
+.stage-card-top { display:flex; justify-content:space-between; align-items:center; }
+.step-num { font:700 13px "IBM Plex Mono",monospace; color:#5cd5ff; }
+.stage-state-tag { font:600 10px "IBM Plex Mono",monospace; }
+.stage-card h3 { font-size:16px; color:#ecf5fc; margin:0; }
+.stage-subtitle { font:400 10px "IBM Plex Mono",monospace; color:#7893a9; }
+.stage-desc { font-size:12px; line-height:1.65; color:#8ea7bb; margin:0; }
+.stage-equation-box { background:#040e18; border:1px solid #14283b; border-radius:6px; padding:8px 10px; }
+.stage-equation-box code { font:500 10px "IBM Plex Mono",monospace; color:#7ee2ff; word-break:break-all; }
+.stage-metrics-list { display:flex; flex-direction:column; gap:6px; font-size:11px; border-top:1px solid #162a3c; padding-top:12px; margin-top:auto; }
+.metric-row { display:flex; justify-content:space-between; align-items:center; }
+.metric-row span { color:#6a8599; font-size:10px; font-family:"IBM Plex Mono",monospace; }
+.metric-row strong { color:#d8ebf9; font-size:10px; font-family:"IBM Plex Mono",monospace; }
+
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
-
-
-
-

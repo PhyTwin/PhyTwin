@@ -320,8 +320,14 @@ export default function RealtimeLab() {
                     layout={{
                       ...plotLayout,
                       title: { text: `(a) ${meta.name} 截面 ${meta.legend}`, x: 0.02, font: { size: 12 } },
-                      xaxis: { title: 'R / x 坐标', gridcolor: '#1b3345' },
-                      yaxis: { title: 'Z / y 坐标', gridcolor: '#1b3345' },
+                      xaxis: {
+                        title: (mode === 'plasma' || mode === 'stellarator') ? '大半径 R (m)' : (mode === 'em' || mode === 'frc') ? '径向位置 r (m)' : (mode === 'ocean') ? '沿水流距离 x (km)' : '空间坐标 x (m)',
+                        gridcolor: '#1b3345'
+                      },
+                      yaxis: {
+                        title: (mode === 'plasma' || mode === 'stellarator') ? '垂直高度 Z (m)' : (mode === 'em' || mode === 'frc') ? '轴向位置 z (m)' : (mode === 'ocean') ? '横向跨度 y (km)' : '空间坐标 y (m)',
+                        gridcolor: '#1b3345'
+                      },
                       height: 380
                     }}
                     config={plotConfig}

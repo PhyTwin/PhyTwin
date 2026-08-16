@@ -389,10 +389,38 @@ export default function UnifiedField3D({ result, running = true }) {
       const color3 = new THREE.Color(0xffd166)
       const color4 = new THREE.Color(0xef476f)
 
+      // 根据物理尺度计算视觉归一化比例
+      let scale = 1.0
+      if (modelType === 'plasma') {
+        const R0 = result.dimensions?.find(d => d[0].includes('R₀'))?.[1] || 6.2
+        scale = 2.4 / R0
+      } else if (modelType === 'stellarator') {
+        const R0 = result.dimensions?.find(d => d[0].includes('R₀'))?.[1] || 5.5
+        scale = 2.5 / R0
+      } else if (modelType === 'em') {
+        const a_em = result.dimensions?.find(d => d[0].includes('半径'))?.[1] || 0.18
+        scale = 1.4 / (a_em || 0.18)
+      } else if (modelType === 'frc') {
+        const L = result.dimensions?.find(d => d[0].includes('长度'))?.[1] || 3.2
+        scale = 4.8 / L
+      }
+
       result.particles.forEach((p, idx) => {
-        posArray[idx * 3] = p.x
-        posArray[idx * 3 + 1] = p.y
-        posArray[idx * 3 + 2] = p.z
+        if (modelType === 'plasma' || modelType === 'stellarator') {
+          // X-Z 水平环面，Y 为垂直轴
+          posArray[idx * 3] = p.x * scale
+          posArray[idx * 3 + 1] = p.z * scale // 垂直高度
+          posArray[idx * 3 + 2] = p.y * scale
+        } else if (modelType === 'em') {
+          // X 为螺线管轴线
+          posArray[idx * 3] = p.z * scale
+          posArray[idx * 3 + 1] = p.x * scale
+          posArray[idx * 3 + 2] = p.y * scale
+        } else {
+          posArray[idx * 3] = p.x * scale
+          posArray[idx * 3 + 1] = p.y * scale
+          posArray[idx * 3 + 2] = p.z * scale
+        }
         velocities.push({ vx: p.vx || 0, vy: p.vy || 0, vz: p.vz || 0 })
 
         const valNorm = Math.min(1, Math.max(0, (p.value - (result.x?.[0] || 0)) / (result.stats?.[0]?.[1] || 10)))
@@ -437,10 +465,10 @@ export default function UnifiedField3D({ result, running = true }) {
         const count = pos.length / 3
         for (let i = 0; i < count; i++) {
           if (modelType === 'plasma' || modelType === 'stellarator') {
-            const x = pos[i * 3], z = pos[i * 3 + 1], y = pos[i * 3 + 2]
+            const x = pos[i * 3], z = pos[i * 3 + 2]
             const angle = 0.012
             pos[i * 3] = x * Math.cos(angle) - z * Math.sin(angle)
-            pos[i * 3 + 1] = x * Math.sin(angle) + z * Math.cos(angle)
+            pos[i * 3 + 2] = x * Math.sin(angle) + z * Math.cos(angle)
           } else if (modelType === 'frc') {
             const x = pos[i * 3], y = pos[i * 3 + 1]
             const angle = 0.02
@@ -448,7 +476,7 @@ export default function UnifiedField3D({ result, running = true }) {
             pos[i * 3 + 1] = x * Math.sin(angle) + y * Math.cos(angle)
           } else if (modelType === 'gas' || modelType === 'pipe') {
             pos[i * 3] += 0.025
-            if (pos[i * 3] > 3.0) pos[i * 3] = -3.0
+            if (pos[i * 3] > 2.5) pos[i * 3] = -2.5
           }
         }
         particlePoints.geometry.attributes.position.needsUpdate = true

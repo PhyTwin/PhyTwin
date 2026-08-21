@@ -1,0 +1,55 @@
+{
+  "name": "high_resolution_thermal_mhd_cell",
+  "domain": {
+    "length_x": 2.0,
+    "length_y": 1.0
+  },
+  "physics": {
+    "viscosity": 0.0015,
+    "magnetic_diffusivity": 0.002,
+    "thermal_diffusivity": 0.0015,
+    "buoyancy": 6.0,
+    "lorentz": 1.0,
+    "imposed_vertical_magnetic_field": 0.45,
+    "background_temperature_gradient": 1.0,
+    "heat_source_amplitude": 0.15,
+    "heat_source_x": 1.0,
+    "heat_source_y": 0.20,
+    "heat_source_width": 0.08
+  },
+  "numerical": {
+    "modes_x": 28,
+    "modes_y": 18,
+    "oversampling": 1.7,
+    "initial_dt": 0.001,
+    "max_dt": 0.004,
+    "min_dt": 1e-8,
+    "end_time": 2.0,
+    "output_interval": 0.05,
+    "cfl": 0.38,
+    "max_retries": 12,
+    "state_growth_limit": 5.0,
+    "adaptive_filter": true,
+    "filter_strategy": "synchronized",
+    "tail_fraction": 0.20,
+    "tail_energy_target": 5e-6,
+    "filter_order": 14,
+    "filter_gain": 2.0,
+    "max_filter_strength": 20.0,
+    "coupling_spread_gain": 0.30
+  },
+  "initial": {
+    "seed": 20260821,
+    "streamfunction_amplitude": 0.0008,
+    "temperature_amplitude": 0.015,
+    "magnetic_potential_amplitude": 0.0003,
+    "excited_modes_x": 5,
+    "excited_modes_y": 4
+  },
+  "output": {
+    "directory": "results/thermal_mhd_cell",
+    "save_snapshots": true,
+    "snapshot_stride": 2,
+    "save_plots": true
+  }
+}

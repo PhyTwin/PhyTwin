@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orthomagtherm"
+version = "1.0.0"
+description = "正交 Galerkin 热磁流体多物理场数值计算软件"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+authors = [{name = "软件著作权申请人"}]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+test = ["pytest>=7.4"]
+
+[project.scripts]
+omt-sim = "orthomagtherm.cli:main"
+omt-aero = "orthomagtherm.aero.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

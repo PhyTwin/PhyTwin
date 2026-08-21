@@ -1,0 +1,47 @@
+{
+  "name": "automatic_airfoil_feedback_design",
+  "design": {
+    "camber": 0.006,
+    "camber_position": 0.4,
+    "thickness": 0.12,
+    "chord": 1.0,
+    "panels": 100
+  },
+  "flight": {
+    "speed": 60.0,
+    "density": 1.225,
+    "angle_of_attack_degrees": 3.0
+  },
+  "standards": {
+    "target_lift_coefficient": 0.75,
+    "lift_tolerance": 0.025,
+    "max_abs_pitching_moment": 0.12,
+    "minimum_allowed_cp": -5.0,
+    "minimum_thickness": 0.1,
+    "maximum_thickness": 0.16,
+    "max_estimated_drag_coefficient": 0.025
+  },
+  "bounds": {
+    "minimum_camber": 0.0,
+    "maximum_camber": 0.09,
+    "minimum_camber_position": 0.2,
+    "maximum_camber_position": 0.8,
+    "minimum_thickness": 0.06,
+    "maximum_thickness": 0.24
+  },
+  "optimization": {
+    "maximum_iterations": 24,
+    "normalized_probe_step": 0.035,
+    "normalized_design_step": 0.12,
+    "minimum_design_step": 0.002,
+    "backtracking_levels": 6,
+    "regularization_weight": 0.015,
+    "field_points_x": 180,
+    "field_points_y": 110
+  },
+  "output": {
+    "directory": "results/aero_design",
+    "save_iteration_surfaces": true,
+    "save_plot": true
+  }
+}
